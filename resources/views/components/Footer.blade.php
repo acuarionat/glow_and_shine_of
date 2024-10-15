@@ -18,8 +18,8 @@
                 <ul>
                     <li><a href="../">Inicio</a></li>
                     <li><a href="../about">Nosotros</a></li>
-                    <li><a href="category">Categoria</a></li>
-                    <li><a href="../contactanos">Contactanos</a></li>
+{{--                     <li><a href="category">Categoria</a></li>
+ --}}                    <li><a href="../contactanos">Contactanos</a></li>
                 </ul>
             </div>
 
@@ -33,7 +33,7 @@
 
                     <li>
                         <span><i class="fa-solid fa-phone"></i></span>
-                        <p>+54 3584 659871 <br> +54 3514 887634</p>
+                        <p>+591 70666682 <br> +591 76201693</p>
                     </li>
 
                     <li>

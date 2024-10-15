@@ -25,12 +25,12 @@
 
     <header>
         <div class="navbar">
-            <div class="logo"><a href="#">Glow and Shine</a></div>
+            <div class="logo"><a href="../">Glow and Shine</a></div>
             <ul class="links">
                 <li><a href="../">Inicio</a></li>
                 <li><a href="../about">Nosotros</a></li>
-                <li><a href="category">Categoria</a></li>
-                <li><a href="../contactanos">Contactanos</a></li>
+{{--                 <li><a href="category">Categoria</a></li>
+ --}}                <li><a href="../contactanos">Contactanos</a></li>
             </ul>
             <div>
                 <a href="account/login" class="action_btn">Iniciar Sesion</a>
@@ -44,8 +44,8 @@
         <div class="dropdown_menu">
             <li><a href="../">Inicio</a></li>
             <li><a href="../about">Nosotros</a></li>
-            <li><a href="category">Categoria</a></li>
-            <li><a href="../contactanos">Contactanos</a></li>
+{{--             <li><a href="category">Categoria</a></li>
+ --}}            <li><a href="../contactanos">Contactanos</a></li>
             <a href="account/login" class="action_btn">Iniciar Sesion</a>
             <a href="account/register" class="action_btn">Registrarse</a>
         </div>

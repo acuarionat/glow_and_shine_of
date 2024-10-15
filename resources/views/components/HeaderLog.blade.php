@@ -25,7 +25,7 @@
 
     <header>
         <div class="navbar">
-            <div class="logo"><a href="#">Glow and Shine</a></div>
+            <div class="logo"><a href="../">Glow and Shine</a></div>
             <ul class="links">
                 <li><a href="../">Inicio</a></li>
                 <li><a href="../about">Nosotros</a></li>

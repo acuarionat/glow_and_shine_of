@@ -19,8 +19,8 @@
                 <div class="contenedor_informacion_producto">
                     <x-Mikaela.nombrePrecio :producto="$producto" />
                     <x-Mikaela.informacionProducto :producto="$producto" />
-                    <x-Mikaela.botonAnadirListaDeseos />
-                </div>
+{{--                     <x-Mikaela.botonAnadirListaDeseos />
+ --}}                </div>
             </div>
             <x-Mikaela.calificaProducto />
         </div>
