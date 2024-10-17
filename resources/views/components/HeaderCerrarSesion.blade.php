@@ -29,8 +29,8 @@
             <ul class="links">
                 <li><a href="../">Inicio</a></li>
                 <li><a href="../about">Nosotros</a></li>
-                <li><a href="category">Categoria</a></li>
-                <li><a href="../contactanos">Contactanos</a></li>
+{{--                 <li><a href="category">Categoria</a></li>
+ --}}                <li><a href="../contactanos">Contactanos</a></li>
             </ul>
             <div>
                 <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
@@ -44,8 +44,8 @@
         <div class="dropdown_menu">
             <li><a href="../">Inicio</a></li>
             <li><a href="../about">Nosotros</a></li>
-            <li><a href="category">Categoria</a></li>
-            <li><a href="../contactanos">Contactanos</a></li>
+{{--             <li><a href="category">Categoria</a></li>
+ --}}            <li><a href="../contactanos">Contactanos</a></li>
             <li> <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a> </li>
             <!-- <li><a href="#" class="action_btn">Registrarse</a></li> -->
         </div>

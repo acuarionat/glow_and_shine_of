@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <a href="/producto/1">
     <div class="product_card">
         
         <!--<div class="discount_badge">
@@ -21,21 +22,21 @@
         </div>-->
        
         <div class="product_image">
-            <img src="https://bolishop.bo/wp-content/uploads/2022/07/SKY-HIGHMesa-de-trabajo-1.jpg" alt="Agua Micelar Charcoal 400ML - Garnier Skin Active">
+            <img src="https://www.yanbal.com/medias/20013509-01.jpg?context=bWFzdGVyfGltYWdlc3w0ODg3NXxpbWFnZS9qcGVnfGFHSTBMMmd4TWk4eE1ETTFPREEzT1RreE5EQXhOQzh5TURBeE16VXdPVjh3TVM1cWNHY3xjNGUzMDg2M2ZkZTNkMzkwMWZjZTY2ZDBlN2FiMjczOWE4NGE1ZDQ5ZDRmMTgxYWQ4NzA3MTlkYmE4ZjMyM2U5" alt="Agua Micelar Charcoal 400ML - Garnier Skin Active">
         </div>
     
-        <h3 class="product_brand">GARNIER SKIN ACTIVE</h3>
+        <h3 class="product_brand">YAMBAL LIPS ACTIVE</h3>
     
-        <h2 class="product_name">AGUA MICELAR CHARCOAL 400ML - GARNIER SKIN ACTIVE</h2>
+        <h2 class="product_name">Labial en Barra Ya! de Yanbal Alma Nude</h2>
     
         <div class="product_price">
-            <span class="current_price">$139.00</span>
-            <span class="original_price">$165.00</span>
+            <span class="current_price">Bs.10.00</span>
+            <span class="original_price">Bs.15.00</span>
         </div>
-    
-        
-        
+   
     </div>
+</a> 
+    
     
     
 </body>

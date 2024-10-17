@@ -2,4 +2,5 @@
 
 <div class="section_scroll">
     {{ $slot }}
+
 </div>
