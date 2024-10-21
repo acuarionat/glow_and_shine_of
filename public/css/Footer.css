@@ -16,11 +16,11 @@ footer{
 
 .contenedor{
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
     flex-wrap: wrap;
     padding: 1rem 60px;
     color: var(--Rosado_principal);
+    justify-content: space-between;
 
 }
 
@@ -48,12 +48,15 @@ footer{
     padding-bottom: 1rem;
     color: var(--Morado);
     text-align: justify;
+    width: fit-content;
+
 }
 
 .redes-sociales{
     display: flex;
-    gap: 1rem;
+    gap: 50px;
     margin: .5rem 0;
+    width: fit-content;
 }
 .redes-sociales img
 {
@@ -108,12 +111,9 @@ footer{
     padding: .5rem;
 }
 
-@media (min-width: 700px){
+@media (max-width: 700px){
     .contenedor{
-        flex-direction: row;
-        column-gap: 100px;
+        flex-direction: column;
     }
-    .sobre-mi{
-        width: 40%;
-    } 
+
 }

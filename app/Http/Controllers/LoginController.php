@@ -25,12 +25,12 @@ class LoginController extends Controller
                 $user = request()->user();
     
                 if ($user->role === 'admin') {
-                    return redirect()->intended(route('account.dashboardAdmin', ['id' => $user->id]));
+                    return redirect()->intended(route('account.dashboardAdmin', ['id' => $user->id]))->with('success','Inicio de Sesion realizada con exito');
                 } elseif ($user->role === 'empleado') {
-                    return redirect()->intended(route('account.dashboardEmpleado', ['id' => $user->id]));
+                    return redirect()->intended(route('account.dashboardEmpleado', ['id' => $user->id]))->with('success','Inicio de Sesion realizada con exito');
                 }
     
-                return redirect()->intended(route('account.dashboard',['id' => $user->id]));
+                return redirect()->intended(route('account.dashboard',['id' => $user->id]))->with('success','Inicio de Sesion realizada con exito');
             } else {
                 return redirect()->route('account.login')->with('error', 'Email o password incorrectos');
             }
@@ -60,7 +60,7 @@ class LoginController extends Controller
                $user->password = Hash::make(request()->password);
                $user->role = 'cliente';
                $user->save();
-               return redirect()->route('account.login')->with('Registro exitoso');
+               return redirect()->route('account.login')->with('success','Tu registro se realizo con exito');
         }else{
             return redirect()->route('account.register')
             ->withInput()

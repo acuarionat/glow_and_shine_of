@@ -3,8 +3,7 @@
     <footer>
         <div class="contenedor">
             <div class="sobre-mi">
-                <h2 class="titulos-footer">Quienes somos</h2>
-                <p>En Glow & Shine, nos comprometemos a ofrecer productos de cosmética innovadores, accesibles y de alta calidad que realcen la belleza natural, promoviendo el cuidado personal y el bienestar integral. Inspiramos a nuestras clientas a sentirse seguras, empoderadas y libres para expresar su actitud única, mientras fomentamos la sostenibilidad y la diversidad en cada aspecto de nuestra tienda.</p>
+                <h2 class="titulos-footer">Redes Sociales</h2>
                 <ul class="redes-sociales">
                     <li><a href="#"><img class="img_fece"  src="{{ asset('images/fecebook.png') }}" alt="Facebook"></a></li>
                     <li><a href="#"><img class="img_insta" src="{{ asset('images/instragram.png') }}" alt="Google"></a></li>

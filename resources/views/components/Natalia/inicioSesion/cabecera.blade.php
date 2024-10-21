@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="\css\cabecera.css">
 <div class="cabecera">
-    <h2>Bienvenido a G&S System</h2>
+    <h2 class="Bienvenido_h2">Bienvenido a G&S System</h2>
     <h2>¡Vamos a iniciar sesión para acceder a tu espacio personalizado!</h2>
 </div>
 <div class="botones_navegacion">
