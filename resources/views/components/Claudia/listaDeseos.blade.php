@@ -6,7 +6,7 @@
 <div class="contenedor_titulo_deseos">
     
     <h1 class="lista_deseos">
-        LISTA DE FAVORITOS
+        RECOMENDACIONES PERSONALIZADAS
     </h1>
     
 </div>

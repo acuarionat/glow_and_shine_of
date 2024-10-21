@@ -1,0 +1,9 @@
+.contenedor_botones_opciones{
+    width: 100%;
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 10px;
+    
+}

@@ -41,6 +41,11 @@
     flex-direction: column;
     margin: 0;
 }
+.invalid-feedback {
+    color: fuchsia;
+    font-size: 17px;
+    margin-top: 5px;
+}
 
 @media (max-width: 600px) {
     .formulario_registro

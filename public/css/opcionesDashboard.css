@@ -1,0 +1,55 @@
+.contenedor_opciones_administrador{
+    
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    
+    /* width: 200px;
+    height: 200px;
+     */
+     margin: 10px;
+
+}
+
+.primera_seccion{
+    border-radius: 8px 8px 0 0; 
+    border-style: solid;
+    border-color: #764C73;
+    border-width: 2px 2px 1px 2px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    height: 150px; 
+    
+}
+
+.imagen_button{
+    width: 70px;
+    height: 70px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 20px;
+    
+}
+.titulo{
+    margin-top: 10px;
+    
+    color: #764C73;
+    font-weight: 600;
+}
+
+.segunda_seccion{
+    border-radius: 0 0 8px 8px;
+    border-style: solid;
+    border-color: #764C73;
+    border-width: 1px 2px 2px 2px; 
+    padding: 5px;
+    width: 200px; /* Asegurando que la segunda sección tenga el mismo ancho */
+    height: 50px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    
+}

@@ -25,49 +25,32 @@
 
     <header>
         <div class="navbar">
-            <div class="logo"><a href="../">Glow and Shine</a></div>
+            <div class="logo"><a href="/">G&S System</a></div>
             <ul class="links">
-                <li><a href="../">Inicio</a></li>
-                <li><a href="../about">Nosotros</a></li>
-{{--                 <li><a href="category">Categoria</a></li>
- --}}                <li><a href="../contactanos">Contactanos</a></li>
+                <li><a href="about">Productos</a></li>
+                <li><a href="category">Favoritos</a></li>
+                <li><a href="category">Promociones</a></li>
+                <li><a href="contact">Contactanos</a></li>
+                <li><a href="contact">Perfil</a></li>
             </ul>
             <div>
-                @if (Auth::check())
-                    @php
-                        $user = Auth::user(); 
-                        $userRole = $user->role;
-                        $userId = $user->id; 
-                    @endphp
-                    <a href="{{ $userRole == 'cliente' ? url('account/dashboard/' . $userId) : ($userRole == 'empleado' ? url('account/dashboardEmpleado/' . $userId) : url('account/dashboardAdmin/' . $userId)) }}" class="action_btn">
-                        <i class="fa-solid fa-user"></i> 
-                    </a>
-                @else
-                    <a href="account/login" class="action_btn">Iniciar Sesion</a>
-                    <a href="account/register" class="action_btn">Registrarse</a>
-                @endif
+                <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
+                <!-- <a href="#" class="action_btn">Registrarse</a> -->
             </div>
-            
             <div class="toggle_btn">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
 
         <div class="dropdown_menu">
-            <li><a href="../">Inicio</a></li>
-            <li><a href="../about">Nosotros</a></li>
-{{--             <li><a href="category">Categoria</a></li>
- --}}            <li><a href="../contactanos">Contactanos</a></li>
- <div>
-    @if (Auth::check())
-        <a href="{{ url('account/dashboard/' . Auth::user()->id) }}" class="action_btn">
-            <i class="fa-solid fa-user"></i> <!-- Ícono de perfil -->
-        </a>
-    @else
-        <a href="account/login" class="action_btn">Iniciar Sesion</a>
-        <a href="account/register" class="action_btn">Registrarse</a>
-    @endif
-</div>
+                <li><a href="about">Productos</a></li>
+                <li><a href="category">Favoritos</a></li>
+                <li><a href="category">Promociones</a></li>
+                <li><a href="contact">Contactanos</a></li>
+                <li><a href="contact">Perfil</a></li>
+                
+                <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
+            <!-- <li><a href="#" class="action_btn">Registrarse</a></li> -->
         </div>
     </header>
 
