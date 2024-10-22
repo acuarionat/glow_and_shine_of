@@ -1,0 +1,8 @@
+.contenedor_titulo_deseos{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    color: #BE6C97;
+    font-size: 24px; 
+    font-family: "Poppins", Bold;
+}

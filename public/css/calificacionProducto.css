@@ -1,0 +1,89 @@
+.contenedor_comentario_producto {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;  
+    background-color: var(--Rosado_clarito) ;
+    padding: 5%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.contenedor_estrellas input[type="radio"] {
+    display: none;
+}
+.contenedor_estrellas label {
+    font-size: 6vh;
+    color: #FFC1F2;
+    cursor: pointer;
+}
+.contenedor_estrellas label:hover,
+.contenedor_estrellas input:checked ~ label {
+    color: var(--Rosado_principal);
+}
+
+textarea {
+    width: 100%;
+    height: 20vh;
+    border: 1px solid var(--Rosado_principal);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.boton_enviar_comentario{
+    font-family: "Poppins", sans-serif;
+    background-color: var(--Morado);
+    color: var(--Blanco);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 5%;
+    font-size: 3vh;
+}
+.boton_enviar_comentario:hover {
+    background-color: var(--Rosado_principal);
+}
+
+.texto_cuentanos{
+    font-weight: 600;
+    color: var(--Morado);
+    margin: 0;
+    padding: 3%;
+    font-size: 3.5vh;
+    text-align: center;
+}
+
+.texto_dejanos{
+    font-weight: 600;
+    color: var(--Morado);
+    margin: 0;
+    padding: 3%;
+    font-size: 3.5vh;
+    text-align:justify;
+}
+
+@media (min-width: 769px) {
+    textarea {
+        display: flex;
+        justify-content: center;
+        width: 140vh;
+        height: 20vh;
+        border-radius: 10px;
+        padding: 5px;
+    }
+    
+    .boton_enviar_comentario{
+        width: 60%; /* Asegura que el botón sea más pequeño para centrado */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto; /* Centrar horizontalmente */
+    }
+
+    .contenedor_estrellas label {
+        font-size: 8vh;
+    }
+}

@@ -1,0 +1,53 @@
+.contenedor_seleccionar_tonos{
+    width: 100%;
+}
+
+.texto_seleccionar_tonos_descripcion{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    color: #601A55;
+    margin: 0;
+    padding: 3%;
+    text-align: justify;
+}
+
+.contenedor_tonos{
+    width: 100%;
+    height: 50%;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+
+}
+
+.tonos{
+    background-color: rgb(151, 47, 96);
+    width: 10vh;
+    height: 10vh;
+    margin: 2%;
+}
+
+@media (min-width: 769px) {
+    .contenedor_seleccionar_tonos {
+        position: absolute;
+        top: 28%; 
+        right:11%;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+    }
+    .texto_seleccionar_tonos_descripcion{
+        font-size: 20px;
+        text-align: justify;
+    }
+
+    .tonos{
+        background-color: rgb(151, 47, 96);
+        width: 13vh;
+        height: 13vh;
+        margin: 2%;
+    }
+
+}
+

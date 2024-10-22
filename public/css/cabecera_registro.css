@@ -1,0 +1,44 @@
+.cabecera
+{
+    background-color: transparent;
+    width: 100%;
+    height: fit-content;
+    padding: 30px 0px 30px 20px;
+    text-align: left;
+    justify-content: center;
+    color: var(--Morado);
+
+}
+.botones_navegacion
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+    margin-top:  -15px;
+}
+/*.navegacion button*/
+.botones_navegacion a
+{
+    width: fit-content;
+    text-align: right;
+    color: #fff;
+    border-radius: 33px;
+
+}
+.uno
+{
+    background-color: #C9A8CB;
+    padding: 15px 20px;
+    margin-right: -45px;
+    z-index: 2;
+
+}
+.dos
+{
+    z-index: 1;
+    background-color: var(--Morado);
+    padding: 15px 20px 15px 50px;
+}

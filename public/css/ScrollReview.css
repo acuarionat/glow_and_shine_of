@@ -1,0 +1,12 @@
+.review_scroll {
+    display: flex; /* Alinear los botones en fila */
+    overflow-x: auto; /* Habilitar el desplazamiento horizontal */
+    padding: 10px; /* Espacio interno */
+    /*white-space: nowrap; /* Evitar que los botones se rompan */
+    margin-top: 20px;
+    max-width: 100%;
+}
+
+.review_scroll::-webkit-scrollbar {
+    display: none;
+}

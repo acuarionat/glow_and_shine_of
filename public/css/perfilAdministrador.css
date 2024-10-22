@@ -1,0 +1,6 @@
+.container_perfil_administrador{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    flex-direction: column;
+} 

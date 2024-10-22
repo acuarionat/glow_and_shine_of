@@ -1,0 +1,30 @@
+.category_scroll {
+    
+    display: flex; /* Alinear los botones en fila */
+    overflow-x: auto; /* Habilitar el desplazamiento horizontal */
+    padding: 10px; /* Espacio interno */
+    /*white-space: nowrap; /* Evitar que los botones se rompan */
+    max-width: 100%;
+    justify-content: space-between;
+    margin-left: 35px;
+    margin-right: 35px;
+    margin-top: 20px;
+}
+
+.category_scroll::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .category_scroll {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .category_scroll::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+

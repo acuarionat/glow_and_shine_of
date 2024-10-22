@@ -1,0 +1,13 @@
+.brand_scroll {
+    display: flex; /* Alinear los botones en fila */
+    overflow-x: auto; /* Habilitar el desplazamiento horizontal */
+    padding: 10px; /* Espacio interno */
+    /*white-space: nowrap; /* Evitar que los botones se rompan */
+    max-width: 90%;
+    margin-top: 20px;
+    gap: 0;   
+}
+
+.brand_scroll::-webkit-scrollbar {
+    display: none;
+}

@@ -1,0 +1,22 @@
+body
+{
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--Blanco);
+
+}
+
+:root
+{
+    --Rosado_clarito:#FEE9FF;
+    --Blanco:#fff;
+    --Negro:#000;
+    --Rosado_principal: #BE6C97;
+    --Morado: #764C73;
+    
+}

@@ -1,0 +1,46 @@
+.texto_contactanos
+{
+    color: #BE6C97;
+    font-size: 20px;
+    font-weight: 400;
+    align-self: start;
+}
+
+.seccion_direccion
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    margin: 50px 0px;
+}
+
+@media (min-width: 700px) {
+    .seccion_direccion {
+      flex-direction: row;
+      justify-content: center;
+
+    }
+    .seccion_direccion .direccion
+    {
+        max-height: 95%;
+        min-height: 500px;
+        padding: 20px 40px 20px 40px;
+    }
+    .contenedor_formulario_contactanos
+    {
+        justify-content: center;
+        margin-left: 50px;
+
+    }
+    .direccion img
+{
+    height:50px;
+    width: 50px;
+}
+.direccion #map
+{
+    min-height: 250px;
+}
+  }

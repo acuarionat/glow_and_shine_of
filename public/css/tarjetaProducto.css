@@ -1,0 +1,105 @@
+.contenedor_tarjeta {
+    width: 40%;
+    height: 47vh;
+    background-color: var(--Blanco);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.contenedor_tarjeta a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.contenedor_imagen_tarjeta {
+    width: 100%;
+    border-radius: 8px;
+    background-color: var(--Blanco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 55%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+
+.producto_catalogo {
+    max-width: 100%;
+    margin: 0;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.contenedor_nombre_producto{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3%;
+    height: 17%;
+    margin: 5%;
+}
+
+
+.contenedor_precio_producto{
+    margin: 0%;
+}
+
+.nombre_producto_tarjeta {
+    font-size: 0.7rem;
+}
+
+.precio_producto_tarjeta {
+    font-size: 0.6rem;
+    color: var(--Rosado_principal);
+}
+
+
+@media (min-width: 769px) {
+    .nombre_producto_tarjeta{
+        margin: 3%;
+        font-size: 16px;
+    }
+    .precio_producto_tarjeta{
+        margin-top: 5%;
+        font-size: 18px;
+    }
+
+    .contenedor_tarjeta {
+        width: 280px;
+        height: 67vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2%; 
+    }
+    .producto_catalogo {
+        max-width: 100%;
+        margin: 0%;
+        height: auto;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .contenedor_imagen_tarjeta {
+        width: 100%;
+        margin-top: 10%;
+    }
+
+    .contenedor_nombre_producto{
+        height: 20%;
+        width: auto;
+        margin-left: -5%;
+        margin-right: -5%;
+    }
+    
+    .contenedor_precio_producto{
+        margin-bottom: 10%;
+    }
+}

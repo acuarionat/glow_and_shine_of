@@ -1,0 +1,46 @@
+.contenedor_formulario_contactanos
+{
+    font-weight: 400;
+    max-width: 500px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.formulario{
+    background-color: transparent;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: #000;
+}
+.formulario input[type="text"], 
+.formulario input[type="email"], 
+.formulario textarea {
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    border: 1px solid #BE6C97;
+    border-radius: 31.5px;
+    font-weight: 300;
+}
+.formulario button {
+    align-self: center;
+    width: fit-content;
+    padding: 10px;
+    margin-top: 30px;
+    background-color: #764C73;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.formulario button:hover {
+    background-color: #BE6C97;
+}
+

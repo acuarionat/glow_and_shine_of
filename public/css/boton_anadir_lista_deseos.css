@@ -1,0 +1,104 @@
+
+.contenedor_anadir_lista_deseos{
+    width: 25%;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+.contenedor_boton_anadir_lista_deseos{
+    width: 35%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor_nombre_producto_especifico{
+    width: 75%;
+}
+.nombre_producto_especifico {
+    color: #601A55;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 1.5rem;
+    text-align: center;
+}
+.boton_lista_deseos {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    display: flex;
+    margin: 0;
+}
+
+.icono_corazon {
+    width: 80%;
+    height: 80%;
+    stroke: #cccccc; 
+    fill: none;
+    transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.icono_corazon.active {
+    stroke: red;
+    fill: red;
+}
+
+.contenedor_texto_anadir_lista_deseos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+}
+
+.anadir_lista_deseos {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    color: #601A55;
+    margin: 0;
+    padding: 0;
+    font-size: 85%;
+    text-align: center;
+}
+
+@media (min-width: 769px) {
+    .contenedor_anadir_lista_deseos {
+        width: 40%;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        height: 100px;
+    }
+    .anadir_lista_deseos {
+        font-size: 22px;
+    }
+
+    .boton_lista_deseos {
+        width: 70px;
+        height: 70px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        outline: none;
+        display: flex;
+    }
+    .boton_lista_deseos {
+        width: 70px;
+        height: 70px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        outline: none;
+        display: flex;
+    }
+
+}

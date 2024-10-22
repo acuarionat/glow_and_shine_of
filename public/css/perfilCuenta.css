@@ -1,0 +1,9 @@
+.pagina_perfil_cuenta{
+    width: 100%;
+    background-color: #FEE9FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}

@@ -1,0 +1,34 @@
+.contenedor_catalogo{
+    margin-top: 2%; 
+    color: var(--Morado);
+    font-weight: 600;
+    text-align: center;
+}
+
+.contenedor_catalogo_productos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+.texto_categoria{
+    width: 100%;
+    height: auto;
+}
+@media (min-width: 769px) {
+    .contenedor_catalogo_productos { 
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .texto_categoria{
+        width: 100%;
+        height: auto;
+        font-size: 32px;
+    }
+    
+}

@@ -1,0 +1,30 @@
+.botones_registro{
+    flex-wrap: wrap;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+.boton1, .boton2 {
+    background-color: #764C73;
+    width: 174px;
+    height: 66px;
+    border: #764C73;
+    border-radius: 33px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.boton1:active, .boton2:active{
+    background-color: #C9A8CB ;
+}
+
+.letrab1{
+    color: #F5F4F4;
+    font-size: 20px;
+    font-family: 'Poppins';
+    text-align: center;
+
+}

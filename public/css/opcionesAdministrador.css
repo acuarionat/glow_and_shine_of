@@ -1,0 +1,33 @@
+.contenedor_opciones_administrador{
+    width: 100%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+
+}
+
+.contenedor_opciones_administrador button{
+    width: 80%;
+    min-width: 315px;
+    max-width: 525px;
+    background-color: #764C73;
+    color: #FFFFFF;
+    padding: 8px;
+    margin: 7px;
+    border-radius: 8px;
+}
+
+@media (min-width: 1024px) {
+    .contenedor_opciones_administrador {
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: center; 
+        gap: 10px;
+    }
+
+    .contenedor_opciones_administrador button {
+        width: calc(50% - 14px); /* Dos columnas con un margen entre ellas */
+        /* Se resta el margen (7px) de ambos lados para mantener el espacio */
+    }
+}

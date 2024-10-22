@@ -1,0 +1,36 @@
+.contenedor_descripcion_productos{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.texto_subtitulos_productos{
+    font-weight: 600;
+    color: var(--Rosado_principal);
+    margin: 0;
+    padding: 3%;
+    text-align: justify;
+}
+.texto_contenido_subtitulos{
+    color: var(--Negro);
+    margin: 0;
+    padding: 3%;
+    text-align: justify;
+}
+
+
+@media (min-width: 769px) {
+    .contenedor_descripcion_productos {
+        display: flex;
+        flex-direction: column;
+    }
+    .texto_subtitulos_productos{
+        font-size: 20px;
+    }
+    .texto_contenido_subtitulos{
+        font-size: 20px;
+    }
+    
+
+}
+

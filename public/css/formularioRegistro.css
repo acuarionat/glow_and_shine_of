@@ -1,0 +1,50 @@
+.contenedor_formulario_registro
+{
+    font-weight: 400;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    margin: 60px 0px;
+    padding: 0px 30px 0px 30px;
+}
+.formulario_registro input[type="password"], 
+.formulario_registro input[type="email"],
+.formulario_registro input[type="name"]
+ {
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    border: 1px solid #BE6C97;
+    border-radius: 31.5px;
+    font-weight: 300;
+
+}
+.formulario_registro button {
+    align-self: center;
+    width: fit-content;
+    padding: 10px;
+    margin-top: 30px;
+    background-color: #764C73;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.formulario_registro
+{
+    background-color: transparent;
+    border-radius: 10px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .formulario_registro
+    {
+        width: 90%;
+    }
+}

@@ -1,0 +1,40 @@
+.contenedor_nombre_producto_especifico{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.nombre_producto_especifico {
+    color: var(--Morado);
+    font-weight: 700;
+    font-size: 1.3rem; 
+    text-align: left;
+}
+
+.precio_producto {
+    font-weight: 700;
+    color: var(--Rosado_principal);
+    text-align: center;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (min-width: 769px) {
+    .contenedor_nombre_producto_especifico {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nombre_producto_especifico {
+        color: var(--Morado);
+        font-weight: 600;
+        font-size: 27px;
+        text-align: left;
+    }
+    
+    .precio_producto{
+        font-size: 23px;
+    }
+}

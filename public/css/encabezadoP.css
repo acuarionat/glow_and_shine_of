@@ -1,0 +1,31 @@
+
+.encabezado_p{
+    /* width: 320px;
+    height: 41px; */
+    width: 100%;
+   
+    display: flex;
+    justify-content: start;
+    
+    margin: 17px; 
+    
+}
+.saludo{
+    color: #BE6C97;
+    font-size: 24px;
+    margin-left: 10px;
+    font-family: 'Poppins', Regular;
+    justify-content: start;
+   
+}
+/* .cerrar_s{
+    color: #764C73;
+    font-size: 15px;
+    font-family: 'Poppins', semi-bold;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: space-between;
+    
+   
+
+} */

@@ -1,0 +1,22 @@
+.container_subtitle {
+    width: 100%;
+    max-width: 100%;
+    border-top: 3px solid var(--Rosado_principal);
+    border-bottom: 3px solid var(--Rosado_principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_subtitle h2 {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--Morado);
+}
+
+@media(max-width: 750px) {
+    .container_subtitle h2 {
+        
+        font-size: 25px;
+    }
+}

@@ -1,0 +1,19 @@
+.contenedor_opciones_empleado{
+    width: 100%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+
+}
+
+.contenedor_opciones_empleado button{
+    width: 80%;
+    min-width: 315px;
+    max-width: 525px;
+    background-color: #764C73;
+    color: #FFFFFF;
+    padding: 5px;
+    margin: 7px;
+    border-radius: 8px;
+}

@@ -1,0 +1,29 @@
+
+.contenedor_informacion{
+    width: 90%;
+    /* min-width: 353px; */
+    height: 610px;
+    border-radius: 31px;
+    background-color: #FFFFFF;
+    padding: 1.5rem;
+    margin-top: 20px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+}
+
+.info_p{
+    width: 100%;
+   /*  min-width: 310px; */
+    height: 53px;
+    color: #000000 ;
+    font-family: 'Poppins', semi-bold;
+    
+}
+.info_p strong {
+    color: #601A55;
+}
+
+
+

@@ -1,0 +1,14 @@
+.contenedor_boton_nombre{
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+}
+
+
+@media (min-width: 769px) {
+    .contenedor_boton_nombre{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+}

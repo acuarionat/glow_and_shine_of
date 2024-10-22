@@ -1,0 +1,114 @@
+main{
+    min-height: 70vh;
+}
+
+.contenedor h2{
+    color: var(--Rosado_principal);
+    font-weight: 400;
+}
+
+footer{
+    background-color: var(--Rosado_clarito);
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 1rem 60px;
+    color: var(--Rosado_principal);
+    justify-content: space-between;
+}
+
+.titulos-footer{
+    font-weight: 300;
+    display: inline-block;
+    padding-bottom: .6rem;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.titulos-footer:before{
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    bottom: 0;
+    left: 0%;
+    border-bottom: .2rem solid var(--Morado);
+}
+
+.sobre-mi p{
+    font-size: 1rem;
+    line-height: 1.4rem;
+    padding-bottom: 1rem;
+    color: var(--Morado);
+}
+
+.redes-sociales{
+    display: flex;
+    gap: 1rem;
+    margin: .5rem 0;
+}
+.redes-sociales img
+{
+    width: 30px;
+    height: 30px;
+}
+
+.redes-sociales a{
+    padding: .6rem;
+    border-radius: .2rem;
+}
+
+
+.fa-brands{
+    font-size: 1.3rem;
+}
+
+.navegacion li a{
+    display: inline-block;
+    margin-bottom: .8rem;
+    color: var(--Morado);
+}
+
+.navegacion li a:hover{
+    color: #a988a7;
+}
+
+.informacion-contacto li{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.informacion-contacto p{
+    color: var(--Morado);
+}
+
+.fa-solid{
+    font-size: 1.2rem;
+    max-height: 1rem;
+    max-width: 1rem;
+}
+
+.copy{
+    text-align: center;
+    font-size: .9rem;
+    line-height: 1.4rem;
+    color: var(--Blanco);
+    background-color: var(--Morado);
+    padding: .5rem;
+}
+
+@media (min-width: 700px){
+    .contenedor{
+        flex-direction: row;
+        column-gap: 100px;
+    }
+
+}

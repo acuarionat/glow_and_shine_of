@@ -1,0 +1,8 @@
+#map {
+    height: 100%;
+    min-height: 200px; 
+    width: 100%;  
+    border: 2px solid #BE6C97; 
+    border-radius: 8px; 
+    margin-bottom: 20px;
+}
