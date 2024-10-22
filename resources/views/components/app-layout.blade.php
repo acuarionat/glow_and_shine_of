@@ -13,6 +13,7 @@
 </head>
 <body>
   <x-Header/>
+ 
   {{$slot}}
 
   <x-Footer/>

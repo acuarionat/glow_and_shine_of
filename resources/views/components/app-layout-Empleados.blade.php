@@ -13,7 +13,6 @@
 </head>
 <body>
   <x-HeaderEmpleados/>
-    
     {{$slot}}
 
   <x-Footer/>

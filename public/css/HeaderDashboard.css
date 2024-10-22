@@ -12,7 +12,21 @@ a {
 a:hover {
     color: #764C73;
 }
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%; 
+    z-index: 1000; 
+    left: 0; 
+    padding: 10px 20px;
+    background-color: #BE6C97;
+    padding: 0 2rem;
+    color: #fff;
+}
 
+.sticky + .content {
+    padding-top: 60px; 
+}
 header {
     background-color: #BE6C97;
     position: relative;
@@ -23,11 +37,11 @@ header {
 .navbar {
     width: 100%;
     height: 60px;
-    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
 }
 
 .navbar .logo a {
