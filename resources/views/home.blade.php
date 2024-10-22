@@ -4,7 +4,12 @@
     <section class="container_general">
         <x-Aldahir.Banner />
 
-        <x-Aldahir.ScrollContainer />
+        <div class="container_section_general">
+            <x-Aldahir.TSubtitle>
+                <span>★</span> CATEGORIAS <span>★</span>
+            </x-Aldahir.TSubtitle>
+            <x-Aldahir.ScrollContainer/>           
+        </div>
 
         <div class="container_section_general">
             <x-Aldahir.TSubtitle>

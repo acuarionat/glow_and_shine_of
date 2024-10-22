@@ -31,7 +31,9 @@
                         <img src="{{ $producto->direccion_imagen }}" alt="{{ $producto->nombre }}">
                     </div>
 
-                    <h3 class="product_brand">{{ $producto->nombre }}</h3>
+                    <h3 class="product_brand">GARNIER SKIN ACTIVE</h3>
+
+                    <h2 class="product_name">{{ $producto->nombre }}</h2>
 
                     <div class="product_price">
                         <span class="current_price">Bs.{{ $producto->precio }}</span>
