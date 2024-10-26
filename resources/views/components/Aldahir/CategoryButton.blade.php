@@ -21,8 +21,6 @@
     <div class="container_button_round">
         <a href="{{ $url ?? '/catalogo'}}">
             <img src="{{ $image ?? '/images/categoria.png' }}" alt="">
-
-            {{-- <img src="https://i.pinimg.com/736x/e1/a7/b1/e1a7b1e54d7ab4527d9f52f70b14b753.jpg" alt=""> --}}
             <h1>{{$slot}}</h1>
         </a>
     </div>

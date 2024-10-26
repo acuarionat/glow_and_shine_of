@@ -5,7 +5,7 @@
     <form class="formulario_inicio_sesion" action="{{route('account.authenticate')}}" method="POST">
         @csrf
         
-            <input type="email" id="correo" name="email" placeholder="Correo electrónico" required value="{{ old('email') }}"> 
+            <input type="email" id="correo" name="email" value="{{ old('email') }}" placeholder="Correo electrónico" required > 
             @error('email')
             <p class="invalid-feedback">{{$message}}</p>
             @enderror

@@ -11,9 +11,15 @@ use App\Http\Controllers\perfilAdministradorController;
 use App\Http\Controllers\perfilEmpleadoController;
 use App\Http\Controllers\perfilUsuarioController;
 use App\Http\Controllers\editarUsuarioController;
+use App\Http\Controllers\ComponentsController;
 
 
-Route::get('/', [HomeController::class, 'principal']);
+
+Route::get('/', [HomeController::class, 'masVendidos', 'mostrarRecienLlegados']);
+
+Route::get('/cardm', [ComponentsController::class, 'CardMostSold']);
+Route::get('/cardn', [ComponentsController::class, 'CardNewArrivals']);
+
 Route::view('/contactanos', 'contactanos');
 Route::get('/Skincare', [catalogoController::class, 'mostrarCatalogoSkinCare']);
 Route::get('/Maquillaje', [catalogoController::class, 'mostrarCatalogoMaquillaje']);

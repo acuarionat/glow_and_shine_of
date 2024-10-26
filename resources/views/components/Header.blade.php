@@ -85,28 +85,7 @@
                 'fa-solid fa-bars'
         }
 
-        window.onscroll = function() {
-    makeNavbarSticky();
-};
-
-window.onscroll = function() { makeNavbarsSticky() };
-
-var navbars = document.querySelectorAll('.navbar'); 
-var stickyPositions = [];
-
-navbars.forEach(function(navbar) {
-    stickyPositions.push(navbar.offsetTop);
-});
-
-function makeNavbarsSticky() {
-    navbars.forEach(function(navbar, index) {
-        if (window.pageYOffset >= stickyPositions[index]) {
-            navbar.classList.add("sticky");
-        } else {
-            navbar.classList.remove("sticky");
-        }
-    });
-}
+   
 
     </script>
     

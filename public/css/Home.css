@@ -1,22 +1,25 @@
 .container_general {
+
     max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    row-gap: 20px;
 }
 
 .container_section_general {
-    /*background-color: black;*/
+    
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-top: 50px;
+    padding-top: 35px;
     padding-bottom: 50px;
-    
 }
+
+
 
 
 

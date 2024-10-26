@@ -69,25 +69,7 @@
                 'fa-solid fa-xmark' :
                 'fa-solid fa-bars'
         }
-        window.onscroll = function() { makeNavbarsSticky() };
 
-var navbars = document.querySelectorAll('.navbar'); // Selecciona todas las barras de navegación
-var stickyPositions = [];
-
-// Obtiene la posición de cada barra de navegación
-navbars.forEach(function(navbar) {
-    stickyPositions.push(navbar.offsetTop);
-});
-
-function makeNavbarsSticky() {
-    navbars.forEach(function(navbar, index) {
-        if (window.pageYOffset >= stickyPositions[index]) {
-            navbar.classList.add("sticky");
-        } else {
-            navbar.classList.remove("sticky");
-        }
-    });
-}
     </script>
 
 </body>

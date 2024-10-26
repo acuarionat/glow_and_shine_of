@@ -4,20 +4,20 @@
     <section class="container_general">
         <x-Aldahir.Banner />
 
-        <x-Aldahir.ScrollContainer />
+        <div class="container_section_general">
+            <x-Aldahir.TSubtitle>
+                <span>★</span> CATEGORIAS <span>★</span>
+            </x-Aldahir.TSubtitle>
+            <x-Aldahir.ScrollContainer/>           
+        </div>
 
         <div class="container_section_general">
             <x-Aldahir.TSubtitle>
                 <span>★</span> MAS VENDIDOS <span>★</span>
             </x-Aldahir.TSubtitle>
 
-            <x-Aldahir.ScrollSection>
-                @for ($i = 0; $i < 5; $i++)
-                    <x-Aldahir.CardSection>
-                        Section {{ $i + 1 }}
-                    </x-Aldahir.CardSection>
-                @endfor
-            </x-Aldahir.ScrollSection>
+            <x-Aldahir.CardMostSold :productosMasVendidos='$productosMasVendidos' />
+
         </div>
 
         <div class="container_section_general">
@@ -25,15 +25,12 @@
                 <span>★</span> RECIEN LLEGADO <span>★</span>
             </x-Aldahir.TSubtitle>
 
-            <x-Aldahir.ScrollSection>
-                @for ($i = 0; $i < 5; $i++)
-                    <x-Aldahir.CardSection>
-                        Section {{ $i + 1 }}
-                    </x-Aldahir.CardSection>
-                @endfor
-            </x-Aldahir.ScrollSection>
-        </div>
+            <x-Aldahir.CardNewArrivals :recienLlegados='$recienLlegados'/>
 
+        </div>
+        <x-Aldahir.TSubtitle>
+            <span>★</span> CONSEJO DEL DÍA <span>★</span>
+        </x-Aldahir.TSubtitle>
         <img src="/images/image.png" alt="">
 
         <div class="container_section_general">
@@ -41,7 +38,7 @@
                 <span>★</span> MARCAS <span>★</span>
             </x-Aldahir.TSubtitle>
 
-            <x-Aldahir.ScrollBrand/>
+            <x-Aldahir.ScrollBrand />
         </div>
 
         <div class="container_section_general">
@@ -49,7 +46,7 @@
                 <span>★</span> RESEÑAS <span>★</span>
             </x-Aldahir.TSubtitle>
 
-            <x-Aldahir.ScrollReview/>
+            <x-Aldahir.ScrollReview />
         </div>
 
 
