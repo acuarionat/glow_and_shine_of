@@ -50,8 +50,8 @@ class LoginController extends Controller
     public function processRegistration(){
         $validator = Validator::make(request()->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/|unique:users', // solo gmail y único
-            'password' => 'required|string|min:8|confirmed', // mínimo 8 caracteres y debe ser confirmado
+            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/|unique:users', 
+            'password' => 'required|string|min:8|confirmed', 
         ], [
             'email.regex' => 'El correo electrónico debe ser una dirección Gmail válida.',
             'email.unique' => 'El correo electrónico ya está en uso.',
