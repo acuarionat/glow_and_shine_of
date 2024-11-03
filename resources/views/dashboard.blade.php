@@ -7,7 +7,6 @@
         <x-Claudia.informacionPerfilU :user="$user"/>
         <x-Claudia.editarPerfil :user="$user"/>
         <x-Claudia.listaDeseos/>
-        <x-Aldahir.CardSection/>
         
     </section>
 </x-app-layout-Usuarios>

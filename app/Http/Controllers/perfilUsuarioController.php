@@ -11,11 +11,11 @@ class perfilUsuarioController extends Controller
 {
     public function recuperar_info($id)
     {
-        if (Auth::user()->role !== 'cliente') {
+        if (Auth::user()->rol->nombre_rol !== 'cliente') {
             return redirect()->route('account.dashboard')->with('error', 'Acceso denegado.');
         }
 
-        $user = DB::table('users')->where('id', $id)->first();
+        $user = DB::table('usuarios')->where('id', $id)->first();
 
         if (!$user) {
             return redirect()->route('account.dashboard')->with('error', 'Usuario no encontrado');

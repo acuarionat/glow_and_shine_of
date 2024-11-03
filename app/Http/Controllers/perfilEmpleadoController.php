@@ -11,11 +11,11 @@ class perfilEmpleadoController extends Controller
 {
     public function recuperar_info_empleado($id)
     {
-        if (Auth::user()->role !== 'empleado') {
+        if (Auth::user()->rol->nombre_rol !== 'empleado') {
             return redirect()->route('account.dashboard')->with('error', 'Acceso denegado.');
         }
 
-        $user = DB::table('users')->where('id', $id)->first();
+        $user = DB::table('usuarios')->where('id', $id)->first();
 
         if (!$user) {
             return redirect()->route('account.dashboard')->with('error', 'Usuario no encontrado');

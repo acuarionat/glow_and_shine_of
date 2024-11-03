@@ -64,8 +64,8 @@
             <i class="fa-solid fa-user"></i> <!-- Ícono de perfil -->
         </a>
     @else
-        <a href="account/login" class="action_btn">Iniciar Sesion</a>
-        <a href="account/register" class="action_btn">Registrarse</a>
+        <a href="../account/login" class="action_btn">Iniciar Sesion</a>
+        <a href="../account/register" class="action_btn">Registrarse</a>
     @endif
 </div>
         </div>

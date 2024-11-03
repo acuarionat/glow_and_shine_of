@@ -10,18 +10,18 @@ class perfilAdministradorController extends Controller
 {
     public function recuperar_info_administrador($id) // Recibir el ID del usuario
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->rol->nombre_rol !== 'admin') {
             return redirect()->route('account.dashboard')->with('error', 'Acceso denegado.');
         }
 
         // Recuperar el usuario específico usando DB::table()
-        $user = DB::table('users')->where('id', $id)->first();
+        $user = DB::table('usuarios')->where('id', $id)->first();
 
         // Verificar si el usuario existe
         if (!$user) {
             return redirect()->route('account.dashboard')->with('error', 'Usuario no encontrado');
         }
-
+        
         $saludo = 'Perfil del Administrador';
         $mensajeB = 'Nos complace tenerte en nuestra comunidad como administrador. 
         Este es tu espacio personal, donde podrás gestionar la información de los usuarios,

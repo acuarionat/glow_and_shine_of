@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator; // Corrección del namespace
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -16,23 +15,35 @@ class LoginController extends Controller
 
     public function authenticate() {
         $validator = Validator::make(request()->all(), [
-            'email' => 'required|email',      
-            'password' => 'required'          
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
     
         if ($validator->passes()) {
             if (Auth::attempt(['email' => request()->email, 'password' => request()->password])) {
-                $user = request()->user();
-    
-                if ($user->role === 'admin') {
-                    return redirect()->intended(route('account.dashboardAdmin', ['id' => $user->id]))->with('success','Inicio de Sesion realizada con exito');
-                } elseif ($user->role === 'empleado') {
-                    return redirect()->intended(route('account.dashboardEmpleado', ['id' => $user->id]))->with('success','Inicio de Sesion realizada con exito');
+                $user = Auth::user();
+                
+                $user = Usuario::with('rol')->find($user->id);
+                if ($user && $user->rol) {
+                    switch ($user->rol->nombre_rol) {
+                        case 'admin':
+                            return redirect()->intended(route('account.dashboardAdmin', ['id' => $user->id]))
+                                ->with('success', 'Inicio de Sesión realizado con éxito');
+                        case 'empleado':
+                            return redirect()->intended(route('account.dashboardEmpleado', ['id' => $user->id]))
+                                ->with('success', 'Inicio de Sesión realizado con éxito');
+                        case 'cliente':
+                            return redirect()->intended(route('account.dashboard', ['id' => $user->id]))
+                                ->with('success', 'Inicio de Sesión realizado con éxito');
+                        default:
+                            return redirect()->intended(route('account.dashboard', ['id' => $user->id]))
+                                ->with('success', 'Inicio de Sesión realizado con éxito');
+                    }
+                } else {
+                    return redirect()->route('account.login')->with('error', 'Usuario no autenticado.');
                 }
-    
-                return redirect()->intended(route('account.dashboard',['id' => $user->id]))->with('success','Inicio de Sesion realizada con exito');
             } else {
-                return redirect()->route('account.login')->with('error', 'Email o password incorrectos');
+                return redirect()->route('account.login')->with('error', 'Email o contraseña incorrectos');
             }
         } else {
             return redirect()->route('account.login')
@@ -41,16 +52,16 @@ class LoginController extends Controller
         }
     }
     
+    
 
     public function register(){
-      
         return view('register');
     }
 
     public function processRegistration(){
         $validator = Validator::make(request()->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/|unique:users', 
+            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/|unique:usuarios', 
             'password' => 'required|string|min:8|confirmed', 
         ], [
             'email.regex' => 'El correo electrónico debe ser una dirección Gmail válida.',
@@ -58,19 +69,20 @@ class LoginController extends Controller
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'password.confirmed' => 'La confirmación de la contraseña no coincide.',
         ]);
-         if($validator->passes()){
-                    
-               $user = new User();
-               $user->name = request()->name;
-               $user->email = request()->email;
-               $user->password = Hash::make(request()->password);
-               $user->role = 'cliente';
-               $user->save();
-               return redirect()->route('account.login')->with('success','Tu registro se realizo con exito');
-        }else{
+
+        if ($validator->passes()) {
+            $user = new Usuario();
+            $user->name = request()->name;
+            $user->email = request()->email;
+            $user->password = Hash::make(request()->password);
+            $user->id_roles = 1;
+            $user->save();
+
+            return redirect()->route('account.login')->with('success', 'Tu registro se realizó con éxito');
+        } else {
             return redirect()->route('account.register')
-            ->withInput()
-            ->withErrors($validator);
+                ->withInput()
+                ->withErrors($validator);
         }
     }
 
