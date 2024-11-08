@@ -36,8 +36,9 @@
                 @if (Auth::check())
                     @php
                         $user = Auth::user(); 
-                        $userRole = $user->role;
                         $userId = $user->id; 
+                        $userRole = $user->rol->nombre_rol;
+                       
                     @endphp
                     <a href="{{ $userRole == 'cliente' ? url('account/dashboard/' . $userId) : ($userRole == 'empleado' ? url('account/dashboardEmpleado/' . $userId) : url('account/dashboardAdmin/' . $userId)) }}" class="action_btn">
                         <i class="fa-solid fa-user"></i> 

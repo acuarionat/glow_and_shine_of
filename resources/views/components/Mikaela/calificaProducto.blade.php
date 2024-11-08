@@ -18,9 +18,10 @@
             <label for="star3">★</label>
             <input type="radio" id="star4" name="rating" value="4">
             <label for="star4">★</label>
-            <input type="radio" id="star5" name="rating" value="1">
+            <input type="radio" id="star5" name="rating" value="5">
             <label for="star5">★</label>
         </div>
+        
         <h3 class="texto_dejanos">Déjanos tu comentario</h3>
         <form>
             <textarea placeholder="Escribe tu comentario aquí..."></textarea>

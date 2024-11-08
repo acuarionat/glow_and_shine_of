@@ -17,12 +17,12 @@ class ComponentsController extends Controller
     {
         $productosMasVendidos = DB::table('inventario_venta as iv')
             ->join('producto as p', 'iv.id_producto', '=', 'p.id_producto')
-            ->join('precio_mercado as pm', 'p.id_precio_mercado', '=', 'pm.id_precio_mercado') // Asegúrate de que esta tabla también existe.
+            ->join('precio_mercado as pm', 'p.id_precio_mercado', '=', 'pm.id_precio_mercado') 
             ->join('imagen_producto as ip', 'p.id_imagen_producto', '=', 'ip.id_imagen_producto')
-            ->select('p.id_producto', 'p.nombre', 'ip.direccion_imagen', 'pm.precio', DB::raw('SUM(iv.cantidad) as total_vendido')) // Cambia 'ip.ruta_imagen' según el nombre del campo que almacena la imagen
-            ->groupBy('p.id_producto', 'p.nombre', 'ip.direccion_imagen', 'pm.precio') // Asegúrate de agrupar correctamente
+            ->select('p.id_producto', 'p.nombre', 'ip.direccion_imagen', 'pm.precio', DB::raw('SUM(iv.cantidad) as total_vendido')) 
+            ->groupBy('p.id_producto', 'p.nombre', 'ip.direccion_imagen', 'pm.precio') 
             ->orderByDesc('total_vendido')
-            ->take(5) // Cambiamos limit(5) por take(5) para que sea compatible con Laravel.
+            ->take(5) 
             ->get();
 
         return view('components.Aldahir.CardMostSold', compact('productosMasVendidos'));
