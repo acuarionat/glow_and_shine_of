@@ -16,7 +16,18 @@
     justify-items: center;
     flex-direction: column;
 }
+.custom-popup {
+    border: 4px solid var(--Rosado_Principal); 
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    background-color: var(--Blanco); 
+    color: indigo; 
+}
 
+.custom-confirm-button {
+    background-color: var(--Morado); 
+    color: white; 
+}
 .contenedor_informacion_producto{
     margin: 5%;
     align-items: center;

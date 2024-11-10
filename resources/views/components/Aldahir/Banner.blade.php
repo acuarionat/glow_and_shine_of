@@ -6,7 +6,7 @@
     <div class="header_content">
         <h1>Bienvenido a Glow & Shine</h1>
         <p>Tu tienda de confianza.</p>
-        @if (Auth::check())
+    @if (Auth::check())
        
     @else
     <x-Aldahir.Button>

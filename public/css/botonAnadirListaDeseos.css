@@ -1,19 +1,21 @@
-.boton_anadir_lista_deseos{
-    background-color: var(--Morado);
-    color: var(--Blanco);
-    padding: 5%;
-    border-radius: 8px;
-    width: 80%;
-    margin-top: 5%;
-    font-weight: 600;
-    font-size: 3vh;
-    display: flex;
-    text-align: center;
-    justify-content: center;
+.heart {
+    font-size: 2rem;
+    color: #ddd; /* Color gris cuando no está en favoritos */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.boton_anadir_lista_deseos:hover{
-    background-color: var(--Rosado_principal);
+.heart:hover {
+    transform: scale(1.1); /* Hacer que el corazón crezca ligeramente cuando se pasa el mouse por encima */
+}
+
+/* Corazón rojo cuando está en favoritos */
+.heart.liked {
+    color: red;
+}
+
+.heart.liked:hover {
+    transform: scale(1.2); /* Aumentar el tamaño cuando está en favoritos */
 }
 @media (min-width: 769px) {
     .boton_anadir_lista_deseos{

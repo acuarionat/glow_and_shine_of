@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ComponentsControllerClau;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\catalogoController;
 use App\Http\Controllers\perfilAdministradorController;
@@ -57,6 +56,10 @@ Route::group(['prefix' => 'account'], function(){
         Route::get('dashboardEmpleado/{id}', [perfilEmpleadoController::class, 'recuperar_info_empleado'])->name('account.dashboardEmpleado');
     });
 });
+
+
+    Route::post('/favorites/add/{id}', [FavoritoController::class, 'addToFavorites'])->name('favorites.add');
+    Route::delete('/favorites/{productId}', [FavoritoController::class, 'removeFromFavorites'])->name('favorites.remove');
 
 /* SECCION DE USUARIO - CLIENTE */
 

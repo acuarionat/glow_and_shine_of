@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +11,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rol_permiso', function (Blueprint $table) {
-            $table->foreignId('id_roles')->constrained('roles')->onDelete('cascade');
-            $table->foreignId('id_permisos')->constrained('permisos')->onDelete('cascade');
-            $table->primary(['id_roles', 'id_permisos']);
+            $table->id('id_rol_permiso');
+            $table->unsignedBigInteger('id_roles'); 
+            $table->unsignedBigInteger('id_permisos'); 
+
+            // Actualizar la referencia a la columna correcta
+            $table->foreign('id_roles')->references('id_roles')->on('roles')->onDelete('cascade');
+            $table->foreign('id_permisos')->references('id_permisos')->on('permisos')->onDelete('cascade');
         });
     }
 
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('role_permission');
+        Schema::dropIfExists('rol_permiso');
     }
 };

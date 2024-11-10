@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="{{ asset('css/inicioSesion.css') }}">
 <x-app-layout-log-reg>
         <x-Natalia.inicioSesion.cabecera/>
-@if(session('success'))
+        <x-Natalia.inicioSesion.formulario-inicio-sesion/>
+        @if(session('success'))
 <script>
 Swal.fire({
     title: 'Registro exitoso',
@@ -30,7 +31,9 @@ Swal.fire({
     }
 });
 
+
 </script>
 @endif
-        <x-Natalia.inicioSesion.formulario-inicio-sesion/>
+
+
 </x-app-layout-log-reg>
