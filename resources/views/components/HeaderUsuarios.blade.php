@@ -60,7 +60,6 @@
                 <li><a href="contact">Perfil</a></li>
                 
                 <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
-            <!-- <li><a href="#" class="action_btn">Registrarse</a></li> -->
         </div>
     </header>
 

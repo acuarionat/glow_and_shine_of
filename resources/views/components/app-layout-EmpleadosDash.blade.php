@@ -13,10 +13,9 @@
 </head>
 <body>
     
-<x-Claudia.encabezadoDashboard :saludo="$saludo" :user="$user"/>
+<x-Claudia.encabezadoDashEmpleado :saludo="$saludo" :user="$user"/>
     {{$slot}}
 
 </body>
 <x-FooterDash/>
-
 </html>

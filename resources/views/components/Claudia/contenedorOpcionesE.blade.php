@@ -6,6 +6,7 @@
 <div class="contenedor_botones_opciones">
     <x-Claudia.opcionesDashboard titulo="Producto" imagen="images/producto.png" cantidad="42 Registrados"/>
     <x-Claudia.opcionesDashboard titulo="Usuarios" imagen="images/usuario.png" cantidad="15 Registrados"/>
+    <x-Claudia.opcionesDashboard titulo="Clientes" imagen="images/clientes.png" cantidad="10 Registrados"/>
     <x-Claudia.opcionesDashboard titulo="Ventas" imagen="images/ventas.png" cantidad="8 Registrados"/>
 
     

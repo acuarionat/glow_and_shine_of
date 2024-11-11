@@ -14,12 +14,13 @@
         
     
      <div class="cerrar_s">
-            <a href="" class="action_btn">
+            <a href="{{ url('dashboard/editarPerfil/' . $user->id) }}" class="action_btn">
                 <i class="fas fa-user-cog"></i> 
             </a>
             <a href="{{route('account.logout')}}" class="action_btn">
                 <i class="fas fa-power-off"></i>
             </a>
+            
     </div>
 </div>
 
@@ -30,7 +31,7 @@
 
         </div>
         <div class="contenedor-opcioness">
-            <x-Claudia.opcionesNavLateral/>
+            <x-Claudia.opcionesNavEmpleadosL :user="$user"/>
 
         </div>
     

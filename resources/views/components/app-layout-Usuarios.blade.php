@@ -15,7 +15,7 @@
   <x-HeaderUsuarios/>
     {{$slot}}
 
-  <x-Footer/>
+    <x-FooterDash/>
 
 </body>
 </html>

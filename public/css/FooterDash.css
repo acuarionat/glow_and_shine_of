@@ -1,0 +1,57 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto; /* Mueve el footer al final */
+}
+
+.titulos-footer {
+    font-weight: 300;
+    display: inline-block;
+    padding-bottom: .6rem;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.titulos-footer:before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    bottom: 0;
+    left: 0%;
+    border-bottom: .2rem solid var(--Morado);
+}
+
+.fa-brands {
+    font-size: 1.3rem;
+}
+
+.navegacion li a:hover {
+    color: #a988a7;
+}
+
+.fa-solid {
+    font-size: 1.2rem;
+    max-height: 1rem;
+    max-width: 1rem;
+}
+
+.copy {
+    text-align: center;
+    font-size: .9rem;
+    line-height: 1.4rem;
+    color: var(--Blanco);
+    background-color: #BE6C97;
+    padding: .5rem;
+    margin-top: 70px;
+}
+
+@media (min-width: 700px) {
+    .contenedor {
+        flex-direction: row;
+        column-gap: 100px;
+    }
+    .sobre-mi {
+        width: 40%;
+    } 
+}
