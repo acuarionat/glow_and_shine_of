@@ -17,16 +17,21 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .section img {
-    max-width: 40%; /* El tamaño de la imagen ocupará el 40% del contenedor */
+    max-width: 40%; 
     height: auto;
     border-radius: 8px;
 }
 .section-content {
-    max-width: 55%; /* El texto ocupará el 55% del contenedor */
+    max-width: 55%; 
 }
 
-h2 {
-    color: #d63384;
+.section-content h2 {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--Morado);
+    border-bottom: 2px solid var(--Rosado_principal);
+    border-top: solid 2px var(--Rosado_principal);
+    margin-bottom: 20px;
 }
 p {
     color: #6c757d;

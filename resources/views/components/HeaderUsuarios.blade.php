@@ -27,15 +27,25 @@
         <div class="navbar">
             <div class="logo"><a href="/">G&S System</a></div>
             <ul class="links">
-                <li><a href="about">Productos</a></li>
-                <li><a href="category">Favoritos</a></li>
-                <li><a href="category">Promociones</a></li>
-                <li><a href="contact">Contactanos</a></li>
-                <li><a href="contact">Perfil</a></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/about">Nosotros</a></li>
+                <li><a href="/Favoritos">Favoritos</a></li>
+                <li><a href="/contactanos">Contactanos</a></li>
             </ul>
-            <div>
+          
+            <div class="botones_sesion">
+                @if (Auth::check())
+                @php
+                    $user = Auth::user(); 
+                    $userId = $user->id; 
+                    $userRole = $user->rol->nombre_rol;
+                   
+                @endphp
+                <a href="{{ $userRole == 'cliente' ? url('account/dashboard/' . $userId) : ($userRole == 'empleado' ? url('account/dashboardEmpleado/' . $userId) : url('account/dashboardAdmin/' . $userId)) }}" class="action_btn">
+                    <i class="fa-solid fa-user"></i> 
+                </a>
+                @endif
                 <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
-                <!-- <a href="#" class="action_btn">Registrarse</a> -->
             </div>
             <div class="toggle_btn">
                 <i class="fa-solid fa-bars"></i>

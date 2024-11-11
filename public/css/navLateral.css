@@ -1,0 +1,83 @@
+/* Contenedor principal del nav lateral */
+.contenedor_nav_lateral {
+    width: 630px;
+    height: 102vh;
+    background-color: #BE6C97;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alineación desde la izquierda */
+     /* Ocupa el espacio restante del contenedor */
+    overflow-y: auto; /* Scroll interno para el menú */
+    overflow-x: hidden; 
+    
+}
+
+/* Estilo para ocultar el scroll */
+.contenedor_nav_lateral::-webkit-scrollbar {
+    width: 0; /* Oculta el ancho del scroll */
+}
+
+.contenedor_nav_lateral {
+    scrollbar-width: none; /* Oculta el scroll en Firefox */
+}
+
+
+
+/* Estilo del logo */
+.logo_empresa {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    justify-content: center; /* Centra el contenido dentro del contenedor */
+    align-items: center;/* Centra el logo dentro del contenedor */
+    padding: 20px 0; /* Espacio alrededor del logo */
+    border-bottom: 2px solid #fff;
+}
+
+.logo_empresa img {
+    margin-top: 20px;
+    width: 150px;
+    height: 150px;
+    
+}
+.nombre_empresa{
+    color: #fff; /* Letras blancas */
+    margin: 0px; /* Espacio entre el logo y el texto */
+    font-size: 1.5rem; /* Tamaño de letra ajustable */
+}
+
+/* Estilo para el contenedor de las opciones */
+.contenedor-opcioness {
+    width: 100%;
+    
+    box-sizing: border-box;
+}
+
+/* Estilo para las opciones (puedes agregar más estilos según tu necesidad) */
+.contenedor-opcioness a {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.contenedor-opcioness a:hover {
+    background-color: #ddd;
+}
+
+
+.contenedor_nav_lateral {
+    width: 250px;
+    height: 100vh;
+    background-color: #BE6C97;
+    transform: translateX(-100%); /* Ocultar el menú inicialmente */
+    transition: transform 0.3s ease;
+}
+
+.contenedor_nav_lateral.visible {
+    transform: translateX(0); /* Mostrar el menú cuando tiene la clase visible */
+}

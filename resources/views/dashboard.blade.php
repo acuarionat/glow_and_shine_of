@@ -5,8 +5,6 @@
         <x-Claudia.encabezadoPerfil :saludo="$saludo" :user="$user"/>
         <x-Claudia.mensajeBienvenida :mensajeB="$mensajeB" :user="$user"/>
         <x-Claudia.informacionPerfilU :user="$user"/>
-        <x-Claudia.editarPerfil :user="$user"/>
-        <x-Claudia.listaDeseos/>
-        
+        <x-Claudia.editarPerfil :user="$user"/>        
     </section>
 </x-app-layout-Usuarios>

@@ -25,6 +25,7 @@ Route::get('/Maquillaje', [catalogoController::class, 'mostrarCatalogoMaquillaje
 Route::get('/Joyeria', [catalogoController::class, 'mostrarCatalogoJoyeria']);
 Route::get('/CuidadoCapilar', [catalogoController::class, 'mostrarCatalogoCuidadoCapilar']);
 Route::get('/Fragancia', [catalogoController::class, 'mostrarCatalogoFragancia']);
+Route::get('/Favoritos', [catalogoController::class, 'mostrarFavoritos']);
 
 Route::get('/producto/{id}', [catalogoController::class, 'mostrarDetalleProducto']);
 
@@ -43,7 +44,6 @@ Route::group(['prefix' => 'account'], function(){
         Route::post('process-register', [LoginController::class,'processRegistration'])->name('account.processRegistration');
         Route::post('authenticate', [LoginController::class,'authenticate'])->name('account.authenticate');
 
-
     });
     Route::group(['middleware' => 'auth'], function(){
 
@@ -60,10 +60,14 @@ Route::group(['prefix' => 'account'], function(){
 
     Route::post('/favorites/add/{id}', [FavoritoController::class, 'addToFavorites'])->name('favorites.add');
     Route::delete('/favorites/{productId}', [FavoritoController::class, 'removeFromFavorites'])->name('favorites.remove');
+    
 
 /* SECCION DE USUARIO - CLIENTE */
 
 Route::get('dashboard/editarPerfil/{id}',[editarUsuarioController::class, 'editar_perfil_usuario']); 
+
+Route::post('/registro-admin', [LoginController::class, 'processRegistrationAdmin'])->name('account.processRegistrationAdmin');
+Route::get('/registerU', [LoginController::class,'registroU'])->name('account.registerU');
 
 /* SECCION DE EMPLEADO */
 

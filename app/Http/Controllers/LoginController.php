@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use App\Models\Persona;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,10 @@ class LoginController extends Controller
 {
     public function index(){
         return view('login');
+    }
+    public function registroU()
+    {
+        return view('RegistrarUsuario'); 
     }
 
     public function authenticate() {
@@ -77,6 +82,49 @@ class LoginController extends Controller
             $user->password = Hash::make(request()->password);
             $user->id_roles = 1;
             $user->save();
+
+            $persona = new Persona();
+            $persona->id_usuario = $user->id; 
+            $persona->nombres = $user->name;
+            $persona->correo_electronico = $user->email;
+            $persona->save();
+
+            return redirect()->route('account.login')->with('success', 'Tu registro se realizó con éxito');
+        } else {
+            return redirect()->route('account.register')
+                ->withInput()
+                ->withErrors($validator);
+        }
+    }
+
+    public function processRegistrationAdmin(){
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/|unique:usuarios',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|in:1,2' // Validación del campo de rol
+        ], [
+            'email.regex' => 'El correo electrónico debe ser una dirección Gmail válida.',
+            'email.unique' => 'El correo electrónico ya está en uso.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+            'role.required' => 'Debe seleccionar un rol válido.',
+            'role.in' => 'El rol seleccionado no es válido.',
+        ]);
+    
+        if ($validator->passes()) {
+            $user = new Usuario();
+            $user->name = request()->name;
+            $user->email = request()->email;
+            $user->password = Hash::make(request()->password);
+            $user->id_roles = request()->role; // Asignación del rol desde el combobox
+            $user->save();
+    
+            $persona = new Persona();
+            $persona->id_usuario = $user->id; 
+            $persona->nombres = $user->name;
+            $persona->correo_electronico = $user->email;
+            $persona->save();
 
             return redirect()->route('account.login')->with('success', 'Tu registro se realizó con éxito');
         } else {

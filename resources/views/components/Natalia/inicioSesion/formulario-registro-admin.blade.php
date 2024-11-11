@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="\css\formularioRegistro.css">
 
 <div class="contenedor_formulario_registro">
-    <form class="formulario_registro" action="{{ route('account.processRegistration') }}" method="POST">
+    <form class="formulario_registro" action="{{ route('account.processRegistrationAdmin') }}" method="POST">
         @csrf
         <div class="contenedor_inputs">
             <input type="name" id="name" name="name" placeholder="Nombre de Usuario" required value="{{ old('name') }}">
@@ -23,10 +23,19 @@
             @error('password_confirmation')
             <p class="invalid-feedback">{{$message}}</p>
             @enderror
-        </div>
 
+         
+        </div>
         <div class="contenedor_botones">
-            <button class="contra" type="button" onclick="generarContrasena()">Sugerir Contraseña</button>
+            <select id="role" name="role" required>
+                <option value="" disabled selected>Seleccionar rol</option>
+                <option value="1">Cliente</option>
+                <option value="2">Empleado</option>
+            </select>
+            @error('role')
+            <p class="invalid-feedback">{{$message}}</p>
+            @enderror
+            <button class="contra" type="button" onclick="generarContrasena()">Generar Contraseña</button>
             <button class="enviar" type="submit">Registrar</button>
         </div>
     </form>
@@ -40,7 +49,7 @@ function generarContrasena() {
 
     if (nombre && email) {
         var parteEmail = email.split("@")[0]; 
-        var randomNum = Math.floor(Math.random() * 1000); 
+        var randomNum = Math.floor(Math.random() * 1000);
 
        
         var contrasenaSugerida = nombre.substring(0, 3) + parteEmail.substring(0, 3) + randomNum;
@@ -49,7 +58,7 @@ function generarContrasena() {
         document.getElementById("clave").value = contrasenaSugerida;
         document.getElementById("password_confirmation").value = contrasenaSugerida;
 
-        
+       
         Swal.fire({
             title: 'Contraseña Sugerida',
             text: 'Tu contraseña sugerida es: ' + contrasenaSugerida,

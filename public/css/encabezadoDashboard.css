@@ -1,0 +1,212 @@
+.encabezado_p {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+   
+}
+
+.saludo {
+    color: #BE6C97;
+    font-size: 24px;
+    font-family: 'Poppins', Regular;
+    margin-left: 20px;
+    text-align: center;
+}
+
+.cerrar_s {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin-right: 25px; 
+    gap: 10px;
+    
+}
+
+.action_btn {
+    background-color: #ffffff;
+    color: #925487;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.action_btn:hover {
+    transform: scale(1.05);
+    background-color: #ffffff; 
+}
+
+.action_btn:active {
+    transform: scale(0.95);
+    background-color: #ffffff; 
+}
+
+
+.toggle_btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;  
+    padding: 5px;     
+    background-color: #fff; 
+    border-radius: 5px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    font-size: 1.5rem; 
+    transition: all 0.3s ease; 
+}
+
+
+.toggle_btn i {
+    font-size: 1.8rem; 
+    color: #764C73;       
+}
+
+
+.toggle_btn:hover {
+    background-color: #f0f0f0;  
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);  
+}
+
+
+
+.contenedor_nav_lateral {
+    width: 630px;
+    height: 100vh;
+    background-color: #BE6C97;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    position: fixed;  
+    
+}
+
+
+.contenedor_nav_lateral::-webkit-scrollbar {
+    width: 0; 
+}
+
+.contenedor_nav_lateral {
+    scrollbar-width: none; 
+}
+
+
+.logo_empresa {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    padding: 20px 0; 
+    border-bottom: 2px solid #fff;
+}
+
+.logo_empresa img {
+    margin-top: 20px;
+    width: 150px;
+    height: 150px;
+    
+}
+.nombre_empresa{
+    color: #fff; 
+    margin: 0px; 
+    font-size: 1.5rem; 
+}
+
+
+.contenedor-opcioness {
+    width: 100%;
+    
+    box-sizing: border-box;
+}
+
+
+.contenedor-opcioness a {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.contenedor-opcioness a:hover {
+    background-color: #ddd;
+}
+
+
+.contenedor_nav_lateral {
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #BE6C97;
+    transform: translateX(-100%); 
+    transition: transform 0.3s ease;
+}
+
+.contenedor_nav_lateral.visible {
+    transform: translateX(0); 
+}
+
+.encabezado_p.push {
+    
+    margin-left: 250px; 
+    width: calc(100% - 250px);
+}
+
+
+.contenedorDashAdmin.push {
+    margin-left: 250px;  
+    transition: margin-left 0.3s ease;  
+}
+
+
+@media (max-width: 768px) {
+    .contenedor_nav_lateral {
+        width: 200px; /* Ajusta el tamaño del menú lateral */
+    }
+}
+
+@media (max-width: 375px) {
+    .contenedor_nav_lateral {
+        width: 180px; /* Reduce más el tamaño para pantallas muy pequeñas */
+    }
+
+    .logo_empresa img {
+        width: 120px; /* Ajusta el tamaño del logo en pantallas pequeñas */
+        height: 120px;
+    }
+
+    .nombre_empresa {
+        font-size: 1.2rem; /* Ajusta el tamaño de la fuente */
+    }
+}
+
+@media (max-width: 768px) {
+    .encabezado_p.push {
+        margin-left: 200px; /* Ajusta el desplazamiento para dispositivos más pequeños */
+        width: calc(100% - 200px);
+    }
+
+    .contenedorDashAdmin.push {
+        margin-left: 200px; /* Asegúrate de que el contenido también se mueva */
+    }
+}
+
+
+
+
+
+

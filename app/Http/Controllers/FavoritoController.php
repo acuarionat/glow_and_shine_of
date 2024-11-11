@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario; 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FavoritoController extends Controller
 {
@@ -34,4 +35,8 @@ public function removeFromFavorites($productId)
 
     return redirect()->back()->with('success', 'Producto eliminado de tus favoritos.');
 }
+
+
+
 }
+

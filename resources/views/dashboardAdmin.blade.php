@@ -1,13 +1,8 @@
 <link rel="stylesheet" href="{{ asset('css/perfilAdministrador.css') }}">
 
-<x-app-layout-Administrador>
-    <section class="container_perfil_administrador">
-        <x-Claudia.encabezadoPerfil :saludo="$saludo" :user="$user"/>
-        <x-Claudia.mensajeBienvenida :mensajeB="$mensajeB" :user="$user"/>
-        <x-Claudia.informacionPerfilU :user="$user"/>
-        <x-Claudia.editarPerfil :user="$user"/>
-        <x-Claudia.contenedorOpcionesA/>
-        
-        
+
+<x-app-layout-AdministradorDash :saludo="$saludo" :user="$user">
+    <section class="contenedorDashAdmin">
+         <x-Claudia.pageContent :saludo="$saludo" :user="$user" :mensajeB="$mensajeB" :cantidad="$cantidad" /> 
     </section>
-</x-app-layout-Administrador>
+</x-app-layout-AdministradorDash >

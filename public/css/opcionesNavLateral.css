@@ -1,0 +1,122 @@
+/* Contenedor principal del menú lateral */
+.contenedor_opciones_navLateral {
+    width: 250px;
+    background-color: #BE6C97;
+    font-family: 'Poppins', sans-serif;
+    color: #FFFFFF;
+    padding-top: 10px;
+
+    
+    
+}
+
+/* Estilo base para la lista del menú */
+.contenedor_opciones_navLateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo para cada elemento de la lista principal */
+.contenedor_opciones_navLateral ul li {
+    position: relative;
+}
+
+/* Ocultar el checkbox que controla el submenú */
+.contenedor_opciones_navLateral ul li input[type="checkbox"] {
+    display: none;
+}
+
+/* Estilo de los enlaces principales del menú */
+.contenedor_opciones_navLateral ul li > label {
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* Cambiar el color de fondo en hover y cuando esté activo */
+.contenedor_opciones_navLateral ul li > label:hover,
+.contenedor_opciones_navLateral ul li input[type="checkbox"]:checked + label {
+    background-color: #A65385;
+}
+
+/* Estilo para el icono principal (por ejemplo, productos, ventas) */
+.contenedor_opciones_navLateral ul li > label i {
+    margin-right: 10px;
+}
+
+/* Estilo para la flecha hacia la derecha */
+.arrow-icon {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+/* Rotar la flecha cuando el submenú esté abierto */
+.contenedor_opciones_navLateral ul li input[type="checkbox"]:checked + label .arrow-icon {
+    transform: rotate(90deg);
+}
+
+/* Estilo para el submenú oculto inicialmente */
+.contenedor_opciones_navLateral ul li .submenu {
+    display: none;
+    list-style: none;
+    padding-left: 20px;
+    background-color: #BE6C97;
+}
+
+/* Mostrar el submenú cuando el checkbox esté marcado */
+.contenedor_opciones_navLateral ul li input[type="checkbox"]:checked ~ .submenu {
+    display: block;
+}
+
+/* Estilo base para las opciones del submenú */
+.contenedor_opciones_navLateral ul li .submenu li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    transition: background 0.3s;
+}
+
+/* Estilo del icono en las opciones del submenú */
+.contenedor_opciones_navLateral ul li .submenu li a i {
+    margin-right: 8px;
+}
+
+/* Efecto hover en las opciones del submenú */
+.contenedor_opciones_navLateral ul li .submenu li a:hover {
+    background-color: #A65385;
+}
+
+/* Estilo de la opción activa en el submenú */
+.contenedor_opciones_navLateral ul li .submenu li a.active,
+.contenedor_opciones_navLateral ul li > label.active {
+    background-color: #A65385;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+/* Opciones del submenú con iconos */
+.contenedor_opciones_navLateral ul li .submenu li a i {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* Animación para los submenús */
+.submenu {
+    transition: all 0.3s ease;
+}
+
+/* Estilo para cuando el submenú está visible */
+.contenedor_opciones_navLateral ul li input[type="checkbox"]:checked ~ .submenu {
+    opacity: 1;
+    height: auto;
+    visibility: visible;
+}

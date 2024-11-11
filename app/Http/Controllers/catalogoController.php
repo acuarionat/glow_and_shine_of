@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class catalogoController extends Controller
@@ -129,6 +130,22 @@ class catalogoController extends Controller
     
         return view('producto', ['producto' => $producto]);
     }
-    
+    public function mostrarFavoritos()
+{
+    $favoritos = DB::table('favoritos')
+    ->join('producto', 'favoritos.id_producto', '=', 'producto.id_producto')
+    ->join('precio_mercado', 'producto.id_precio_mercado', '=', 'precio_mercado.id_precio_mercado')
+    ->join('imagen_producto', 'producto.id_imagen_producto', '=', 'imagen_producto.id_imagen_producto')
+    ->where('favoritos.id_usuario', Auth::id())
+    ->select(
+        'producto.id_producto',
+        'producto.nombre as nombre_producto',
+        'precio_mercado.precio as precio_mercado',
+        'imagen_producto.direccion_imagen as direccion_imagen'
+    )
+    ->get();
+    return view('Favoritos', ['favoritos' => $favoritos]);
+
+}
 }
 

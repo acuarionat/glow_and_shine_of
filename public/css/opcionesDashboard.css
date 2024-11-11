@@ -1,55 +1,60 @@
-.contenedor_opciones_administrador{
-    
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    
-    /* width: 200px;
-    height: 200px;
-     */
-     margin: 10px;
+.contenedor_opciones_administrador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
 
 }
 
-.primera_seccion{
-    border-radius: 8px 8px 0 0; 
-    border-style: solid;
-    border-color: #764C73;
-    border-width: 2px 2px 1px 2px; 
+.primera_seccion {
+    width: 200px;
+    height: 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
-    height: 150px; 
-    
+    justify-content: center;
+    border: 2px solid #764C73;
+    border-radius: 8px 8px 0 0;
+    box-sizing: border-box;
 }
 
-.imagen_button{
+.imagen_button {
     width: 70px;
     height: 70px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    margin-top: 20px;
-    
-}
-.titulo{
-    margin-top: 10px;
-    
-    color: #764C73;
-    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
 }
 
-.segunda_seccion{
-    border-radius: 0 0 8px 8px;
-    border-style: solid;
-    border-color: #764C73;
-    border-width: 1px 2px 2px 2px; 
-    padding: 5px;
-    width: 200px; /* Asegurando que la segunda sección tenga el mismo ancho */
-    height: 50px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+.titulo {
+    margin-top: 10px;
+    color: #764C73;
+    margin: 6px;
     
+    text-align: center;
+    text-decoration: none; 
+    font-size: 20px;/* Asegura que los títulos no tengan subrayado */
+}
+
+.segunda_seccion {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border: 2px solid #764C73;
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+    box-sizing: border-box;
+    color: #764C73;
+    text-decoration: none; /* Asegura que no haya subrayado */
+}
+
+/* Quitar el subrayado de todos los enlaces dentro de los componentes */
+.contenedor_opciones_administrador a {
+    text-decoration: none;
+    color: inherit; /* Usa el color de la clase contenedora */
 }

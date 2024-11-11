@@ -1,46 +1,75 @@
-.contenedor_formulario_registro
-{
+.contenedor_formulario_registro {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
     align-items: center;
-    margin: 60px 0px;
-    padding: 0px 30px 0px 30px;
+    margin: 40px 0;
+    padding: 0 30px;
+}
+
+.contenedor_inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px; 
+}
+.formulario_registro
+{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.formulario_registro select
+{
+    padding: 10px 20px;
+    border: 1px solid #BE6C97;
+    border-radius: 31.5px;
+    margin-bottom: 20px;
+    font-weight: 300;
+    width: fit-content;
+    box-sizing: border-box;
 }
 .formulario_registro input[type="password"], 
 .formulario_registro input[type="email"],
-.formulario_registro input[type="name"]
- {
-    padding: 10px;
-    margin: 10px 0px 10px 0px;
+.formulario_registro input[type="name"] {
+    padding: 10px 20px;
+    margin: 10px 0;
     border: 1px solid #BE6C97;
     border-radius: 31.5px;
     font-weight: 300;
-
+    width: 100%;
+    box-sizing: border-box;
 }
-.formulario_registro button {
-    align-self: center;
+
+.contenedor_botones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.formulario_registro .enviar {
     width: fit-content;
-    padding: 10px;
-    margin-top: 30px;
+    padding: 10px 20px;
     background-color: #764C73;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    margin-top: 10px;
 }
-.formulario_registro
-{
-    background-color: transparent;
-    border-radius: 10px;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+.formulario_registro .contra{
+    width: fit-content;
+    color: #764C73;
+    border: none;
+    cursor: pointer;
 }
+
 .invalid-feedback {
     color: fuchsia;
     font-size: 17px;
@@ -48,8 +77,8 @@
 }
 
 @media (max-width: 600px) {
-    .formulario_registro
-    {
+    .contenedor_inputs {
+        grid-template-columns: 1fr;
         width: 90%;
     }
 }

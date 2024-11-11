@@ -1,0 +1,40 @@
+.mensaje_contenedor{
+    background-color: #FEE9FF;
+    width: 100%; 
+    height: 150px; 
+    margin-top: 10px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+    
+}
+.encabezado_B{
+    color: #601A55;
+    font-size: 1.5rem;
+    font-family: 'Poppins', semi-bold;
+    
+    
+}
+.mensaje_B{
+    color: #601A55;
+    font-size: 16px;
+    font-family: 'Poppins', Regular;
+    text-align: justify;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    
+}
+
+@media (max-width: 375px) {
+    .mensaje_contenedor {
+        height: auto;
+        padding: 20px 10px; 
+    }
+
+    .mensaje_B {
+        font-size: 14px; /* Reduce ligeramente el tamaño del texto para mejorar la legibilidad en pantallas pequeñas */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

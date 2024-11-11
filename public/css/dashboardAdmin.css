@@ -1,0 +1,9 @@
+
+.contenedorDashAdmin{
+    width: 90%;
+    min-width: 352px;  
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+}
