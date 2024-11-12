@@ -1,11 +1,11 @@
 .encabezado_p {
     width: 100%;
-    margin-top: 10px;
+    margin: 15px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: margin-left 0.3s ease, width 0.3s ease;
-   
+    border-bottom: 2px solid #BE6C97; 
 }
 
 .saludo {
@@ -132,15 +132,7 @@
 }
 
 
-.contenedor-opcioness a {
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #fff;
-    color: #333;
-    text-decoration: none;
-    border-radius: 5px;
-}
+
 
 .contenedor-opcioness a:hover {
     background-color: #ddd;

@@ -12,7 +12,7 @@
             
             <label onclick="">
                 <i class="fab fa-dashcube fa-fw"></i>
-                Dashboard
+                <a href="{{ url('/account/dashboardAdmin/' . auth()->user()->id) }}" class="active"> Dashboard</a>
             </label>
         </li>
         <li class="menu-item">
@@ -24,9 +24,8 @@
             </label>
             
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Editar Producto</a></li>
+                <li><a href="/registrarProducto" class="active"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
+                <li><a href="/buscarProducto" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
             </ul>
         </li>
         
@@ -64,9 +63,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar Empleado</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Editar Empleado</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar Empleado</a></li>
+                <li><a href="{{ url('registrarEmpleados/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Empleados</a></li>
+                <li><a href="{{ url('listaEmpleados/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Empleados</a></li>
             </ul>
         </li>
 
@@ -92,8 +90,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar nuevo usuario</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
+                <li><a href="{{ url('registerU/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar nuevo usuario</a></li>
+                <li><a href="{{ url('listarUsuarios/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
             </ul>
         </li>
 

@@ -12,6 +12,10 @@ use App\Http\Controllers\perfilUsuarioController;
 use App\Http\Controllers\editarUsuarioController;
 use App\Http\Controllers\ComponentsController;
 use App\Http\Controllers\ResenaController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\registrarProductoController;
+use App\Http\Controllers\buscarProductoController;
+use App\Http\Controllers\moduloEmpleadoController;
 
 Route::get('/', [HomeController::class, 'masVendidos', 'mostrarRecienLlegados']);
 
@@ -66,8 +70,25 @@ Route::group(['prefix' => 'account'], function(){
 Route::get('dashboard/editarPerfil/{id}',[editarUsuarioController::class, 'editar_perfil_usuario']); 
 
 Route::post('/registro-admin', [LoginController::class, 'processRegistrationAdmin'])->name('account.processRegistrationAdmin');
-Route::get('/registerU', [LoginController::class,'registroU'])->name('account.registerU');
-
+Route::get('/registerU/{id}', [LoginController::class,'registroU'])->name('account.registerU');
+Route::get('/listarUsuarios/{id}', [UsuarioController::class, 'listarUsuarios'])->name('usuarios.listar');
+Route::get('/buscarUsuario/{id}', [UsuarioController::class, 'busqueda_usuario'])->name('usuarios.busqueda_usuario');
 Route::post('/resena', [ResenaController::class, 'store'])->name('store');
 
 
+Route::get('/producto/{id}', [buscarProductoController::class, 'mostrarDetalleProductoAdmin']);
+Route::get('/producto/create', [registrarProductoController::class, 'create']);
+Route::get('/registrarProducto', [registrarProductoController::class, 'create'])->name('producto.create');
+Route::post('/registrarProducto', [registrarProductoController::class, 'store'])->name('producto.store');
+Route::get('/buscarProducto', [buscarProductoController::class, 'buscarProducto'])->name('buscarProducto');;
+Route::resource('producto', registrarProductoController::class);
+
+
+
+Route::get('/listaEmpleados/{id}', [moduloEmpleadoController::class, 'detalles_empleados'])->name('empleados.detalles');
+Route::get('empleados/{id}/', [moduloEmpleadoController::class, 'busqueda_empleado'])->name('empleados.busqueda_empleado');
+Route::get('/registrarEmpleados/{id}', [moduloEmpleadoController::class, 'registrar_empleado']);
+Route::get('/verificar-correo', [moduloEmpleadoController::class, 'verificarCorreo'])->name('verificar.correo');
+Route::post('/empleados/registrar', [moduloEmpleadoController::class, 'registrarEmpleado'])->name('empleados.registrar');
+Route::get('/editarPerfil/{id}/{id_empleado}', [moduloEmpleadoController::class, 'editarEmpleado'])->name('empleados.editar');
+Route::put('/empleados/actualizar', [moduloEmpleadoController::class, 'actualizarEmpleado'])->name('empleados.actualizar');

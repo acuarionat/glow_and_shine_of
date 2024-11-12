@@ -7,16 +7,28 @@ use App\Models\Persona;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
     public function index(){
         return view('login');
     }
-    public function registroU()
+   
+    public function registroU($id)
     {
-        return view('RegistrarUsuario'); 
-    }
+            $user = DB::table('usuarios')->where('id', $id)->first();
+    
+            
+            if (!$user) {
+                return redirect('/users')->with('error', 'Usuario no encontrado');
+            }
+            $saludo = 'Perfil del Administrador';
+    
+            return view('RegistrarUsuario' , compact('user','saludo'));
+            
+        }    
+    
 
     public function authenticate() {
         $validator = Validator::make(request()->all(), [

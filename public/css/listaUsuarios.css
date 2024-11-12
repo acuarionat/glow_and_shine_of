@@ -1,0 +1,127 @@
+
+.container_lista_usuarios {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; 
+    border-radius: 8px;
+   margin-top: 10px;
+}
+.contenedor_Tmostrar{
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: space-between; 
+    gap: 10px; 
+
+}
+
+.container_lista_usuarios h1 {
+    font-size: 1.5em;
+    color: #925487; 
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+}
+.editar_cuenta{
+    color: #601A55;
+    font-family: 'Poppins', semi-bold;
+    cursor: pointer;
+    transition: color 0.3s; 
+}
+.contenedor_busqueda {
+    width: 100%;
+    max-width: 400px;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #764C73; 
+    border-radius: 31px;
+    padding-left: 15px;
+    margin-bottom: 21px;
+    box-sizing: border-box;
+    background-color: #FFFFFF; 
+    
+   
+}
+.formulario_busqueda{
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+     
+    justify-content: space-between; 
+
+}
+.contenedor_busqueda i {
+    color: grey;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    
+}
+
+.buscar_empleado {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: grey;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 8px;
+    background: none;
+}
+
+.buscar_usuario::placeholder {
+    color: grey; /* Color del placeholder */
+    opacity: 0.7;
+}
+
+
+.contenedor_tabla_usuario {
+    overflow-x: auto; /* Scroll horizontal en pantallas pequeñas */
+}
+
+.estilo_tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.encabezado_table th {
+    background-color: #925487; 
+    color: #ffffff;
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: "Poppins", sans-serif;
+}
+
+
+.estilo_tabla td {
+    padding: 10px 15px;
+    text-align: center;
+    color: #495057; 
+    font-size: 0.9em;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.estilo_tabla tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}
+
+
+.estilo_tabla tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+
+.text-center {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}

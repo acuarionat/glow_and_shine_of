@@ -8,7 +8,20 @@
     margin: 40px 0;
     padding: 0 30px;
 }
-
+.cotenedor_registrar_usuario
+{
+    display: flex;
+    justify-content: left;
+    width: 100%;
+}
+.cotenedor_registrar_usuario h1 {
+    font-size: 1.5em;
+    color: #925487; 
+    text-align: left;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+}
 .contenedor_inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;

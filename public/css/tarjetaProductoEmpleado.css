@@ -1,0 +1,222 @@
+.contenedor_tarjeta_empleado {
+    width: 95%;
+    height: 50vh;
+    background-color: var(--Blanco);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 0px 4px 6px #0000004d;
+}
+.contenedor_tarjeta_empleado a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+}
+
+
+.contenedor_imagen_tarjeta_empleado {
+    /* width: 25vh; */
+    width: 32%;
+    border-radius: 8px;
+    border-right: 1px solid #0000004d;
+    /* background-color: var(--Blanco); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    /* margin-top: 7%;
+    margin-bottom: 4%; */
+}
+
+.producto_catalogo {
+    width: 98%;
+    margin: 0;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.contenedor_producto_1 {
+    width: 100%;
+    height: 20%;
+    border-bottom: 1px solid #0000004d;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.contenedor_general_producto {
+    width: 68%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitulos_producto {
+    font-weight: 600;
+    font-size: 2.5vh;
+    width: 50%;
+    color: var(--Rosado_principal);
+    margin: 0;
+    padding: 2%;
+    text-align: justify;
+}
+.titulo_producto {
+    font-size: 4vh;
+}
+.info_producto {
+    color: var(--Negro);
+    font-size: 2.5vh;
+    width: 42%;
+    margin: 0;
+    padding: 2%;
+    text-align: justify;
+}
+.contenedor_producto_2 {
+    border-bottom: 1px solid #0000004d;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0px;
+    height: 60%;
+}
+
+.contenedor_producto_3 {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+.boton_actualizar {
+    background-color: var(--Morado);
+    color: var(--Blanco);
+    padding: 3%;
+    border-radius: 8px;
+    width: 80%;
+    font-weight: 600;
+    font-size: 2.5vh;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton_actualizar:hover {
+    background-color: var(--Rosado_principal);
+}
+
+
+@media (min-width: 769px) {
+    .contenedor_tarjeta_empleado {
+        width: 95%;
+        height: 38vh;
+    }
+
+    .contenedor_imagen_tarjeta_empleado {
+        width: 25vh;
+        border-radius: 8px;
+        height: 25vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+    }
+    .contenedor_tarjeta_empleado a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    .producto_catalogo {
+        width: 22vh;
+        margin: 0;
+        height: auto;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .contenedor_producto_2 {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0px;
+    }
+    .contenedor_general_producto {
+        width: 171vh;
+        height: 36vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .subtitulos_producto {
+        font-weight: 600;
+        font-size: 2.5vh;
+        width: 14%;
+        color: var(--Rosado_principal);
+        margin: 0;
+        padding: 1%;
+        text-align: justify;
+    }
+
+    .info_producto {
+        color: var(--Negro);
+        font-size: 2.5vh;
+        width: 14%;
+        margin: 0;
+        padding: 1%;
+        text-align: justify;
+    }
+    .boton_actualizar {
+        padding: 10px;
+        width: 40vh;
+        font-size: 2.5vh;
+    }
+
+    .contenedor_producto_1 {
+        width: 100%;
+        height: 20%;
+    }
+    .contenedor_producto_3 {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .subtitulos_producto {
+        font-size: 3.2vh;
+    }
+    .info_producto {
+        font-size: 3.2vh;
+    }
+
+    .contenedor_producto_3 a {
+        color: var(--Blanco);
+        margin-top: 1%;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+    }
+}

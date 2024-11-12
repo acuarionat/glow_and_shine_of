@@ -1,11 +1,9 @@
-@if($errors->any())
-<div>
-    <ul>
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-  <x-Natalia.inicioSesion.formulario-registro-admin/>
+  <link rel="stylesheet" href="{{ asset('css/perfilAdministrador.css') }}">
 
+
+  <x-app-layout-AdministradorDash :saludo="$saludo" :user="$user">
+      <section class="contenedorDashAdmin">
+        <x-Natalia.inicioSesion.formulario-registro-admin/>
+      </section>
+  </x-app-layout-AdministradorDash >
+  

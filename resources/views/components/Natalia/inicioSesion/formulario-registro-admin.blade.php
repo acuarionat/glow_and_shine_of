@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="\css\formularioRegistro.css">
 
+
+
 <div class="contenedor_formulario_registro">
+    <div class="cotenedor_registrar_usuario">
+        <h1> REGISTRAR NUEVO USUARIO</h1>
+    </div>
     <form class="formulario_registro" action="{{ route('account.processRegistrationAdmin') }}" method="POST">
         @csrf
         <div class="contenedor_inputs">

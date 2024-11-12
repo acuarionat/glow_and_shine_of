@@ -1,0 +1,19 @@
+.contenedor_edit{
+    width: 90%;
+   
+    /* max-width: 525px; */
+    height: 30px;
+    display: flex; 
+    justify-content: end;
+    margin-top: 1rem;
+    
+
+}
+
+.editar_cuenta{
+    color: #601A55;
+    font-size: 1rem;
+    font-family: 'Poppins', semi-bold;
+    cursor: pointer;
+    transition: color 0.3s; 
+}
