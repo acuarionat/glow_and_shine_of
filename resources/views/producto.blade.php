@@ -70,14 +70,13 @@
                 </div>
             </div>
         </div>
-        <x-Aldahir.TSubtitle>
-            <span>★</span> RESEÑA PRODUCTO <span>★</span>
-        </x-Aldahir.TSubtitle>
         <div class="contenedor_total_producto">
-            <x-Mikaela.calificaProducto />
-
+            <x-Mikaela.calificaProducto :producto="$producto"/>
         </div>
-
+        <x-Aldahir.TSubtitle>
+            <span>★</span> RESEÑAS DEL PRODUCTO <span>★</span>
+        </x-Aldahir.TSubtitle>
+        <x-Aldahir.ScrollReview :resenas="$resenas" />
     </x-app-layout>
    
 

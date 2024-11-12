@@ -1,15 +1,18 @@
-<link rel="stylesheet" href="css/CardReviews.css">
+<link rel="stylesheet" href="{{ asset('css/CardReviews.css') }}">
+
+@props(['calificacion', 'comentario', 'fechaResena'])
 
 <div class="container_card">
-    <div class="review_card">
-            <img src="https://production.na01.natura.com/on/demandware.static/-/Sites-natura-ar-storefront-catalog/default/dw1bae5d7f/NATARG-2771_1.jpg"
-                alt="">
-        <div class="review_text">
-            <span class="stars"> ★★★★★</span>
-            <p>
-                El producto que obtuve era tan bueno, pero tan bueno, que cuando me veia al espejo creia que era mi hija
-                o mi hermana menor de 10 años, el producto muy bueno 10 de 10.
-            </p>
-        </div>
+<div class="review_card">
+    <div class="review_text">
+        <span class="stars">
+            @for ($i = 1; $i <= 5; $i++)
+                <span style="color: {{ $i <= $calificacion ? '#FFD700' : '#ccc' }}">★</span>
+            @endfor
+        </span>
+        <p>{{ $comentario }}</p>
+        <small>Fecha: {{ $fechaResena }}</small>
     </div>
+</div>
+
 </div>

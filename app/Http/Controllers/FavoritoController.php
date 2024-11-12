@@ -10,7 +10,7 @@ class FavoritoController extends Controller
 {
    public function addToFavorites($productId)
 {
-    $user = Usuario::with('favorites')->find(Auth::id()); // Usamos Auth::id() para obtener el ID del usuario autenticado
+    $user = Usuario::with('favorites')->find(Auth::id()); 
 
     if (!$user) {
         return redirect()->back()->with('info', 'Debes registrarte para agregar productos a favoritos.');

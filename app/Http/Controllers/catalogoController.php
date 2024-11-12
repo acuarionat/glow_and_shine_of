@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Resena; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -108,7 +109,6 @@ class catalogoController extends Controller
         return view('Fragancia', ['productos' => $productos]);
     }
 
-
     public function mostrarDetalleProducto($id) {
         $producto = DB::table('producto AS p')
             ->join('imagen_producto AS ip', 'p.id_imagen_producto', '=', 'ip.id_imagen_producto')
@@ -128,7 +128,12 @@ class catalogoController extends Controller
             )
             ->first();
     
-        return view('producto', ['producto' => $producto]);
+            $resenas = Resena::where('id_producto', $id)->orderBy('fecha_resena', 'desc')->take(7)->get();
+        
+        return view('producto', [
+            'producto' => $producto,
+            'resenas' => $resenas
+        ]);
     }
     public function mostrarFavoritos()
 {

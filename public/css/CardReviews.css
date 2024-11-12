@@ -1,58 +1,103 @@
 .container_card {
-    flex: 0 0 auto;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     background-color: var(--Morado);
     max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
 }
 
 .review_card {
     background-color: var(--Blanco);
-    border-radius: 8px;
+    border-radius: 12px;
     display: flex;
+    flex-direction: row;
     align-items: center;
     padding: 20px;
     max-width: 600px;
-    overflow: hidden;
-    transition: transform 0.5s ease;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .review_card:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .review_card img {
-    width: 200px;
-    height: auto;
+    width: 120px;
+    height: 120px;
     border-radius: 8px;
+    object-fit: cover;
 }
 
 .review_text {
     padding-left: 20px;
-    
+    flex-grow: 1;
 }
 
 .review_text p {
     font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
 }
 
 .stars {
     color: orange;
-    font-size: 50px;
-    margin-right: 5px;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
 }
 
-@media(max-width: 500px) {
-    .review_text p {
-        font-size: 0.5rem;
-    }
+.review_card .info {
+    font-size: 0.9rem;
+    color: #888;
+    text-align: right;
+}
 
-    .stars {
-        font-size: 30px;
+@media(max-width: 768px) {
+    .review_card {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .review_card img {
         width: 100px;
+        height: 100px;
+    }
+
+    .review_text p {
+        font-size: 0.9rem;
+    }
+
+    .stars {
+        font-size: 1.2rem;
     }
 }
 
+@media(max-width: 500px) {
+    .container_card {
+        padding: 10px;
+    }
+
+    .review_card {
+        padding: 15px;
+    }
+
+    .review_text p {
+        font-size: 0.8rem;
+    }
+
+    .stars {
+        font-size: 1.2rem;
+    }
+
+    .review_card img {
+        width: 80px;
+        height: 80px;
+    }
+}

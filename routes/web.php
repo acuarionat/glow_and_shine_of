@@ -11,8 +11,7 @@ use App\Http\Controllers\perfilEmpleadoController;
 use App\Http\Controllers\perfilUsuarioController;
 use App\Http\Controllers\editarUsuarioController;
 use App\Http\Controllers\ComponentsController;
-
-
+use App\Http\Controllers\ResenaController;
 
 Route::get('/', [HomeController::class, 'masVendidos', 'mostrarRecienLlegados']);
 
@@ -69,10 +68,6 @@ Route::get('dashboard/editarPerfil/{id}',[editarUsuarioController::class, 'edita
 Route::post('/registro-admin', [LoginController::class, 'processRegistrationAdmin'])->name('account.processRegistrationAdmin');
 Route::get('/registerU', [LoginController::class,'registroU'])->name('account.registerU');
 
-/* SECCION DE EMPLEADO */
-
-/* Route::get('/perfilEmpleado/editarPerfil/{id}',[editarUsuarioController::class, 'editar_perfil_usuario']); */
-
-/* SECCION DE ADMINISTRADOR*/
+Route::post('/resena', [ResenaController::class, 'store'])->name('store');
 
 

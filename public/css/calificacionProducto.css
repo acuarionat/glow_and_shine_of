@@ -13,6 +13,8 @@
 .contenedor_estrellas {
     display: flex;
     flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
 }
 .contenedor_estrellas input[type="radio"] {
     display: none;

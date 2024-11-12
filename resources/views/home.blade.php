@@ -41,13 +41,7 @@
             <x-Aldahir.ScrollBrand />
         </div>
 
-        <div class="container_section_general">
-            <x-Aldahir.TSubtitle>
-                <span>★</span> RESEÑAS <span>★</span>
-            </x-Aldahir.TSubtitle>
 
-            <x-Aldahir.ScrollReview />
-        </div>
 
 
     </section>

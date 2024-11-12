@@ -21,14 +21,14 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-link">
-                    <i class="fas fa-heart heart liked"></i> <!-- Corazón lleno -->
+                    <i class="fas fa-heart heart liked"></i> 
                 </button>
             </form>
         @else
             <form action="{{ route('favorites.add', $producto->id_producto) }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-link">
-                    <i class="far fa-heart heart"></i> <!-- Corazón bordeado -->
+                    <i class="far fa-heart heart"></i> 
                 </button>
             </form>
         @endif
@@ -39,7 +39,7 @@
     <script>
         Swal.fire({
             title: 'Información',
-            text: "{{ session('info') }}",  // Cambié las comillas
+            text: "{{ session('info') }}",  
             icon: 'info',
             confirmButtonText: 'Aceptar',
             customClass: {
@@ -54,7 +54,7 @@
     <script>
         Swal.fire({
             title: 'Error',
-            text: "{{ session('error') }}",  // Cambié las comillas
+            text: "{{ session('error') }}",  
             icon: 'error',
             confirmButtonText: 'Aceptar',
             customClass: {
@@ -69,7 +69,7 @@
     <script>
         Swal.fire({
             title: 'Éxito',
-            text: "{{ session('success') }}",  // Cambié las comillas
+            text: "{{ session('success') }}",  
             icon: 'success',
             confirmButtonText: 'Aceptar',
             customClass: {

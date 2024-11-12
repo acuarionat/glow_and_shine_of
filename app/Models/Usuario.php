@@ -20,10 +20,15 @@ class Usuario extends Authenticatable
     public function favorites(): BelongsToMany
     {
         return $this->belongsToMany(
-            Producto::class,    // Modelo relacionado (Producto)
-            'favoritos',        // Nombre de la tabla intermedia
-             'id_usuario',       // Foreign key del usuario en la tabla intermedia 'favoritos'
-            'id_producto'       // Foreign key del producto en la tabla intermedia 'favoritos'
+            Producto::class,   
+            'favoritos',        
+             'id_usuario',       
+            'id_producto'       
         );
+    }
+
+    public function resenas()
+    {
+        return $this->hasMany(Resena::class, 'id_usuario');
     }
 }

@@ -1,9 +1,13 @@
-<link rel="stylesheet" href="/css/ScrollReview.css">
+<link rel="stylesheet" href="{{ asset('css/ScrollReview.css') }}">
 
+
+@props(['resenas'])
 <div class="review_scroll">
-    @for ($i = 0; $i < 7; $i++)
-        <x-Aldahir.Cardreviews>
-            Reviews {{ $i + 1 }}
-        </x-Aldahir.CardReviews>
-    @endfor
+    @foreach($resenas as $resena)
+        <x-Aldahir.CardReviews 
+            :calificacion="$resena->calificacion"
+            :comentario="$resena->comentario"
+            :fechaResena="$resena->fecha_resena"
+        />
+    @endforeach
 </div>
