@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ asset('css/botonAnadirListaDeseos.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/botonAnadirListaDeseos.css') }}">
 
 @php
     $isFavorite = Auth::check() ? Auth::user()->favorites()->where('favoritos.id_producto', $producto->id_producto)->exists() : false;
@@ -21,3 +21,4 @@
         </button>
     </form>
 @endif
+ --}}
