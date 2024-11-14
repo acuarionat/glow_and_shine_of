@@ -1,0 +1,54 @@
+.contenedor_perfil{
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Columna por defecto */
+    justify-content: center;
+    align-items: center;
+
+}
+.container_informacion{
+    width: 90%;
+    max-width: 525px;
+    border-radius: 8px;
+    border: 2px solid #764C73;
+    padding: 5px;
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column; /* Columna por defecto */
+    justify-content: center;
+    align-items: center;
+   
+
+    
+}
+
+.titulo_ip{
+    margin-top: 25px;
+    font-size: 1.5em;
+    color: #925487; 
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+}
+
+.editar_cuenta{
+    color: #601A55;
+    font-size: 1rem;
+    font-family: 'Poppins', semi-bold;
+    cursor: pointer;
+    transition: color 0.3s; 
+    margin-top: 20px;
+}
+.contenedor_opcion{
+    display: flex;
+    margin-bottom: 20px; 
+    color: #925487;
+    flex-direction: column;
+    display: flex;
+   
+    margin-top: 10px;
+    
+}
+

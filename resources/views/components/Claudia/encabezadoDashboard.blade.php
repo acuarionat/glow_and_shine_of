@@ -14,7 +14,7 @@
         
     
      <div class="cerrar_s">
-            <a href="" class="action_btn">
+            <a href="{{ url('perfil/' . auth()->user()->id) }}" class="action_btn">
                 <i class="fas fa-user-cog"></i> 
             </a>
             <a href="{{route('account.logout')}}" class="action_btn">

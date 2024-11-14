@@ -8,6 +8,9 @@ class Producto extends Model
 {
     protected $table = 'producto'; 
     protected $primaryKey = 'id_producto';
+    public $timestamps = false;
+
+  
     protected $fillable = [
         'id_producto',
         'nombre',
@@ -24,6 +27,8 @@ class Producto extends Model
         'id_detalle_medida',
         'id_proveedor',
         'cantidad',
+        'precio',
+        'detalle_medida'
     ];
 
     public function imagenProducto()
@@ -31,7 +36,6 @@ class Producto extends Model
         return $this->belongsTo(ImagenProducto::class, 'id_imagen_producto');
     }
 
-    // Relación inversa (muchos a muchos) con Usuario
     public function users()
     {
         return $this->belongsToMany(

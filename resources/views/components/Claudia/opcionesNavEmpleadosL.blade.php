@@ -10,7 +10,7 @@
     <ul>
         <li class="menu-item">
             
-            <a class="opc_dashboard" href="{{ url('account/dashboardAdmin/' . $user->id) }}">
+            <a class="opc_dashboard" href="{{ url('account/dashboardEmpleado/' . $user->id) }}">
             <i class="fab fa-dashcube fa-fw"></i>
                 Dashboard
             </a>
@@ -52,8 +52,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar cliente</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar clientes</a></li>
+                <li><a href="{{ url('registrarCCliente/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Clientes</a></li>
+                <li><a href="{{ url('listaCClientes/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Clientes</a></li>
             </ul>
         </li>
 

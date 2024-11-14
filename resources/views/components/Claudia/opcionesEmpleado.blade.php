@@ -3,10 +3,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<div class="contenedor_opciones_empleado">
-    
-    <button class="Registrar">Registrar venta </button>
-    <button class="Catalogo">Ver catalogo</button>
-    <button class="Crear_cuenta">Crear cuenta de usuario</button>
-    
+@props(['titulo', 'imagen', 'cantidad'])
+
+<div class="contenedor_opciones_dashboard">
+    <div class="primera_seccion">
+        <h1 class="titulo">{{ $titulo }}</h1>
+        <img class="imagen_button" src="{{ asset($imagen) }}" alt="">
+    </div>
+    <div class="segunda_seccion">
+        <p class="detalles">{{ $cantidad }} Registrados</p>
+    </div>
 </div>

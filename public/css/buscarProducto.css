@@ -30,6 +30,9 @@ body {
     margin-top: 2%; 
     color: var(--Morado);
     font-weight: 600;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -45,12 +48,31 @@ body {
 
 
 @media (min-width: 769px) {
+
+    .contenedor_catalogo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        margin-top: 2%; 
+        color: var(--Morado);
+        font-weight: 600;
+    }
+
     .contenedor_catalogo_productos { 
         flex-wrap: wrap;
         justify-content: space-around;
     }
+    .contenedor_buscador_general{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 
-    .edit_info{
+    .edit_informacion{
         width: 100vh;
         height: 3rem;
         border-radius: 31px;
@@ -71,9 +93,41 @@ body {
     display: flex;
     width: 100%;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     gap: 3px;
+}
+
+.formulario_busqueda_producto{
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center; 
+
+}
+
+.contenedor_busqueda_producto{
+    width: 100%;
+    max-width: 400px;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #764C73; 
+    border-radius: 31px;
+    padding-left: 15px;
+    margin-bottom: 21px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+}
+.buscar_producto {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: grey;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 8px;
+    background: none;
 }
     
     .boton_busqueda{
@@ -91,7 +145,6 @@ body {
     
     .boton_busqueda:hover {
         background-color: var(--Rosado_principal);
-    
     }
 }
 

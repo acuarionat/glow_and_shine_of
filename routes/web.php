@@ -16,6 +16,13 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\registrarProductoController;
 use App\Http\Controllers\buscarProductoController;
 use App\Http\Controllers\moduloEmpleadoController;
+use App\Http\Controllers\moduloClienteController;
+use App\Http\Controllers\moduloCClienteController;
+use App\Http\Controllers\comprasController;
+use App\Http\Controllers\salesController;
+use App\Http\Controllers\perfilController;
+use App\Http\Controllers\ManagmentSaleController;
+
 
 Route::get('/', [HomeController::class, 'masVendidos', 'mostrarRecienLlegados']);
 
@@ -76,12 +83,19 @@ Route::get('/buscarUsuario/{id}', [UsuarioController::class, 'busqueda_usuario']
 Route::post('/resena', [ResenaController::class, 'store'])->name('store');
 
 
-Route::get('/producto/{id}', [buscarProductoController::class, 'mostrarDetalleProductoAdmin']);
+
+
+Route::get('/productoDetalle/{id}', [buscarProductoController::class, 'mostrarDetalleProductoAdmin']);
+
+
 Route::get('/producto/create', [registrarProductoController::class, 'create']);
 Route::get('/registrarProducto', [registrarProductoController::class, 'create'])->name('producto.create');
 Route::post('/registrarProducto', [registrarProductoController::class, 'store'])->name('producto.store');
-Route::get('/buscarProducto', [buscarProductoController::class, 'buscarProducto'])->name('buscarProducto');;
+Route::get('/buscarProducto', [buscarProductoController::class, 'buscarProducto'])->name('buscarProducto');
 Route::resource('producto', registrarProductoController::class);
+
+Route::get('/producto/{id}/edit', [registrarProductoController::class, 'edit'])->name('producto.edit');
+Route::put('/producto/{id}/edit', [registrarProductoController::class, 'update'])->name('producto.update');
 
 
 
@@ -92,3 +106,36 @@ Route::get('/verificar-correo', [moduloEmpleadoController::class, 'verificarCorr
 Route::post('/empleados/registrar', [moduloEmpleadoController::class, 'registrarEmpleado'])->name('empleados.registrar');
 Route::get('/editarPerfil/{id}/{id_empleado}', [moduloEmpleadoController::class, 'editarEmpleado'])->name('empleados.editar');
 Route::put('/empleados/actualizar', [moduloEmpleadoController::class, 'actualizarEmpleado'])->name('empleados.actualizar');
+
+
+
+
+Route::get('/registrarCCliente/{id}', [moduloCClienteController::class, 'registrar_cliente']);
+Route::get('/verificarCorreo', [moduloCClienteController::class, 'verificarCorreo'])->name('verificar.correo');
+Route::post('/cclientes/registrar', [moduloCClienteController::class, 'registrarCliente'])->name('cliente.registrar');
+Route::get('/listaCClientes/{id}', [moduloCClienteController::class, 'detalles_cliente'])->name('cliente.detalles');
+Route::get('cclientes/{id}/', [moduloCClienteController::class, 'busqueda_cliente'])->name('cliente.busqueda_cliente');
+Route::get('/editarPerfilCCliente/{id}/{id_cliente}', [moduloCClienteController::class, 'editarCliente'])->name('cliente.editar');
+Route::put('/Cclientes/actualizar', [moduloCClienteController::class, 'actualizarCliente'])->name('clientes.actualizar');
+
+
+
+Route::get('/registrarCliente/{id}', [moduloClienteController::class, 'registrar_cliente']);
+Route::get('/verificarCorreo', [moduloClienteController::class, 'verificarCorreo'])->name('verificar.correo');
+Route::post('/clientes/registrar', [moduloClienteController::class, 'registrarCliente'])->name('cliente.registrar');
+Route::get('/listaClientes/{id}', [moduloClienteController::class, 'detalles_cliente'])->name('cliente.detalles');
+Route::get('clientes/{id}/', [moduloClienteController::class, 'busqueda_cliente'])->name('cliente.busqueda_cliente');
+Route::get('/editarPerfilCliente/{id}/{id_cliente}', [moduloClienteController::class, 'editarCliente'])->name('cliente.editar');
+Route::put('/clientes/actualizar', [moduloClienteController::class, 'actualizarCliente'])->name('clientes.actualiza');
+
+
+
+Route::get('/ventas/{id}', [salesController::class, 'mostrarVentas']);
+Route::get('/compras/{id}', [comprasController::class, 'mostrarCompras']);
+
+
+Route::get('/perfil/{id}', [perfilController::class, 'datos_perfil']);
+
+Route::get('/buscar-producto/{nombre}', [ManagmentSaleController::class, 'buscarProducto'])->name('buscar.producto');
+Route::get('/msale/{id}', [ManagmentSaleController::class, 'ManagmentSale']); 
+Route::get('/buscar-persona/{ci}', [ManagmentSaleController::class, 'buscarPersona'])->name('buscar.persona');

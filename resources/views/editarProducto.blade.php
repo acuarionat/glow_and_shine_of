@@ -8,73 +8,163 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/registrarProducto.css') }}">
+    <!-- Agrega los enlaces necesarios para SweetAlert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>Editar Producto</title>
 </head>
 
-<body>
-    <h2 class="titulo_producto">Editar Producto</h2>
-    <x-Mikaela.botonesAccionProducto />
+<div class="container">
 
-    <div class="container">
-
-
-
-        <form action="{{ route('producto.update', $producto->id_producto) }}" method="POST">
-            @csrf
-            @method('PUT')
-
-            <!-- <h2>Registrar Imagen producto</h2>
-    <div class="registro_imagen_producto">
-    <label for="direccion_imagen">Dirección de la Imagen:</label>
-    <input type="text" id="direccion_imagen" name="direccion_imagen" class="llenar" value="{{ $producto->direccion_imagen }}">
-
-    <label for="descripcion_imagen">Descripción de la Imagen:</label>
-    <input type="text" id="descripcion_imagen" name="descripcion_imagen" class="llenar" value="{{ $producto->descripcion_imagen }}">
-</div> -->
-
-            <h2>Registrar Información producto</h2>
-            <div class="registro_info_producto">
-                <label for="nombre">Nombre del Producto:</label>
-                <input type="text" id="nombre" name="nombre" class="llenar" value="{{ $producto->nombre }}">
-
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" class="llenar">{{ $producto->descripcion }}</textarea>
-
-                <label for="id_precio_mercado">ID Precio Mercado:</label>
-                <input type="number" id="id_precio_mercado" name="id_precio_mercado" class="llenar" value="{{ $producto->id_precio_mercado }}">
-
-                <label for="recomendaciones_uso">Recomendaciones de Uso:</label>
-                <textarea id="recomendaciones_uso" name="recomendaciones_uso" class="llenar">{{ $producto->recomendaciones_uso }}</textarea>
-
-                <label for="marca">Marca:</label>
-                <input type="text" id="marca" name="marca" class="llenar" value="{{ $producto->marca }}">
-
-                <label for="categoria">Categoría:</label>
-                <input type="text" id="categoria" name="categoria" class="llenar" value="{{ $producto->categoria }}">
-
-                <label for="color">Color:</label>
-                <input type="text" id="color" name="color" class="llenar" value="{{ $producto->color }}">
-
-                <label for="presentacion">Presentación:</label>
-                <input type="text" id="presentacion" name="presentacion" class="llenar" value="{{ $producto->presentacion }}">
-
-                <label for="estado">Estado:</label>
-                <input type="text" id="estado" name="estado" class="llenar" value="{{ $producto->presentacion }}">
-
-                <label for="id_lote">ID Lote:</label>
-                <input type="number" id="id_lote" name="id_lote" class="llenar" value="{{ $producto->id_lote }}">
-
-                <label for="id_detalle_medida">ID Detalle Medida:</label>
-                <input type="number" id="id_detalle_medida" class="llenar" name="id_detalle_medida" value="{{ $producto->id_detalle_medida }}">
-
-                <label for="id_proveedor">ID Proveedor:</label>
-                <input type="number" id="id_proveedor" class="llenar" name="id_proveedor" value="{{ $producto->id_proveedor }}">
-
-                <label for="cantidad">Cantidad:</label>
-                <input type="number" id="cantidad" class="llenar" name="cantidad" value="{{ $producto->cantidad }}">
+    <form action="{{ route('producto.update', ['id' => $producto->id_producto]) }}" method="POST">
+    @csrf
+    @method('PUT')
+    <h2 class="seccion_forms">Registrar Imagen producto</h2>
+        <div class="registro_imagen_producto">
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">URL de la Imagen:</h3>
+                <input type="text" name="direccion_imagen" class="edit_info" id="direccion_imagen" value="{{ old('direccion_imagen', $imagenProducto->direccion_imagen ?? '') }}" required>
             </div>
-            <button type="submit" class="boton_busqueda">Actualizar Producto</button>
-        </form>
-    </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Descripción de la imagen:</h3>
+                <textarea name="descripcion_imagen" class="edit_info" id="descripcion_imagen">{{ old('descripcion_imagen', $imagenProducto->descripcion_imagen ?? '') }}</textarea>
+            </div>
+        </div>
+
+        <h2 class="seccion_forms">Registrar Información producto</h2>
+        <div class="registro_info_producto">
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Nombre del Producto:</h3>
+                <input type="text" name="nombre" class="edit_info" id="nombre" value="{{ $producto->nombre }}" required>
+            </div>
+
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Descripcion del producto:</h3>
+                <textarea name="descripcion" id="descripcion" class="edit_info">{{ $producto->descripcion }}</textarea>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Recomendaciones de Uso:</h3>
+                <textarea name="recomendaciones_uso" id="recomendaciones_uso" class="edit_info">{{ $producto->recomendaciones_uso }}</textarea>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione una marca:</h3>
+                <select name="marca" id="marca" class="edit_info">
+                    @foreach ($subparametrosMarca as $subparametro)
+                    <option value="{{ $subparametro->id_sub_parametros }}" @selected($producto->marca == $subparametro->id_sub_parametros)>
+                        {{ $subparametro->descripcion }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione una categoría:</h3>
+                <select name="categoria" id="categoria" class="edit_info">
+                    @foreach ($subparametrosCategorias as $subparametro)
+                    <option value="{{ $subparametro->id_sub_parametros }}" @selected($producto->categoria == $subparametro->id_sub_parametros)>
+                        {{ $subparametro->descripcion }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione un color:</h3>
+                <select name="color" id="color" class="edit_info">
+                    @foreach ($subparametrosColor as $subparametro)
+                    <option value="{{ $subparametro->id_sub_parametros }}" @selected($producto->color == $subparametro->id_sub_parametros)>
+                        {{ $subparametro->descripcion }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione una presentación:</h3>
+                <select name="presentacion" id="presentacion" class="edit_info">
+                    @foreach ($subparametrosPresentacion as $subparametro)
+                    <option value="{{ $subparametro->id_sub_parametros }}" @selected($producto->presentacion == $subparametro->id_sub_parametros)>
+                        {{ $subparametro->descripcion }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione el estado del producto:</h3>
+                <select name="estado" id="estado" class="edit_info">
+                    @foreach ($subparametrosEstado as $subparametro)
+                    <option value="{{ $subparametro->id_sub_parametros }}" @selected($producto->estado == $subparametro->id_sub_parametros)>
+                        {{ $subparametro->descripcion }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione un Lote:</h3>
+                <select name="id_lote" id="id_lote" class="edit_info">
+                    @foreach ($lote as $lotes)
+                    <option value="{{ $lotes->id_lote }}" @selected($producto->id_lote == $lotes->id_lote)>
+                        {{ $lotes->codigo_lote }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Seleccione un proveedor:</h3>
+                <select name="id_proveedor" id="id_proveedor" class="edit_info">
+                    @foreach ($proveedores as $proveedor)
+                    <option value="{{ $proveedor->id_proveedor }}" @selected($producto->id_proveedor == $proveedor->id_proveedor)>
+                        {{ $proveedor->empresa_proveedor }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Cantidad:</h3>
+                <input type="number" name="cantidad" id="cantidad" class="edit_info" value="{{ $producto->cantidad }}">
+            </div>
+
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Precio:</h3>
+                <input type="text" name="precio" class="edit_info" id="precio" value="{{ $producto->precio }}" placeholder="Ingrese el precio del producto" required>
+            </div>
+            <div class="contenedor_datos">
+                <h3 class="subtitulo_Info">Detalle del contenido:</h3>
+                <input type="text" name="detalle_medida" class="edit_info" id="detalle_medida" value="{{ $producto->detalle_medida }}" placeholder="Detalle del contenido" required>
+            </div>
+        </div>
+
+        <button type="submit" class="boton_busqueda">Guardar Producto</button>
+
+    </form>
+</div>
+
+@if(session('success'))
+<script>
+Swal.fire({
+    title: 'Cambios guardados',
+    text: '{{ session("success") }}',
+    icon: 'success',
+    confirmButtonText: 'Aceptar',
+    customClass: {
+        popup: 'custom-popup', 
+        confirmButton: 'custom-confirm-button' 
+    }
+});
+</script>
+@endif
+
+@if(session('error'))
+<script>
+Swal.fire({
+    title: 'Error al guardar cambios',
+    text: '{{ session("error") }}',
+    icon: 'error',
+    confirmButtonText: 'Aceptar',
+    customClass: {
+        popup: 'custom-popup', 
+        confirmButton: 'custom-confirm-button' 
+    }
+});
+</script>
+@endif

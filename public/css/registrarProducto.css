@@ -27,7 +27,7 @@ label {
 label {
     color: var(--Negro);
     font-size: 17px;
-    width: 15%;
+    width: 10%;
     margin: 1%;
 }
 
@@ -38,7 +38,7 @@ label {
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 0;
+    gap: 80px;
 }
 
 .llenar {
@@ -54,9 +54,9 @@ label {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start;
-    gap: 0;
+    gap: 10px;
 }
 
 .container {
@@ -80,4 +80,42 @@ label {
 
 .boton_busqueda:hover {
     background-color: var(--Rosado_principal);
+}
+
+.edit_info{
+    width: 100%;
+    height: 3rem;
+    border-radius: 31px;
+    border: 1.5px solid #764C73;
+    font-size: 1rem ;
+    color: grey;
+    font-family: 'Poppins', semi-bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-left: 15px; 
+    box-sizing: border-box;
+}
+
+.seccion_forms{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Esto alinea el contenido a la derecha */
+    /* margin-bottom: 20px;  */
+    color: #925487;
+}
+
+.subtitulo_Info{
+    font-family: 'Poppins', semi-bold;
+    font-style: normal;
+    width: 100%;
+    margin: 2.5%;
+    font-size: 1rem;
+    font-weight: 600;
+
+}
+
+.contenedor_datos{
+    width: 45%;
 }

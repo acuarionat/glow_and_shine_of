@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Producto;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,9 @@ class perfilEmpleadoController extends Controller
         if (!$user) {
             return redirect()->route('account.dashboard')->with('error', 'Usuario no encontrado');
         }
-
+        $cantidadVentas = DB::table('inventario_venta')->count();
+        $cantidadClientes = DB::table('cliente')->count();
+        $cantidadProductos = Producto::count();
         $saludo = 'Perfil de Empleado';
         $mensajeB = 'Nos alegra que formes parte de nuestro 
         equipo. Este es tu espacio personal, donde podrás gestionar 
@@ -28,7 +31,11 @@ class perfilEmpleadoController extends Controller
         con tus tareas. ¡Estamos emocionados de tenerte con nosotros 
         y esperamos que disfrutes de tu experiencia aquí!';
 
-        return view('dashboardEmpleado', compact('user', 'saludo', 'mensajeB'));
-        dd(compact('user', 'saludo', 'mensajeB'));
-    }
+        $cantidadDatos = [
+            'Ventas' => $cantidadVentas,
+            'Clientes' => $cantidadClientes,
+            'Productos' => $cantidadProductos,
+        ];
+        return view('dashboardEmpleado', compact('user', 'saludo', 'mensajeB','cantidadDatos'));
+        }
 }

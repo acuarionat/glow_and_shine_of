@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/inicioSesion.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <x-app-layout-log-reg>
         <x-Natalia.inicioSesion.cabecera/>
         <x-Natalia.inicioSesion.formulario-inicio-sesion/>

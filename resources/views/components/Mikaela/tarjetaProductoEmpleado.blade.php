@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/tarjetaProductoEmpleado.css') }}">
 
 <div class="contenedor_tarjeta_empleado">
-<a href="/producto/{{ $producto->id_producto }}">
+<a href="/productoDetalle/{{ $producto->id_producto }}">
     <div class="contenedor_imagen_tarjeta_empleado">
     <img src="{{ $producto->direccion_imagen }}" alt="{{ $producto->nombre_producto }}" class="producto_catalogo">
     </div>
@@ -15,7 +15,7 @@
             <h2 class="subtitulos_producto">Color:</h2>
             <h2 class="info_producto">{{ $producto->color }}</h2>
             <h2 class="subtitulos_producto">Precio:</h2>
-            <h2 class="info_producto">{{ $producto->precio_mercado }}</h2>
+            <h2 class="info_producto">{{ $producto->precio}}</h2>
             <h2 class="subtitulos_producto">Marca:</h2>
             <h2 class="info_producto">{{ $producto->marca }}</h2>
             <h2 class="subtitulos_producto">Estado:</h2>

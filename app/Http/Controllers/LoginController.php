@@ -109,12 +109,12 @@ class LoginController extends Controller
         }
     }
 
-    public function processRegistrationAdmin(){
+    public function processRegistrationAdmin() {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/|unique:usuarios',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:1,2' // Validación del campo de rol
+            'role' => 'required|in:1,2' 
         ], [
             'email.regex' => 'El correo electrónico debe ser una dirección Gmail válida.',
             'email.unique' => 'El correo electrónico ya está en uso.',
@@ -125,11 +125,12 @@ class LoginController extends Controller
         ]);
     
         if ($validator->passes()) {
+
             $user = new Usuario();
             $user->name = request()->name;
             $user->email = request()->email;
             $user->password = Hash::make(request()->password);
-            $user->id_roles = request()->role; // Asignación del rol desde el combobox
+            $user->id_roles = request()->role; 
             $user->save();
     
             $persona = new Persona();
@@ -137,15 +138,16 @@ class LoginController extends Controller
             $persona->nombres = $user->name;
             $persona->correo_electronico = $user->email;
             $persona->save();
-
-            return redirect()->route('account.login')->with('success', 'Tu registro se realizó con éxito');
+    
+           
+            return redirect()->route('usuarios.listar', ['id' => Auth ::user()->id])->with('success', 'Usuario registrado exitosamente');
         } else {
-            return redirect()->route('account.register')
+            return redirect()->route('account.registerU', ['id' => Auth ::user()->id]) ->with('error', 'Registro de usuario no se pudo efectuar')
                 ->withInput()
                 ->withErrors($validator);
         }
     }
-
+    
     public function logout(){
         Auth::logout();
         request()->session()->invalidate();

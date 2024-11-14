@@ -1,0 +1,136 @@
+
+.container_registrar_empleados {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; 
+   margin-top: 10px;
+}
+
+.container_registrar_empleados h1 {
+    font-size: 1.5em;
+    color: #925487; 
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.container_form_registro{
+    width: 100%;
+    min-width: 352px;  
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+}
+
+.form_registrar_empleado{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+.form_group{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+.seccion_forms{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Esto alinea el contenido a la derecha */
+    margin-bottom: 20px; 
+    color: #925487;
+
+}
+
+
+.edit_info{
+    width: 100%;
+    min-width: 300px;
+    max-width: 580px;
+    height: 3rem;
+    border-radius: 31px;
+    border: 1.5px solid #764C73;
+    
+    font-size: 1rem ;
+    color: grey;
+    font-family: 'Poppins', semi-bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 21px;
+    padding-left: 15px; 
+    box-sizing: border-box;
+}
+.cont_boton_editE{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.container_llenado{
+    
+    display: flex;
+    margin-bottom: 20px; 
+    color: #925487;
+    flex-direction: column;
+    display: flex;
+    justify-content: flex-start; 
+ 
+}
+.subtitle{
+    color: #BE6C97;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 5px;
+    font-size: 1em;
+    display: flex;
+    justify-content: flex-start; 
+
+}
+
+.boton_guardar_cambios{
+    background-color: #764C73;
+    width: 30%;
+    min-width: 305px;
+    max-width: 580px;
+    height: 2.8rem;
+    
+    border: #764C73;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+
+.boton_guardar_cambios:active{
+    background-color: #C9A8CB ;
+}
+
+@media (min-width: 1024px) {
+    
+    .form_group {
+        flex-direction: row; /* Cambiar a filas */
+        flex-wrap: wrap; /* Permitir el ajuste en más de una fila */
+        justify-content: space-between;
+    }
+
+    .container_llenado{
+        width: 48%; /* Hacer los inputs ocupen el 48% del ancho para que haya espacio entre ellos */
+    }
+
+    .boton_guardar_cambios {
+        width: 100%; /* El botón sigue ocupando toda la fila */
+    }
+}

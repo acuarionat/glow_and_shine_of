@@ -24,7 +24,7 @@
             </label>
             
             <ul class="submenu">
-                <li><a href="/registrarProducto" class="active"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
+                <li><a href="/registrarProducto"class="active"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
                 <li><a href="/buscarProducto" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
             </ul>
         </li>
@@ -37,8 +37,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar venta</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Historia de ventas</a></li>
+                <li><a href="{{ url('msale/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar venta</a></li>
+                <li><a href="{{ url('ventas/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de ventas</a></li>
             </ul>
         </li>
 
@@ -51,7 +51,7 @@
             </label>
             <ul class="submenu">
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar Compra</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Historia de Compra</a></li>
+                <li><a href=" {{ url('compras/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de Compra</a></li>
             </ul>
         </li>
 
@@ -76,9 +76,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar cliente</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Editar cliente</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar cliente</a></li>
+                <li><a href="{{ url('registrarCliente/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Clientes</a></li>
+                <li><a href="{{ url('listaClientes/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Clientes</a></li>
             </ul>
         </li>
 

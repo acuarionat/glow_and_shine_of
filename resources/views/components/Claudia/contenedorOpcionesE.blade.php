@@ -2,14 +2,14 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
+@props(['cantidadDatos','titulo','imagen'])
 
 <div class="contenedor_botones_opciones">
-    <x-Claudia.opcionesDashboard titulo="Producto" imagen="images/producto.png" cantidad="42 Registrados"/>
-    <x-Claudia.opcionesDashboard titulo="Usuarios" imagen="images/usuario.png" cantidad="15 Registrados"/>
-    <x-Claudia.opcionesDashboard titulo="Clientes" imagen="images/clientes.png" cantidad="10 Registrados"/>
-    <x-Claudia.opcionesDashboard titulo="Ventas" imagen="images/ventas.png" cantidad="8 Registrados"/>
-
-    
-    
-   
+    @foreach($cantidadDatos as $key => $cantidad)
+        <x-Claudia.opcionesDashboard 
+            :titulo="$key" 
+            :imagen="'images/'.strtolower($key).'.png'" 
+            :cantidad="$cantidad"
+        />
+    @endforeach
 </div>
