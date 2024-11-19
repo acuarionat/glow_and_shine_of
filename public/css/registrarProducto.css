@@ -1,24 +1,3 @@
-body {
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--Blanco);
-}
-
-:root {
-    --Rosado_clarito: #fee9ff;
-    --Blanco: #fff;
-    --Negro: #000;
-    --Rosado_principal: #be6c97;
-    --Morado: #764c73;
-}
-
 label {
     font-family: inherit; /* Hereda la fuente del body */
     font-style: inherit; /* Hereda el estilo del body */
@@ -36,7 +15,9 @@ label {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    justify-content: space-between;
     align-items: flex-start;
     gap: 80px;
 }
@@ -54,16 +35,20 @@ label {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 90%;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 10px;
+    margin-left: 5%;
+    gap: 5px;
 }
 
-.container {
-    width: 80%;
-    justify-content: space-between;
+.contenedor_registrar_editar_producto {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    padding: 20px; /* Puedes agregar un poco de espacio interno si lo deseas */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
 }
 
 .boton_busqueda {
@@ -72,7 +57,7 @@ label {
     padding: 1%;
     border-radius: 8px;
     width: 30%;
-    height: 10%;
+    height: 5%;
     font-weight: 600;
     margin-top: 10px;
     font-size: 2.5vh;
@@ -82,7 +67,7 @@ label {
     background-color: var(--Rosado_principal);
 }
 
-.edit_info{
+.edit_informacion{
     width: 100%;
     height: 3rem;
     border-radius: 31px;
@@ -102,9 +87,14 @@ label {
     width: 100%;
     display: flex;
     justify-content: flex-start; /* Esto alinea el contenido a la derecha */
-    /* margin-bottom: 20px;  */
+    margin-top: 1%; 
+    margin-left: 5%;
+    margin-bottom: 1%;
     color: #925487;
+    font-weight: 600;
+    font-size: 25px;
 }
+
 
 .subtitulo_Info{
     font-family: 'Poppins', semi-bold;
@@ -118,4 +108,12 @@ label {
 
 .contenedor_datos{
     width: 45%;
+}
+
+.boton_guardar_actualizar_productos{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
 }

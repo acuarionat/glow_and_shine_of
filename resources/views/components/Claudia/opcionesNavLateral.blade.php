@@ -24,8 +24,8 @@
             </label>
             
             <ul class="submenu">
-                <li><a href="/registrarProducto"class="active"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
-                <li><a href="/buscarProducto" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
+                <li><a href=" {{ url('registrarProducto/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Productos</a></li>
+                <li><a href=" {{ url('buscarProducto/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
             </ul>
         </li>
         

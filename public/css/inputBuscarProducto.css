@@ -1,0 +1,40 @@
+
+
+.formulario_busqueda_producto{
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center; 
+
+}
+
+.contenedor_busqueda_producto{
+    width: 400px;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #764C73; 
+    border-radius: 31px;
+    padding-left: 15px;
+    margin-bottom: 21px;
+    box-sizing: border-box;
+    /* background-color: #FFFFFF; */
+}
+.buscar_producto {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: grey;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 8px;
+    background: none;
+}
+    
+.contenedor_barra_busqueda{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

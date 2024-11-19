@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/tarjetaProductoEmpleado.css') }}">
 
 <div class="contenedor_tarjeta_empleado">
-<a href="/productoDetalle/{{ $producto->id_producto }}">
+<a href="{{ url('productoDetalle/' . auth()->user()->id . '/' . $producto->id_producto) }}">
     <div class="contenedor_imagen_tarjeta_empleado">
     <img src="{{ $producto->direccion_imagen }}" alt="{{ $producto->nombre_producto }}" class="producto_catalogo">
     </div>
@@ -24,8 +24,11 @@
             <h2 class="info_producto">{{ $producto->cantidad }}</h2>
         </div>
         <div class="contenedor_producto_3">
-    <a href="{{ route('producto.edit', $producto->id_producto) }}" class="boton_actualizar">Editar</a>
-        </div>
+    <a href="{{ url('producto/' . auth()->user()->id . '/' . $producto->id_producto) . '/edit'}}" class="boton_actualizar">Editar</a>
+</div>
+
     </div>
     </a>
 </div>
+
+

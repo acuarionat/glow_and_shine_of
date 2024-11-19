@@ -85,17 +85,18 @@ Route::post('/resena', [ResenaController::class, 'store'])->name('store');
 
 
 
-Route::get('/productoDetalle/{id}', [buscarProductoController::class, 'mostrarDetalleProductoAdmin']);
+Route::get('/productoDetalle/{id_user}/{id}', [buscarProductoController::class, 'mostrarDetalleProductoAdmin']);
 
+// Route::get('/producto/create', [registrarProductoController::class, 'create']);
+Route::get('/registrarProducto/{id}', [registrarProductoController::class, 'create'])->name('producto.create');
+Route::post('/registrarProducto/{id}', [registrarProductoController::class, 'store'])->name('producto.store');
 
-Route::get('/producto/create', [registrarProductoController::class, 'create']);
-Route::get('/registrarProducto', [registrarProductoController::class, 'create'])->name('producto.create');
-Route::post('/registrarProducto', [registrarProductoController::class, 'store'])->name('producto.store');
-Route::get('/buscarProducto', [buscarProductoController::class, 'buscarProducto'])->name('buscarProducto');
-Route::resource('producto', registrarProductoController::class);
+Route::get('/buscarProducto/{id?}', [buscarProductoController::class, 'buscarProducto'])->name('buscarProducto');
 
-Route::get('/producto/{id}/edit', [registrarProductoController::class, 'edit'])->name('producto.edit');
-Route::put('/producto/{id}/edit', [registrarProductoController::class, 'update'])->name('producto.update');
+// Route::resource('producto', registrarProductoController::class);
+
+Route::get('/producto/{id_user}/{id}/edit', [registrarProductoController::class, 'edit'])->name('producto.edit');
+Route::put('/producto/{id_user}/{id}/edit', [registrarProductoController::class, 'update'])->name('producto.update');
 
 
 

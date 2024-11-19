@@ -1,11 +1,11 @@
 .contenedor_tarjeta_empleado {
-    width: 95%;
+    width: 80%;
     height: 50vh;
     background-color: var(--Blanco);
     border-radius: 8px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     text-align: center;
     box-shadow: 0px 4px 6px #0000004d;
 }
@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     text-align: center;
 }
 
@@ -62,8 +62,8 @@
 
 .subtitulos_producto {
     font-weight: 600;
-    font-size: 2.5vh;
-    width: 50%;
+    font-size: 2.2vh;
+    width: 55%;
     color: var(--Rosado_principal);
     margin: 0;
     padding: 2%;
@@ -71,6 +71,8 @@
 }
 .titulo_producto {
     font-size: 4vh;
+    font-weight: 600;
+    color: var(--Rosado_principal);
 }
 .info_producto {
     color: var(--Negro);
@@ -171,7 +173,7 @@
     .subtitulos_producto {
         font-weight: 600;
         font-size: 2.5vh;
-        width: 16%;
+        width: 17%;
         color: var(--Rosado_principal);
         margin: 0;
         padding: 1%;
@@ -195,11 +197,11 @@
     .contenedor_producto_1 {
         width: 100%;
         height: 20%;
-        margin-top: 1%;
     }
     .contenedor_producto_3 {
-        height: 17%;
+        height: 20%;
         width: 100%;
+        margin: 0%;
         display: flex;
         justify-content: center;
         align-items: center;
