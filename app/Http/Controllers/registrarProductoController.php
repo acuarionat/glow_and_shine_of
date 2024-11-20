@@ -32,52 +32,55 @@ class registrarProductoController extends Controller
         return view('registrarProducto', compact('user', 'saludo', 'subparametrosCategorias', 'subparametrosMarca', 'subparametrosColor', 'subparametrosPresentacion', 'subparametrosEstado', 'proveedores', 'lote'));
     }
 
-   public function store(Request $request, $id)
-{
-    $user = DB::table('usuarios')->where('id', $id)->first();
+    public function store(Request $request, $id)
+    {
+        $user = DB::table('usuarios')->where('id', $id)->first();
 
-    if (!$user) {
-        return redirect('/users')->with('error', 'Usuario no encontrado');
+
+        if (!$user) {
+            return redirect('/users')->with('error', 'Usuario no encontrado');
+        }
+
+        $saludo = 'Perfil del Administrador';
+        // Validar los datos
+        $request->validate([
+            'nombre' => 'required|string|max:100',
+            'direccion_imagen' => 'required|string',
+            'descripcion_imagen' => 'nullable|string',
+        ]);
+
+        $idProductoImagen = DB::table('producto')->max('id_producto') + 1;
+
+        $imagen = ImagenProducto::create([
+            'id_imagen_producto' => $idProductoImagen,  // Asegúrate que id_imagen_producto sea bigint
+            'direccion_imagen' => $request->direccion_imagen,
+            'descripcion_imagen' => $request->descripcion_imagen,
+        ]);
+
+        // Crear el producto en la tabla 'producto'
+        Producto::create([
+            'id_producto' => $idProductoImagen,  // Usando el mismo id generado
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'recomendaciones_uso' => $request->recomendaciones_uso,
+            'marca' => $request->marca,
+            'categoria' => $request->categoria,
+            'color' => $request->color,
+            'presentacion' => $request->presentacion,
+            'estado' => $request->estado,
+            'id_lote' => $request->id_lote,
+            'id_imagen_producto' => $idProductoImagen,  // Asegúrate de usar el mismo id
+            'id_proveedor' => $request->id_proveedor,
+            'cantidad' => $request->cantidad,
+            'precio' => $request->precio,
+            'detalle_medida' => $request->detalle_medida
+        ]);
+
+        // Redirigir a la lista de productos con un mensaje de éxito
+        // 
+        // return redirect()->route('registrarProducto',['id' => $id])->with('success', 'Producto creado correctamente');
+        return redirect()->route('producto.create', ['id' => $id])->with('success', 'Producto creado correctamente');
     }
-
-    $request->validate([
-        'nombre' => 'required|string|max:100',
-        'direccion_imagen' => 'required|string',
-        'descripcion_imagen' => 'nullable|string',
-    ]);
-    $nextIdI = DB::table('imagen_producto')->max('id_imagen_producto') + 1;
-    // Evita duplicar imágenes
-    $imagen = ImagenProducto::firstOrCreate(
-        ['id_imagen_producto' => $nextIdI],
-        ['direccion_imagen' => $request->direccion_imagen],
-        ['descripcion_imagen' => $request->descripcion_imagen]
-    );
-
-    // Crear el producto asociado
-    $nextId = DB::table('producto')->max('id_producto') + 1;
-
-    Producto::create([
-        'id_producto' => $nextId,
-        'nombre' => $request->nombre,
-        'descripcion' => $request->descripcion,
-        'recomendaciones_uso' => $request->recomendaciones_uso,
-        'marca' => $request->marca,
-        'categoria' => $request->categoria,
-        'color' => $request->color,
-        'presentacion' => $request->presentacion,
-        'estado' => $request->estado,
-        'id_lote' => $request->id_lote,
-        'id_imagen_producto' => $imagen->id_imagen_producto,
-        'id_proveedor' => $request->id_proveedor,
-        'cantidad' => $request->cantidad,
-        'precio' => $request->precio,
-        'detalle_medida' => $request->detalle_medida,
-    ]);
-
-    return redirect()->route('producto.create', ['id' => $id])
-        ->with('success', 'Producto creado correctamente');
-}
-
     public function edit($id_user, $id)
     {
         $user = DB::table('usuarios')->where('id', $id_user)->first();
@@ -121,15 +124,17 @@ class registrarProductoController extends Controller
     }
 
     public function update(Request $request, $id_user, $id)
+
     {
+
         $user = DB::table('usuarios')->where('id', $id_user)->first();
-    
+
+
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-    
+
         $saludo = 'Perfil del Administrador';
-    
         // Validar los datos
         $request->validate([
             'nombre' => 'required|string|max:100',
@@ -138,39 +143,25 @@ class registrarProductoController extends Controller
             'descripcion' => 'nullable|string',
             // Agregar validaciones para otros campos según sea necesario
         ]);
-    
+
         // Encontrar el producto existente
         $producto = Producto::findOrFail($id);
-    
-        // Verificar si la URL de la imagen ha cambiado
-        if ($request->has('direccion_imagen') && $request->direccion_imagen !== $producto->imagenProducto->direccion_imagen) {
-            // Verificar si la imagen ya existe en la tabla `imagen_producto`
-            $imagen = ImagenProducto::where('direccion_imagen', $request->direccion_imagen)->first();
-    
-            if (!$imagen) {
-                $nextIdI = DB::table('imagen_producto')->max('id_imagen_producto') + 1;
-                $imagen = ImagenProducto::firstOrCreate(
-                    ['id_imagen_producto' => $nextIdI],
-                    ['direccion_imagen' => $request->direccion_imagen],
-                    ['descripcion_imagen' => $request->descripcion_imagen]
-                );
-            } else {
-                $imagen->update([
-                    'descripcion_imagen' => $request->descripcion_imagen,
-                ]);
-            }
-    
-            // Asignar el nuevo ID de la imagen al producto
+        if ($request->has('direccion_imagen') && $request->has('descripcion_imagen')) {
+            // Crear o actualizar la entrada en imagen_producto
+            $imagen = ImagenProducto::updateOrCreate(
+                ['direccion_imagen' => $request->direccion_imagen],  // Condiciones para encontrar la imagen
+                ['descripcion_imagen' => $request->descripcion_imagen] // Valores para actualizar o crear
+            );
+
+            // Asigna el ID de la imagen al producto
             $producto->id_imagen_producto = $imagen->id_imagen_producto;
-        } elseif ($request->has('descripcion_imagen')) {
-            // Si la URL no cambia pero hay una nueva descripción, actualizarla
-            $producto->imagenProducto->update([
-                'descripcion_imagen' => $request->descripcion_imagen,
-            ]);
         }
-    
-        // Actualizar los campos del producto
+
+
+        // Luego, actualiza los demás campos del producto
         $producto->update([
+            'direccion_imagen' => $request->direccion_imagen,
+            'descripcion_imagen' => $request->descripcion_imagen,
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'id_precio_mercado' => $request->id_precio_mercado,
@@ -185,13 +176,11 @@ class registrarProductoController extends Controller
             'id_proveedor' => $request->id_proveedor,
             'cantidad' => $request->cantidad,
             'precio' => $request->precio,
-            'detalle_medida' => $request->detalle_medida,
+            'detalle_medida' => $request->detalle_medida
         ]);
-    
+
         // Redirigir al listado de productos con un mensaje de éxito
         return redirect()->route('producto.update', ['id' => $producto->id_producto, 'id_user' => $id_user])
             ->with('success', 'Producto actualizado correctamente');
     }
-    
-    
 }

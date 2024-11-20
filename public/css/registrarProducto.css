@@ -88,7 +88,6 @@ label {
     display: flex;
     justify-content: flex-start; /* Esto alinea el contenido a la derecha */
     margin-top: 1%; 
-    margin-left: 5%;
     margin-bottom: 1%;
     color: #925487;
     font-weight: 600;

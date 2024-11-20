@@ -15,7 +15,7 @@ class editarUsuarioController extends Controller
     }
     public function editar_perfil_usuario($id)
     {
-        $user = DB::table('users')->where('id', $id)->first();
+        $user = DB::table('usuarios')->where('id', $id)->first();
 
         // Verificar si el usuario existe
         if (!$user) {
