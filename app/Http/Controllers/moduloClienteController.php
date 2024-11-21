@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,12 @@ class moduloClienteController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
+
 
         return view('clientesRegistro' , compact('user','saludo'));
         
@@ -34,8 +40,6 @@ class moduloClienteController extends Controller
     $correo = $request->input('correo');
 
     $persona = DB::table('persona')->where('correo_electronico', $correo)->first();
-    $ultimoIdCliente = DB::table('cliente')->max('id_cliente');
-        $nuevoIdCliente = $ultimoIdCliente + 1;
 
         if ($persona) {
             DB::table('persona')
@@ -48,7 +52,6 @@ class moduloClienteController extends Controller
                     'telefono' => $request->input('telefono', $persona->telefono)
                 ]);
             
-            // Usamos el ID de la persona existente
             $personaId = $persona->id_persona;
         } else {
             return redirect()->back()->with('error', 'El correo electrónico no está registrado. Debe crear un usuario primero.');
@@ -56,7 +59,6 @@ class moduloClienteController extends Controller
 
    
     DB::table('cliente')->insert([
-        'id_cliente' => $nuevoIdCliente,
         'id_persona' => $persona->id_persona,
         'tipo_cliente' => $request->input('tipo_cliente'),
         'porcentaje_descuento' => $request->input('porcentaje_descuento')
@@ -74,7 +76,11 @@ class moduloClienteController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
 
         $clientes = DB::table('cliente')
         ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona') // Unión con la tabla persona
@@ -99,7 +105,11 @@ class moduloClienteController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
 
         $busqueda = $request->input('busqueda');
 
@@ -137,7 +147,11 @@ class moduloClienteController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
     
         // Obtener la información del cliente por su ID
         $clientes = DB::table('cliente')
@@ -168,7 +182,7 @@ class moduloClienteController extends Controller
             'apellido_materno' => 'nullable|string|max:255',
             'carnet_identidad' => 'required|string|max:20',
             'porcentaje_descuento' => 'required|numeric|between:0,100', // Valor entre 0 y 100
-            'tipo_cliente' => 'required|in:52,53,54' // Asegúrate de que estos valores sean correctos
+            'tipo_cliente' => 'required|in:42,43,44' // Asegúrate de que estos valores sean correctos
         ]);
     
         // Buscar al cliente en la base de datos

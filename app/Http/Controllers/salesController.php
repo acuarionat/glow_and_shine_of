@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,12 @@ class salesController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
+
         // Ejecutamos la consulta usando Query Builder
         $ventas = DB::table('inventario_venta as iv')
                     ->select('iv.id_inventario_venta', 'p.nombre as producto', 'iv.cantidad', 'pm.precio as precio', 'u.name as usuario', 'iv.fecha_venta')

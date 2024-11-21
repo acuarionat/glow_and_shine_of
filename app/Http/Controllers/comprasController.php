@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,19 +17,23 @@ class comprasController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
-        // Ejecutamos la consulta usando Query Builder
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
+
         $compras = DB::table('inventario_compra as iv')
                 ->select(
                     'iv.id_inventario_compra',
                     'p.nombre as producto',
                     'iv.cantidad',
-                    'iv.costo_unitario as precio', // Usando el campo correcto de costo unitario
+                    'iv.costo_unitario as precio', 
                     'u.name as usuario',
                     'iv.fecha_compra'
                 )
                 ->join('producto as p', 'iv.id_producto', '=', 'p.id_producto')
-                ->join('usuarios as u', 'iv.id_usuario', '=', 'u.id') // Asumiendo que es el campo 'id_usuario'
+                ->join('usuarios as u', 'iv.id_usuario', '=', 'u.id') 
                 ->get();
 
         // Pasar los datos a la vista

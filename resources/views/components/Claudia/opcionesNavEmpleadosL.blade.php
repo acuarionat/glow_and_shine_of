@@ -24,9 +24,8 @@
             </label>
             
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Nuevo Producto</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Editar Producto</a></li>
+                <li><a href=" {{ url('registrarProducto/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Productos</a></li>
+                <li><a href=" {{ url('buscarProducto/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
             </ul>
         </li>
         
@@ -38,8 +37,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar venta</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Historia de ventas</a></li>
+                <li><a href="{{ url('msale/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar venta</a></li>
+                <li><a href="{{ url('ventas/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de ventas</a></li>
             </ul>
         </li>
 
@@ -52,8 +51,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="{{ url('registrarCCliente/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Clientes</a></li>
-                <li><a href="{{ url('listaCClientes/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Clientes</a></li>
+                <li><a href="{{ url('registrarCliente/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar Clientes</a></li>
+                <li><a href="{{ url('listaClientes/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Clientes</a></li>
             </ul>
         </li>
 
@@ -65,8 +64,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar nuevo usuario</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
+                <li><a href="{{ url('registerU/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar nuevo usuario</a></li>
+                <li><a href="{{ url('listarUsuarios/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
             </ul>
         </li>
     </ul>

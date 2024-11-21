@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Subparametro;
 use App\Models\Proveedores;
 use App\Models\Lote;
+use App\Models\Usuario;
+
 
 class registrarProductoController extends Controller
 {
@@ -19,7 +21,11 @@ class registrarProductoController extends Controller
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
 
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
         $subparametrosCategorias = Subparametro::where('id_parametros', 1)->get();
         $subparametrosMarca = Subparametro::where('id_parametros', 2)->get();
         $subparametrosColor = Subparametro::where('id_parametros', 3)->get();
@@ -27,6 +33,7 @@ class registrarProductoController extends Controller
         $subparametrosEstado = Subparametro::where('id_parametros', 5)->get();
         $proveedores = Proveedores::all();
         $lote = Lote::all();
+
         return view('registrarProducto', compact(
             'user',
             'saludo',
@@ -48,28 +55,25 @@ class registrarProductoController extends Controller
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
 
+        // Validar los datos
         $request->validate([
             'nombre' => 'required|string|max:100',
-            'url_imagen' => 'required|url',
+            'url_imagen' => 'required|string|max:255',
             'descripcion' => 'nullable|string',
+            'recomendaciones_uso' => 'nullable|string',
+            'marca' => 'required|integer',
+            'categoria' => 'required|integer',
+            'color' => 'nullable|integer',
+            'presentacion' => 'nullable|integer',
+            'estado' => 'required|integer',
+            'id_lote' => 'required|integer',
+            'id_proveedor' => 'required|integer',
+            'cantidad' => 'required|integer',
+            'precio' => 'required|numeric',
+            'detalle_medida' => 'nullable|string|max:100'
         ]);
 
-        Producto::create([
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'recomendaciones_uso' => $request->recomendaciones_uso,
-            'marca' => $request->marca,
-            'categoria' => $request->categoria,
-            'color' => $request->color,
-            'presentacion' => $request->presentacion,
-            'estado' => $request->estado,
-            'id_lote' => $request->id_lote,
-            'url_imagen' => $request->url_imagen, 
-            'id_proveedor' => $request->id_proveedor,
-            'cantidad' => $request->cantidad,
-            'precio' => $request->precio,
-            'detalle_medida' => $request->detalle_medida,
-        ]);
+        Producto::create($request->all());
 
         return redirect()->route('producto.create', ['id' => $id])
             ->with('success', 'Producto creado correctamente');
@@ -120,7 +124,12 @@ class registrarProductoController extends Controller
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
     
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
+
     
       
         $producto = Producto::findOrFail($id);

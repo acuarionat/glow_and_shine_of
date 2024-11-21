@@ -8,7 +8,6 @@ class ComponentsController extends Controller
 {
     public function CardMostSold()
     {
-        // Consultar los productos más vendidos
         $productosMasVendidos = DB::table('inventario_venta as iv')
             ->join('producto as p', 'iv.id_producto', '=', 'p.id_producto')
             ->select(
@@ -18,9 +17,9 @@ class ComponentsController extends Controller
                 'p.precio', 
                 DB::raw('SUM(iv.cantidad) as total_vendido')
             )
-            ->groupBy('p.id_producto', 'p.nombre', 'p.url_imagen', 'p.precio') // Agrupar por los campos relevantes
+            ->groupBy('p.id_producto', 'p.nombre', 'p.url_imagen', 'p.precio') 
             ->orderByDesc('total_vendido')
-            ->take(5) // Limitar a los 5 más vendidos
+            ->take(5) 
             ->get();
 
         return view('components.Aldahir.CardMostSold', compact('productosMasVendidos'));
@@ -28,7 +27,7 @@ class ComponentsController extends Controller
 
     public function CardNewArrivals()
     {
-        // Consultar los productos recién llegados
+ 
         $recienLlegados = DB::table('inventario_compra as ic')
             ->join('producto as p', 'ic.id_producto', '=', 'p.id_producto')
             ->select(
@@ -36,10 +35,10 @@ class ComponentsController extends Controller
                 'p.nombre',
                 'p.url_imagen', 
                 'p.precio', 
-                'ic.fecha_compra' // Incluir la fecha de compra
+                'ic.fecha_compra' 
             )
-            ->orderByDesc('ic.fecha_compra') // Ordenar por la fecha más reciente
-            ->take(7) // Limitar a los últimos 7 ingresos
+            ->orderByDesc('ic.fecha_compra') 
+            ->take(7) 
             ->get();
 
         return view('components.Aldahir.CardNewArrivals', compact('recienLlegados'));

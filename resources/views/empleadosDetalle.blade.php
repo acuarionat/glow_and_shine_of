@@ -3,9 +3,6 @@
 
 <x-app-layout-AdministradorDash :saludo="$saludo" :user="$user">
     <section class="contenedorDashAdmin">
-         <x-Claudia.pageContentEmpleados :saludo="$saludo" 
-         :user="$user" 
-         :mensajeB="$mensajeB" 
-         :cantidadDatos="$cantidadDatos" /> 
+         <x-Claudia.modEmpleados.mostrarDetallesE :empleados="$empleados" :user="$user" :datosAcademicos="$datosAcademicos"/> 
     </section>
 </x-app-layout-AdministradorDash >

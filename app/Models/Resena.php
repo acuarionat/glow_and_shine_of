@@ -9,7 +9,7 @@ class Resena extends Model
 {
     use HasFactory;
     protected $table = 'resena';
-    protected $primaryKey = 'id_resena';
+    protected $primaryKey = 'id_resena_producto';
     public $timestamps = false;
     
     // Definir relaciones inversas

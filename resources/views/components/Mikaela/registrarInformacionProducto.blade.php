@@ -8,11 +8,7 @@
         <div class="registro_imagen_producto">
             <div class="contenedor_datos">
                 <h3 class="subtitulo_Info">URL de la Imagen:</h3>
-                <input type="text" name="direccion_imagen" class="edit_informacion" id="direccion_imagen" placeholder="URL de la imagen" required>
-            </div>
-            <div class="contenedor_datos">
-                <h3 class="subtitulo_Info">Descripción de la imagen:</h3>
-                <textarea name="descripcion_imagen" class="edit_informacion" id="descripcion_imagen" placeholder="Descripción de Imagen"></textarea>
+                <input type="text" name="url_imagen" class="edit_informacion" id="url_imagen" placeholder="URL de la imagen" required>
             </div>
         </div>
 

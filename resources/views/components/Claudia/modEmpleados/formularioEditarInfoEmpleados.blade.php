@@ -59,9 +59,9 @@
                 <div class="container_llenado">
                     <label class="subtitle" for="Turno">Turno</label>
                     <select class="edit_info" name="turno" required>
-                        <option value="44" {{ $empleados->turno == 44 ? 'selected' : '' }}>Mañana</option>
-                        <option value="45" {{ $empleados->turno == 45 ? 'selected' : '' }}>Tarde</option>
-                        <option value="46" {{ $empleados->turno == 46 ? 'selected' : '' }}>Noche</option>
+                        <option value="34" {{ $empleados->turno == 34 ? 'selected' : '' }}>Mañana</option>
+                        <option value="35" {{ $empleados->turno == 35 ? 'selected' : '' }}>Tarde</option>
+                        <option value="36" {{ $empleados->turno == 36 ? 'selected' : '' }}>Noche</option>
                     </select>
                 </div>
 

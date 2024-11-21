@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Producto;
+use App\Models\Usuario;
+
 
 
 class ManagmentSaleController extends Controller
@@ -20,7 +22,11 @@ class ManagmentSaleController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
 
 
         return view('DashboardAdminSale', compact('user', 'saludo'));

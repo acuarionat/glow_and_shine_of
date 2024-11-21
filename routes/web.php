@@ -107,7 +107,7 @@ Route::get('/verificar-correo', [moduloEmpleadoController::class, 'verificarCorr
 Route::post('/empleados/registrar', [moduloEmpleadoController::class, 'registrarEmpleado'])->name('empleados.registrar');
 Route::get('/editarPerfil/{id}/{id_empleado}', [moduloEmpleadoController::class, 'editarEmpleado'])->name('empleados.editar');
 Route::put('/empleados/actualizar', [moduloEmpleadoController::class, 'actualizarEmpleado'])->name('empleados.actualizar');
-
+Route::get('/mostrarDetalles/{id}/{id_empleado}', [moduloEmpleadoController::class, 'mostrarDetalle'])->name('empleados.detalles');
 
 
 

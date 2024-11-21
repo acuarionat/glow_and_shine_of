@@ -17,14 +17,12 @@ class editarUsuarioController extends Controller
     {
         $user = DB::table('usuarios')->where('id', $id)->first();
 
-        // Verificar si el usuario existe
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
 
         $saludo = 'Edita tu información';
 
-        // Pasar los datos a la vista
        
         return view('editarPerfilUsuario', compact('user','saludo'));
 

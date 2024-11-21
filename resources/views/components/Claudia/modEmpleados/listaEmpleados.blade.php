@@ -13,7 +13,6 @@
                 <i class="fas fa-search fa-fw" id="iconoBuscar" style="cursor: pointer;" onclick="document.getElementById('formularioBusqueda').submit();"></i>
                 <input class="buscar_empleado" type="text" name="busqueda"  placeholder="Nombre del empleado" required>
 
-
             </form>
         </div>
     </div>
@@ -26,9 +25,10 @@
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Fecha contratación</th>
-                    <th>Salario</th>
+                    <th>Salario (Bs)</th>
                     <th>Turno</th>
                     <th>Opciones</th>
+                    <th>Detalles</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +40,7 @@
                         <td>{{ $empleado->salario }}</td>
                         <td>{{ $empleado->turno }}</td>
                         <td><a href="{{ url('editarPerfil/' . $user->id . '/' . $empleado->id_empleado) }}" class="editar_cuenta">Editar información</a></td>
+                        <td><a href="{{ url('mostrarDetalles/' . $user->id . '/' . $empleado->id_empleado) }}" class="editar_cuenta">Mostrar más</a></td>
                     </tr>
                 @endforeach
             </tbody>

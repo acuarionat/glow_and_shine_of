@@ -53,9 +53,9 @@
                     <div class="container_llenado">
                         <label class="subtitle" for="tipo_cliente">Tipo de cliente</label>
                         <select class="edit_info" name="tipo_cliente" required>
-                            <option value="52" {{ $clientes->tipo_cliente == 52 ? 'selected' : '' }}>Minorista</option>
-                            <option value="53" {{ $clientes->tipo_cliente == 53 ? 'selected' : '' }}>Mayorista</option>
-                            <option value="54" {{ $clientes->tipo_cliente == 54 ? 'selected' : '' }}>Promotores</option>
+                            <option value="42" {{ $clientes->tipo_cliente == 42 ? 'selected' : '' }}>Minorista</option>
+                            <option value="43" {{ $clientes->tipo_cliente == 43 ? 'selected' : '' }}>Mayorista</option>
+                            <option value="44" {{ $clientes->tipo_cliente == 44 ? 'selected' : '' }}>Promotores</option>
                         </select>
                     </div>
                 </div>

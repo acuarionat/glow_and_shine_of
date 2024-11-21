@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use App\Models\Empleado;
 use App\Models\Persona;
@@ -16,7 +17,12 @@ class moduloEmpleadoController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
+
 
         $empleados = DB::table('empleados')
         ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona') // Unión con persona
@@ -37,8 +43,11 @@ class moduloEmpleadoController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
-
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
         $busqueda = $request->input('busqueda');
 
         $empleados = DB::table('empleados')
@@ -64,7 +73,11 @@ class moduloEmpleadoController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
 
         return view('empleadosRegistro' , compact('user','saludo'));
         
@@ -85,8 +98,6 @@ class moduloEmpleadoController extends Controller
 
     // Verificar si la persona ya existe por su correo
     $persona = DB::table('persona')->where('correo_electronico', $correo)->first();
-    $ultimoIdEmpleado = DB::table('empleados')->max('id_empleado');
-        $nuevoIdEmpleado = $ultimoIdEmpleado + 1;
 
         if ($persona) {
             // Si la persona existe, actualizamos sus datos si están vacíos o nulos
@@ -100,15 +111,11 @@ class moduloEmpleadoController extends Controller
                     'telefono' => $request->input('telefono', $persona->telefono)
                 ]);
             
-            // Usamos el ID de la persona existente
-            $personaId = $persona->id_persona;
         } else {
             return redirect()->back()->with('error', 'El correo electrónico no está registrado. Debe crear un usuario primero.');
         }
-
    
     DB::table('empleados')->insert([
-        'id_empleado' => $nuevoIdEmpleado,
         'id_persona' => $persona->id_persona,
         'fecha_contratacion' => $request->input('fecha_contratacion'),
         'salario' => $request->input('salario'),
@@ -140,7 +147,11 @@ class moduloEmpleadoController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador'
+        };
 
 
 
@@ -175,7 +186,7 @@ class moduloEmpleadoController extends Controller
         'carnet_identidad' => 'required|string|max:20',
         'fecha_contratacion' => 'required|date',
         'salario' => 'required|numeric',
-        'turno' => 'required|in:44,45,46'
+        'turno' => 'required|in:34,35,36'
     ]);
 
     // Buscar al empleado en la base de datos
@@ -209,7 +220,51 @@ class moduloEmpleadoController extends Controller
                      ->with('success', 'Empleado actualizado correctamente.');
 }
 
+public function mostrarDetalle($id, $id_empleado)
+{
+    $user = DB::table('usuarios')->where('id', $id)->first();
+    if (!$user) {
+        return redirect('/users')->with('error', 'Usuario no encontrado');
+    }
+    $user = Usuario::with('rol')->find($user->id);
+    $saludo = match ($user->rol->nombre_rol) {
+        'empleado' => 'Perfil de Empleado',
+        'admin' => 'Perfil del Administrador'
+    };
 
+    $empleados = DB::table('empleados')
+        ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
+        ->leftJoin('dbo.sub_parametros as genero', 'persona.genero', '=', 'genero.id_sub_parametros') // Asegúrate de usar el nombre correcto de la columna
+        ->leftJoin('dbo.sub_parametros as estadoCivil', 'persona.estado_civil', '=', 'estadoCivil.id_sub_parametros') // Asegúrate de usar el nombre correcto de la columna
+        ->where('empleados.id_empleado', $id_empleado)
+        ->select(
+            'empleados.*',
+            'persona.*',
+            'genero.descripcion as genero_descripcion',
+            'estadoCivil.descripcion as estado_civil_descripcion'
+        )
+        ->first();
+
+    $datosAcademicos = DB::table('datos_academicos')
+        ->join('sub_parametros as nivel', 'datos_academicos.nivel_academico', '=', 'nivel.id_sub_parametros')
+        ->join('sub_parametros as especialidad', 'datos_academicos.especialidad_academica', '=', 'especialidad.id_sub_parametros')
+        ->where('datos_academicos.id_empleado', $id_empleado)
+        ->select(
+            'datos_academicos.id_datos_academicos',
+            'nivel.descripcion as nivel_academico_descripcion',
+            'especialidad.descripcion as especialidad_academica_descripcion'
+        )
+        ->first();
+
+
+
+
+    if (!$empleados) {
+        return redirect()->back()->with('error', 'Empleado no encontrado.');
+    }
+
+    return view('empleadosDetalle', compact('empleados', 'user', 'saludo', 'datosAcademicos'));
+}
 
 
 

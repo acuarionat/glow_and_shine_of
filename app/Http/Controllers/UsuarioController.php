@@ -22,7 +22,12 @@ class UsuarioController extends Controller
             ->select('usuarios.id', 'usuarios.name', 'usuarios.email', 'usuarios.created_at', 'roles.nombre_rol as rol_name')
             ->get();
         
-        $saludo = 'Perfil del Administrador';
+            $user = Usuario::with('rol')->find($user->id);
+            $saludo = match ($user->rol->nombre_rol) {
+                'empleado' => 'Perfil de Empleado',
+                'admin' => 'Perfil del Administrador'
+            };
+    
 
         return view('usuariosLista', compact('user', 'saludo', 'usuarios'));
     }
@@ -36,7 +41,12 @@ class UsuarioController extends Controller
         return redirect('/users')->with('error', 'Usuario no encontrado');
     }
 
-    $saludo = 'Perfil del Administrador';
+    $user = Usuario::with('rol')->find($user->id);
+    $saludo = match ($user->rol->nombre_rol) {
+        'empleado' => 'Perfil de Empleado',
+        'admin' => 'Perfil del Administrador'
+    };
+
 
     $busqueda = $request->input('busqueda');
 

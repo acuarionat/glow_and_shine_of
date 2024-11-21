@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +14,12 @@ class buscarProductoController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario',
+        };
 
         $query = DB::table('producto')
             ->leftJoin('sub_parametros as sp_color', 'producto.color', '=', 'sp_color.id_sub_parametros')
@@ -58,7 +63,13 @@ class buscarProductoController extends Controller
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
         
-        $saludo = 'Perfil del Administrador';
+        $user = Usuario::with('rol')->find($user->id);
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario',
+        };
+
     
         $producto = DB::table('producto AS p')
             ->leftJoin('sub_parametros AS sp_color', function ($join) {
