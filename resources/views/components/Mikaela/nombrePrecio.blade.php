@@ -25,5 +25,5 @@
 </form>
 @endif
 </div>
-    <h2 class="precio_producto">Bs.{{ $producto->precio_mercado }}</h2>
+    <h2 class="precio_producto">Bs.{{ $producto->precio }}</h2>
 </div>

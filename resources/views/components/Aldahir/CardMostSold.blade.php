@@ -13,7 +13,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
         rel="stylesheet">
-
 </head>
 
 <body>
@@ -24,19 +23,19 @@
                 <div class="product_card">
 
                     <!--<div class="discount_badge">
-                16% OFF
-            </div>-->
+                        16% OFF
+                    </div>-->
 
                     <div class="product_image">
-                        <img src="{{ $producto->direccion_imagen }}" alt="{{ $producto->nombre }}">
+                        <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre }}">
                     </div>
 
-                    <h3 class="product_brand">GARNIER SKIN ACTIVE</h3>
+                    <h3 class="product_brand">Marca del Producto</h3> <!-- Aquí puedes agregar la marca del producto si está disponible -->
 
                     <h2 class="product_name">{{ $producto->nombre }}</h2>
 
                     <div class="product_price">
-                        <span class="current_price">Bs.{{ $producto->precio }}</span>
+                        <span class="current_price">Bs. {{ number_format($producto->precio, 2) }}</span> <!-- Formatea el precio para mostrar dos decimales -->
                     </div>
 
                 </div>

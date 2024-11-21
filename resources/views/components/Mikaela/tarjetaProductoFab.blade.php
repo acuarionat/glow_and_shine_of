@@ -5,13 +5,13 @@
 <div class="contenedor_tarjeta">
     <a href="/producto/{{ $favorito->id_producto }}">
         <div class="contenedor_imagen_tarjeta">
-            <img src="{{ $favorito->direccion_imagen }}" alt="{{ $favorito->nombre_producto }}" class="producto_catalogo">
+            <img src="{{ $favorito->url_imagen }}" alt="{{ $favorito->nombre_producto }}" class="producto_catalogo">
         </div>
         <div class="contenedor_nombre_producto">
             <h3 class="nombre_producto_tarjeta">{{ $favorito->nombre_producto }}</h3>
         </div>
         <div class="contenedor_precio_producto">
-            <h3 class="precio_producto_tarjeta">Bs. {{ $favorito->precio_mercado }}</h3>
+            <h3 class="precio_producto_tarjeta">Bs. {{ $favorito->precio }}</h3>
             @php
                 $isFavorite = Auth::check() ? Auth::user()->favorites()->where('favoritos.id_producto', $favorito->id_producto)->exists() : false;
             @endphp

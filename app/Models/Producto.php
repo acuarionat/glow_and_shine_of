@@ -14,7 +14,7 @@ class Producto extends Model
     protected $fillable = [
         'id_producto',
         'nombre',
-        'id_precio_mercado',
+        'precio',
         'descripcion',
         'recomendaciones_uso',
         'marca',
@@ -23,18 +23,13 @@ class Producto extends Model
         'presentacion',
         'estado',
         'id_lote',
-        'id_imagen_producto',
-        'id_detalle_medida',
+        'url_imagen',
+        'detalle_medida',
         'id_proveedor',
         'cantidad',
-        'precio',
-        'detalle_medida'
+        'precio'
     ];
 
-    public function imagenProducto()
-    {
-        return $this->belongsTo(ImagenProducto::class, 'id_imagen_producto');
-    }
 
     public function users()
     {
