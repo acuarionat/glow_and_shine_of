@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/contenidoInformacionProducto.css') }}">
 <div class="contenedor_total_producto">
     <div class="contenedor_detalle_producto">
-        <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre_producto }}" class="producto_catalogo">
+        <img src="{{ $producto->imagen_producto }}" alt="{{ $producto->nombre_producto }}" class="producto_catalogo">
     </div>
     <div class="contenedor_informacion_producto">
         <h4 class="texto_subtitulos_productos">Nombre producto:</h4>

@@ -111,4 +111,49 @@ class registrarProductoController extends Controller
         return redirect()->route('producto.update', ['id' => $producto->id_producto, 'id_user' => $id_user])
             ->with('success', 'Producto actualizado correctamente');
     }
+
+    public function edit($id_user, $id)
+    {
+        $user = DB::table('usuarios')->where('id', $id_user)->first();
+    
+        if (!$user) {
+            return redirect('/users')->with('error', 'Usuario no encontrado');
+        }
+    
+        $saludo = 'Perfil del Administrador';
+    
+      
+        $producto = Producto::findOrFail($id);
+    
+    
+        $subparametrosCategorias = Subparametro::where('id_parametros', 1)->get();
+        $subparametrosMarca = Subparametro::where('id_parametros', 2)->get();
+        $subparametrosColor = Subparametro::where('id_parametros', 3)->get();
+        $subparametrosPresentacion = Subparametro::where('id_parametros', 4)->get();
+        $subparametrosEstado = Subparametro::where('id_parametros', 5)->get();
+    
+    
+        $proveedores = Proveedores::all();
+        $lote = Lote::all();
+    
+        $imagenProducto = $producto->url_imagen; 
+    
+        return view('editarProducto', compact(
+            'user',
+            'saludo',
+            'producto',
+            'imagenProducto', 
+            'subparametrosCategorias',
+            'subparametrosMarca',
+            'subparametrosColor',
+            'subparametrosPresentacion',
+            'subparametrosEstado',
+            'proveedores',
+            'lote'
+        ));
+    }
+    
+
 }
+
+   

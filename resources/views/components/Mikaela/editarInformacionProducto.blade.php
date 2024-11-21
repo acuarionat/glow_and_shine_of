@@ -7,11 +7,7 @@
         <div class="registro_imagen_producto">
             <div class="contenedor_datos">
                 <h3 class="subtitulo_Info">URL de la Imagen:</h3>
-                <input type="text" name="direccion_imagen" class="edit_informacion" id="direccion_imagen" value="{{ old('direccion_imagen', $imagenProducto->direccion_imagen ?? '') }}" required>
-            </div>
-            <div class="contenedor_datos">
-                <h3 class="subtitulo_Info">Descripción de la imagen:</h3>
-                <textarea name="descripcion_imagen" class="edit_informacion" id="descripcion_imagen">{{ old('descripcion_imagen', $imagenProducto->descripcion_imagen ?? '') }}</textarea>
+                <input type="text" name="url_imagen" class="edit_informacion" id="direccion_imagen" value="{{ old('url_imagen', $producto->url_imagen ?? '') }}" required>
             </div>
         </div>
 
@@ -120,6 +116,5 @@
         <div class="boton_guardar_actualizar_productos">
             <button type="submit" class="boton_busqueda">Guardar Producto</button>
         </div>
-
     </form>
 </div>

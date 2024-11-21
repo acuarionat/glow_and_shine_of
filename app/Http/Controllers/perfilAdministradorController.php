@@ -32,23 +32,16 @@ class perfilAdministradorController extends Controller
          supervisar operaciones y acceder a herramientas clave para optimizar nuestro sistema. 
          ¡Aprovecha al máximo esta experiencia y gracias por tu valiosa contribución!';
 
-       /*   $cantidadDatos = [
+         $cantidadDatos = [
             'Usuarios' => $cantidadUsuarios,
             'Ventas' => $cantidadVentas,
             'Compras' => $cantidadCompras,
             'Clientes' => $cantidadClientes,
             'Empleados' => $cantidadEmpleados,
             'Productos' => $cantidadProductos,
-        ]; */
+        ]; 
 
-        $cantidadDatos = [
-            'Usuarios' => '$cantidadUsuarios',
-            'Ventas' => '$cantidadVentas',
-            'Compras' => '$cantidadCompras',
-            'Clientes' => '$cantidadClientes',
-            'Empleados' => '$cantidadEmpleados',
-            'Productos' => '$cantidadProductos',
-        ];
+    
          
          return view('dashboardAdmin', compact('user','saludo','mensajeB','cantidadDatos'));
      }

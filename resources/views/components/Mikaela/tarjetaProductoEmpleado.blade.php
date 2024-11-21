@@ -3,7 +3,7 @@
 <div class="contenedor_tarjeta_empleado">
 <a href="{{ url('productoDetalle/' . auth()->user()->id . '/' . $producto->id_producto) }}">
     <div class="contenedor_imagen_tarjeta_empleado">
-    <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre_producto }}" class="producto_catalogo">
+    <img src="{{ $producto->imagen_producto }}" alt="{{ $producto->nombre_producto }}" class="producto_catalogo">
     </div>
     <div class="contenedor_general_producto">
         <div class="contenedor_producto_1">
