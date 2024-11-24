@@ -81,6 +81,7 @@ Route::get('/registerU/{id}', [LoginController::class,'registroU'])->name('accou
 Route::get('/listarUsuarios/{id}', [UsuarioController::class, 'listarUsuarios'])->name('usuarios.listar');
 Route::get('/buscarUsuario/{id}', [UsuarioController::class, 'busqueda_usuario'])->name('usuarios.busqueda_usuario');
 Route::post('/resena', [ResenaController::class, 'store'])->name('store');
+Route::put('/usuarios/cambiar-estado/{id}', [UsuarioController::class, 'cambiarEstado'])->name('cambiarEstado');
 
 
 
@@ -131,12 +132,17 @@ Route::put('/clientes/actualizar', [moduloClienteController::class, 'actualizarC
 
 
 
+
+
 Route::get('/ventas/{id}', [salesController::class, 'mostrarVentas']);
 Route::get('/compras/{id}', [comprasController::class, 'mostrarCompras']);
-
-
-Route::get('/perfil/{id}', [perfilController::class, 'datos_perfil']);
 
 Route::get('/buscar-producto/{nombre}', [ManagmentSaleController::class, 'buscarProducto'])->name('buscar.producto');
 Route::get('/msale/{id}', [ManagmentSaleController::class, 'ManagmentSale']); 
 Route::get('/buscar-persona/{ci}', [ManagmentSaleController::class, 'buscarPersona'])->name('buscar.persona');
+
+
+Route::get('registrarCompras/{id}', [comprasController::class, 'ManagmentBuy']);
+Route::get('/buscar-empresa/{ci}', [comprasController::class, 'buscarPersona'])->name('buscar.persona');
+
+

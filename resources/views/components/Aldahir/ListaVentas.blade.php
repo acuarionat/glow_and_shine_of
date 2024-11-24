@@ -17,7 +17,6 @@
                     
                     <th>Producto</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
                     <th>Usuario</th>
                     <th>Fecha de venta</th>
                     
@@ -29,7 +28,6 @@
                             <td>{{ $venta->id_inventario_venta }}</td>
                             <td>{{ $venta->producto }}</td>
                             <td>{{ $venta->cantidad }}</td>
-                            <td>{{ $venta->precio }}</td>
                             <td>{{ $venta->usuario }}</td>
                             <td>{{ \Carbon\Carbon::parse($venta->fecha_venta)->format('d/m/Y H:i') }}</td>
                         </tr>

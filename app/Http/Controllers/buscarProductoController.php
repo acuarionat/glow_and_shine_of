@@ -78,19 +78,19 @@ class buscarProductoController extends Controller
             })
             ->leftJoin('sub_parametros AS sp_estado', function ($join) {
                 $join->on('p.estado', '=', 'sp_estado.id_sub_parametros')
-                    ->where('sp_estado.id_parametros', '=', 4);
+                    ->where('sp_estado.id_parametros', '=', 5);
             })
             ->leftJoin('sub_parametros AS sp_marca', function ($join) {
                 $join->on('p.marca', '=', 'sp_marca.id_sub_parametros')
-                    ->where('sp_marca.id_parametros', '=', 5);
+                    ->where('sp_marca.id_parametros', '=', 2);
             })
             ->leftJoin('sub_parametros AS sp_presentacion', function ($join) {
                 $join->on('p.presentacion', '=', 'sp_presentacion.id_sub_parametros')
-                    ->where('sp_presentacion.id_parametros', '=', 6);
+                    ->where('sp_presentacion.id_parametros', '=', 4);
             })
             ->leftJoin('sub_parametros AS sp_categoria', function ($join) {
                 $join->on('p.categoria', '=', 'sp_categoria.id_sub_parametros')
-                    ->where('sp_categoria.id_parametros', '=', 7);
+                    ->where('sp_categoria.id_parametros', '=', 1);
             })
             ->where('p.id_producto', $id)
             ->select(

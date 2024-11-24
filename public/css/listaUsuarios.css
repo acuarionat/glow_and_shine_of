@@ -15,7 +15,10 @@
     gap: 10px; 
 
 }
-
+.estado-btn {
+    min-width: 80px; 
+    text-align: center; 
+}
 .container_lista_usuarios h1 {
     font-size: 1.5em;
     color: #925487; 

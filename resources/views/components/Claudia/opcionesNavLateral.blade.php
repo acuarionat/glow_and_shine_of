@@ -56,7 +56,7 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Registrar Compra</a></li>
+                <li><a href="{{ url('registrarCompras/' . auth()->user()->id) }}"  class="active"><i class="fas fa-plus"></i> Registrar Compra</a></li>
                 <li><a href="{{ url('compras/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de Compra</a></li>
             </ul>
         </li>
@@ -86,7 +86,6 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="{{ url('registerU/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar nuevo usuario</a></li>
                 <li><a href="{{ url('listarUsuarios/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
             </ul>
         </li>

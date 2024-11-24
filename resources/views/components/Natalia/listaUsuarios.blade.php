@@ -11,7 +11,7 @@
         <div class="contenedor_busqueda">
             <form class="formulario_busqueda" id="formularioBusqueda" action="{{ route('usuarios.busqueda_usuario', ['id' => auth()->user()->id]) }}" method="GET">
                 <i class="fas fa-search fa-fw" id="iconoBuscar" style="cursor: pointer;" onclick="document.getElementById('formularioBusqueda').submit();"></i>
-                <input class="buscar_usuario" type="text" name="busqueda" placeholder="Nombre del usuario" required>
+                <input class="buscar_usuario" type="text" name="busqueda" placeholder="" required>
             </form>
         </div>
     </div>
@@ -20,24 +20,42 @@
         <table class="estilo_tabla">
             <thead>
                 <tr class="encabezado_table">
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Fecha de creación</th>
+                    <th>Email</th>
                     <th>Rol</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($usuarios as $usuario)
-                    <tr class="text-center">
-                        <td>{{ $usuario->id }}</td> 
-                        <td>{{ $usuario->name }}</td>
-                        <td>{{ $usuario->email }}</td>
-                        <td>{{ $usuario->created_at }}</td>
-                        <td>{{ $usuario->rol_name }}</td> 
-                    </tr>
+                @foreach ($usuarios as $usuario)
+                <tr class="text-center">
+                    <td>{{ $usuario->id }}</td>
+                    <td>{{ $usuario->name }}</td>
+                    <td>{{ $usuario->email }}</td>
+                    <td>
+                        @if ($usuario->rol_name == 'admin')
+                            administrador
+                        @else
+                            {{ $usuario->rol_name }}
+                        @endif
+                    </td>
+                <td>
+                        <form action="{{ route('cambiarEstado', $usuario->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" 
+                                class="btn btn-sm estado-btn {{ $usuario->estado === 'Activo' ? 'btn-success' : 'btn-danger' }}">
+                                {{ $usuario->estado }}
+                            </button>
+                        </form>
+                        
+                        
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
+              
     </div>
 </section>

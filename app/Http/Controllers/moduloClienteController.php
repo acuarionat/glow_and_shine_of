@@ -98,34 +98,30 @@ class moduloClienteController extends Controller
         
     }
 
-    public function busqueda_empleado(Request $request, $id){
+    public function busqueda_cliente(Request $request, $id)
+    {
         $user = DB::table('usuarios')->where('id', $id)->first();
 
-        
+
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $user = Usuario::with('rol')->find($user->id);
-        $saludo = match ($user->rol->nombre_rol) {
-            'empleado' => 'Perfil de Empleado',
-            'admin' => 'Perfil del Administrador'
-        };
+        $saludo = 'Perfil del Administrador';
 
         $busqueda = $request->input('busqueda');
 
         $clientes = DB::table('cliente')
-        ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
-            ->select('cliente.id_cliente', 'persona.nombres', 'cliente.porcentaje_descuento')
+            ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
+            ->join('sub_parametros', 'cliente.tipo_cliente', '=', 'sub_parametros.id_sub_parametros')
+            ->select('cliente.id_cliente', 'persona.nombres', 'cliente.porcentaje_descuento','sub_parametros.descripcion AS tipo_cliente')
             ->when($busqueda, function ($query, $busqueda) {
                 return $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
             })
             ->get();
 
-        return view('clientesLista' , compact('user','saludo','clientes'));
-        
+        return view('clientesLista', compact('user', 'saludo', 'clientes'));
     }
-
-    public function editar_clientes($id)
+        public function editar_clientes($id)
     {
         $user = DB::table('usuarios')->where('id', $id)->first();
 

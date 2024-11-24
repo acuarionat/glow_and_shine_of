@@ -6,6 +6,8 @@
     <div class="cont_register_title">
         <h1>Datos Administrador</h1>
     </div>
+    {{--     <form method="POST" action="{{ route('registrar.venta') }}"> --}}
+    @csrf
     <div class="cont_regis">
         <div class="cont_filled">
             <label class="subt_register" for="name">Nombre</label>
@@ -45,7 +47,8 @@
     </div>
 
     <div class="container_button_sale">
-        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+ Agregar
+        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+
+            Agregar
             Producto</button>
     </div>
 
@@ -63,12 +66,12 @@
                 <div class="modal-body">
                     <!-- Cuadro de búsqueda -->
                     <div class="contenedor_busqueda">
-                        <form id="formularioBusqueda" class="formulario_busqueda" id="formularioBusqueda" {{-- action="{{ route('empleados.busqueda_empleado', ['id' => $user->id]) }}" method="GET" --}}>
+                        <form id="formularioBusqueda" class="formulario_busqueda" id="formularioBusqueda"
+                            {{-- action="{{ route('empleados.busqueda_empleado', ['id' => $user->id]) }}" method="GET" --}}>
 
                             <i class="fas fa-search fa-fw" id="iconoBuscar" style="cursor: pointer;"></i>
                             <input class="buscar_empleado" type="text" id="nombre_producto"
                                 placeholder="Nombre del producto" required>
-
                         </form>
                     </div>
 
@@ -82,8 +85,6 @@
                                     <th>Categoría</th>
                                     <th>Marca</th>
                                     <th>Color</th>
-                                    <th>Lote</th>
-                                    <th>Detalle Medida</th>
                                     <th>Precio Venta</th>
                                     <th>Estado</th>
                                     <th>Imagen</th>
@@ -91,17 +92,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><button class="btn btn-success">+</button></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><img src="" alt="" class="img-fluid"
-                                            ></td>
+
                                 </tr>
                                 <!-- Más filas de ejemplo -->
                             </tbody>
@@ -115,11 +106,7 @@
         </div>
     </div>
 
-
-
-
     {{-- //my_table --}}
-
     <div class="cont_table_sale">
         <table border="1">
             <thead>
@@ -145,9 +132,9 @@
     </div>
 
     <div class="container_button_sale">
-        <button type="button" class="my_button_sale">Registrar Venta</button>
+        <button type="button" class="my_button_sale" id="btnRegistrarVenta">Registrar Venta</button>
     </div>
-
+    {{--     </form> --}}
 </div>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -160,3 +147,185 @@
 {{-- //script for filled --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    /* buscar producto */
+    $(document).ready(function() {
+        $('#iconoBuscar').on('click', function() {
+            const nombreProducto = $('#nombre_producto').val();
+            if (nombreProducto) {
+                $.ajax({
+                    url: `/buscar-producto/${nombreProducto}`,
+                    method: 'GET',
+                    success: function(data) {
+                        const tbody = $('.modal-table tbody');
+                        tbody.empty(); // Limpiar la tabla antes de mostrar resultados
+                        data.forEach(producto => {
+                            const fila = `
+                            <tr>
+                                <td><button class="btn btn-success">+</button></td>
+                                <td>${producto.nombre_producto}</td>
+                                <td>${producto.categoria}</td>
+                                <td>${producto.marca}</td>
+                                <td>${producto.color}</td>
+                                <td>${producto.precio_venta}</td>
+                                <td>${producto.estado}</td>
+                                <td>
+                                    ${producto.imagen ? `<img src="${producto.imagen}" alt="Imagen del producto" class="img-fluid" style="width: 50px; height: auto;">` : 'Sin Imagen'}
+                                </td>
+                            </tr>
+                        `;
+                            tbody.append(
+                                fila); // Añadir cada fila al cuerpo de la tabla
+                        });
+
+                        // Enlazar el evento a los botones generados
+                        $('.modal-table .btn-success').off('click').on('click', function() {
+                            const row = $(this).closest('tr')[0];
+                            const productName = row.cells[1].textContent;
+                            const price = row.cells[5].textContent;
+
+                            const saleTableBody = document.querySelector(
+                                '.cont_table_sale tbody');
+                            const newRow = document.createElement('tr');
+
+                            newRow.innerHTML = `
+                            <td><button class="btn btn-danger" onclick="removeRow(this)">-</button></td>
+                            <td>${productName}</td>
+                            <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
+                            <td>${price}</td>
+                            <td><input type="number" value="0" min="0" onchange="updateSubtotal(this)"></td>
+                            <td>${price}</td>
+                        `;
+                            saleTableBody.insertBefore(newRow, saleTableBody
+                                .querySelector('.total-row'));
+
+                            updateTotal();
+                        });
+                    },
+                    error: function() {
+                        alert('Producto no encontrado');
+                    }
+                });
+            }
+        });
+    });
+
+
+    $(document).ready(function() {
+        $('#ci_persona').on('blur', function() {
+            const ci = $(this).val();
+            if (ci) {
+                $.ajax({
+                    url: `/buscar-persona/${ci}`,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#nombres').val(data.nombres);
+                        $('#apellido_paterno').val(data.apellido_paterno);
+                        $('#apellido_materno').val(data.apellido_materno);
+
+                    },
+                    error: function() {
+                        alert('Persona no encontrada');
+                        $('#nombres').val('');
+                        $('#apellido_paterno').val('');
+                        $('#apellido_materno').val('');
+
+                    }
+                });
+            }
+        });
+    });
+
+
+
+    // Función para actualizar el subtotal de cada fila de venta
+    function updateSubtotal(input) {
+        const row = input.closest('tr');
+        const quantity = row.cells[2].querySelector('input').value;
+        const price = parseFloat(row.cells[3].textContent);
+        const discount = row.cells[4].querySelector('input').value;
+        const subtotal = (quantity * price) - discount;
+
+        row.cells[5].textContent = subtotal.toFixed(2);
+
+
+        updateTotal();
+    }
+
+    // Función para actualizar el total general
+    function updateTotal() {
+        const rows = document.querySelectorAll('.cont_table_sale tbody tr:not(.total-row)');
+        let total = 0;
+
+        rows.forEach(row => {
+            const subtotal = parseFloat(row.cells[5].textContent);
+            total += subtotal;
+        });
+
+        document.querySelector('.total-row td:last-child').textContent = total.toFixed(2);
+    }
+
+    // Función para eliminar una fila de la tabla de ventas
+    function removeRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+        updateTotal();
+    }
+
+
+
+    $(document).on('click', '#btnRegistrarVenta', function() {
+        const productos = [];
+
+        // Recorre las filas de la tabla de productos
+        $('.cont_table_sale tbody tr:not(.total-row)').each(function() {
+    const row = $(this);
+
+    // Validar que la fila no esté vacía
+    if (!row.find('td').length) {
+        console.warn('Fila vacía detectada, ignorando...');
+        return; // Saltar esta iteración
+    }
+
+    const nombre = row.find('td:nth-child(2)').text().trim();
+    const cantidad = parseInt(row.find('td:nth-child(3) input').val());
+ 
+    // Validar datos de la fila
+    if (nombre && !isNaN(cantidad) ) {
+        productos.push({ nombre, cantidad });
+    } else {
+        console.warn('Datos inválidos en fila, ignorando:', { nombre, cantidad });
+    }
+});
+
+        
+
+        // Enviar los datos al servidor
+        console.log(productos);
+        $.ajax({
+            url: '/registrar-venta',
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                productos: productos
+            },
+            success: function(response) {
+                alert(response.success);
+                location.reload(); // Recargar la página después del éxito
+            },
+            error: function(xhr) {
+    console.log(xhr.responseJSON);
+    alert(xhr.responseJSON.error || 'Ocurrió un error al registrar la venta.');
+}
+
+
+
+        });
+    });
+</script>

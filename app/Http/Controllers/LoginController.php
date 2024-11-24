@@ -30,44 +30,51 @@ class LoginController extends Controller
         }    
     
 
-    public function authenticate() {
-        $validator = Validator::make(request()->all(), [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-    
-        if ($validator->passes()) {
-            if (Auth::attempt(['email' => request()->email, 'password' => request()->password])) {
-                $user = Auth::user();
-                
-                $user = Usuario::with('rol')->find($user->id);
-                if ($user && $user->rol) {
-                    switch ($user->rol->nombre_rol) {
-                        case 'admin':
-                            return redirect()->intended(route('account.dashboardAdmin', ['id' => $user->id]))
-                                ->with('success', 'Inicio de Sesión realizado con éxito');
-                        case 'empleado':
-                            return redirect()->intended(route('account.dashboardEmpleado', ['id' => $user->id]))
-                                ->with('success', 'Inicio de Sesión realizado con éxito');
-                        case 'cliente':
-                            return redirect()->intended(route('account.dashboard', ['id' => $user->id]))
-                                ->with('success', 'Inicio de Sesión realizado con éxito');
-                        default:
-                            return redirect()->intended(route('account.dashboard', ['id' => $user->id]))
-                                ->with('success', 'Inicio de Sesión realizado con éxito');
-                    }
-                } else {
-                    return redirect()->route('account.login')->with('error', 'Usuario no autenticado.');
+  public function authenticate() {
+    $validator = Validator::make(request()->all(), [
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    if ($validator->passes()) {
+        if (Auth::attempt(['email' => request()->email, 'password' => request()->password])) {
+            $user = Auth::user();
+            $user = Usuario::with('rol')->find($user->id);
+
+            // Verifica si el usuario está inactivo
+            if ($user->estado === 'Inactivo') {
+                Auth::logout();  // Cierra la sesión si el usuario está inactivo
+                return redirect()->route('account.login')->with('error', 'Tu cuenta está inactiva. Contacta al administrador.');
+            }
+
+            if ($user && $user->rol) {
+                switch ($user->rol->nombre_rol) {
+                    case 'admin':
+                        return redirect()->intended(route('account.dashboardAdmin', ['id' => $user->id]))
+                            ->with('success', 'Inicio de Sesión realizado con éxito');
+                    case 'empleado':
+                        return redirect()->intended(route('account.dashboardEmpleado', ['id' => $user->id]))
+                            ->with('success', 'Inicio de Sesión realizado con éxito');
+                    case 'cliente':
+                        return redirect()->intended(route('account.dashboard', ['id' => $user->id]))
+                            ->with('success', 'Inicio de Sesión realizado con éxito');
+                    default:
+                        return redirect()->intended(route('account.dashboard', ['id' => $user->id]))
+                            ->with('success', 'Inicio de Sesión realizado con éxito');
                 }
             } else {
-                return redirect()->route('account.login')->with('error', 'Email o contraseña incorrectos');
+                return redirect()->route('account.login')->with('error', 'Usuario no autenticado.');
             }
         } else {
-            return redirect()->route('account.login')
-                ->withInput()
-                ->withErrors($validator);
+            return redirect()->route('account.login')->with('error', 'Email o contraseña incorrectos');
         }
+    } else {
+        return redirect()->route('account.login')
+            ->withInput()
+            ->withErrors($validator);
     }
+}
+
     
     
 
