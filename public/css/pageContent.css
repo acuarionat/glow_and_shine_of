@@ -20,3 +20,9 @@ body
     --Morado: #764C73;
     
 }
+.container_perfil_administrador
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

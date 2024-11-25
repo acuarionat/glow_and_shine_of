@@ -1,36 +1,47 @@
 .mensaje_contenedor{
-    background-color: #FEE9FF;
-    width: 100%; 
+    background-color: var(--Rosado_principal);
+    width: 80%; 
     height: 150px; 
     margin-top: 10px;
     margin-bottom: 40px;
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    flex-direction: column;
-    
+    flex-direction: column; 
+    border: double var(--Blanco) 8px ;  
+    border-radius: 20px;
 }
-.encabezado_B{
+/* .encabezado_B{
     color: #601A55;
     font-size: 1.5rem;
     font-family: 'Poppins', semi-bold;
     
     
-}
+} */
 .mensaje_B{
-    color: #601A55;
-    font-size: 16px;
+    color: #fff;
+    font-size: 25px;
     font-family: 'Poppins', Regular;
     text-align: justify;
     padding-left: 2rem;
     padding-right: 2rem;
     
 }
+.intro
+{
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Poppins', Regular;
+    text-align: justify;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
+}
 
 @media (max-width: 375px) {
     .mensaje_contenedor {
         height: auto;
-        padding: 20px 10px; 
+
     }
 
     .mensaje_B {

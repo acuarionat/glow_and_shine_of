@@ -24,8 +24,8 @@
 
 <div class="contenedor_nav_lateral">
     <div class="logo_empresa">
-        <img src="{{ asset('images/logosis.png') }}" alt="Logo">
-        <h1 class="nombre_empresa">G&S System</h1>
+        <img src="{{ asset('images/log.png') }}" alt="Logo">
+    
     </div>
     <div class="contenedor-opcioness">
         <x-Claudia.opcionesNavLateral/>

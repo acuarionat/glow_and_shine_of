@@ -27,10 +27,7 @@ class perfilAdministradorController extends Controller
         $cantidadEmpleados = DB::table('empleados')->count();
         $cantidadProductos = Producto::count();
         $saludo = 'Perfil del Administrador';
-        $mensajeB = 'Nos complace tenerte en nuestra comunidad como administradora. 
-        Este es tu espacio personal, donde podrás gestionar la información de los usuarios,
-         supervisar operaciones y acceder a herramientas clave para optimizar nuestro sistema. 
-         ¡Aprovecha al máximo esta experiencia y gracias por tu valiosa contribución!';
+        $mensajeB = 'Este es tu panel personal, donde podras realizar tus tareas como administrad@r.';
 
          $cantidadDatos = [
             'Usuarios' => $cantidadUsuarios,

@@ -8,8 +8,7 @@
         
     </h1> -->
     <p class="mensaje_B">
-    ¡Bienvenida, {{ $user->name }}! {{$mensajeB}}
-    
-
+    ¡Bienvenid@, {{ $user->name }}! 
     </p>
+    <p class="intro">{{$mensajeB}}</p>
 </div>
