@@ -11,7 +11,7 @@
             <form class="formulario_busqueda" id="formularioBusqueda" action="{{ route('empleados.busqueda_empleado', ['id' => $user->id]) }}" method="GET">
                 
                 <i class="fas fa-search fa-fw" id="iconoBuscar" style="cursor: pointer;" onclick="document.getElementById('formularioBusqueda').submit();"></i>
-                <input class="buscar_empleado" type="text" name="busqueda"  placeholder="Nombre del empleado" required>
+                <input class="buscar_empleado" type="text" name="busqueda"  placeholder="Nombre del empleado" value="{{ request('busqueda') }}">
 
             </form>
         </div>

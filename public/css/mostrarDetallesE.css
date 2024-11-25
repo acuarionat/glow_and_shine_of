@@ -128,17 +128,17 @@
     
     
     .form_group {
-        flex-direction: row; /* Cambiar a filas */
-        flex-wrap: wrap; /* Permitir el ajuste en más de una fila */
+        flex-direction: row; 
+        flex-wrap: wrap; 
         justify-content: space-between;
     }
 
      .container_llenado {
-        width: 48%;
+        width: 28%;
     }
     
 
     .boton_guardar_cambios {
-        width: 100%; /* El botón sigue ocupando toda la fila */
+        width: 100%;
     }
 }

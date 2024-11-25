@@ -9,7 +9,17 @@
     
     
 }
-
+.opc_dashboard{
+    background-color: #BE6C97;
+    display: block;
+    padding: 10px 20px;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
 /* Estilo base para la lista del menú */
 .contenedor_opciones_navLateral ul {
     list-style: none;

@@ -1,4 +1,8 @@
-
+.contenedorDashAdmin {
+    display: flex; /* Esto pone las secciones lado a lado */
+    justify-content: space-between; /* Opcional: distribuye el espacio entre los elementos */
+    
+}
 
 x-Claudia.navegacionLateral {
     flex: 1; /* Toma el espacio disponible, puedes ajustar este valor */

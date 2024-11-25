@@ -14,9 +14,9 @@
             <label>
                 <i class="fab fa-dashcube fa-fw"></i>
                 @if($role == 'admin')
-                    <a href="{{ url('/account/dashboardAdmin/' . auth()->user()->id) }}" class="active"> Dashboard</a>
+                    <a class="opc_dashboard" href="{{ url('/account/dashboardAdmin/' . auth()->user()->id) }}" class="active"> Dashboard</a>
                 @else
-                    <a href="{{ url('/account/dashboardEmpleado/' . auth()->user()->id) }}" class="active"> Dashboard</a>
+                    <a lass="opc_dashboard" href="{{ url('/account/dashboardEmpleado/' . auth()->user()->id) }}" class="active"> Dashboard</a>
                 @endif
             </label>
         </li>

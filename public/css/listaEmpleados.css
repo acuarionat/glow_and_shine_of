@@ -125,3 +125,42 @@
     font-family: "Poppins", sans-serif;
     font-weight: 500;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.pagination .page-link {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+}
+
+
+@media (min-width: 640px) {
+    .sm\:justify-between {
+        display: flex
+;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}

@@ -92,6 +92,21 @@
 .boton_guardar_cambios:active{
     background-color: #C9A8CB ;
 }
+.form-field {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.alert {
+    width: 100%;
+    margin-top: 2px;
+    font-size: 13px;
+    color: red;
+}
 
 @media (min-width: 1024px) {
     
@@ -100,10 +115,12 @@
         flex-wrap: wrap; /* Permitir el ajuste en más de una fila */
         justify-content: space-between;
     }
-
-    .edit_info {
-        width: 48%; /* Hacer los inputs ocupen el 48% del ancho para que haya espacio entre ellos */
+    .form-field {
+        width: 48%;
+    
     }
+
+    
 
     .boton_guardar_cambios {
         width: 100%; /* El botón sigue ocupando toda la fila */

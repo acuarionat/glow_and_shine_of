@@ -3,127 +3,152 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use App\Models\Empleado;
 use App\Models\Persona;
+use Illuminate\Pagination\Paginator;
 
 class moduloEmpleadoController extends Controller
 {
-    public function detalles_empleados( $id){
+
+    public function detalles_empleados($id)
+    {
         $user = DB::table('usuarios')->where('id', $id)->first();
 
-        
+
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $user = Usuario::with('rol')->find($user->id);
-        $saludo = match ($user->rol->nombre_rol) {
-            'empleado' => 'Perfil de Empleado',
-            'admin' => 'Perfil del Administrador'
-        };
-
+        $saludo = 'Perfil del Administrador';
 
         $empleados = DB::table('empleados')
-        ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona') // Unión con persona
-        ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros') // Unión con sub_parametros
-        ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros') // Unión con parametros
-        ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno') // Selección de columnas
-        ->get();
-        
+            ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona') 
+            ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros')
+            ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros')  
+            ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno') // Selección de columnas
+            ->get();
 
-        return view('empleadosLista' , compact('user','saludo','empleados'));
-        
+
+        return view('empleadosLista', compact('user', 'saludo', 'empleados'));
     }
 
-    public function busqueda_empleado(Request $request, $id){
+    public function busqueda_empleado(Request $request, $id)
+    {
         $user = DB::table('usuarios')->where('id', $id)->first();
 
-        
+
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $user = Usuario::with('rol')->find($user->id);
-        $saludo = match ($user->rol->nombre_rol) {
-            'empleado' => 'Perfil de Empleado',
-            'admin' => 'Perfil del Administrador'
-        };
+        $saludo = 'Perfil del Administrador';
+
         $busqueda = $request->input('busqueda');
 
         $empleados = DB::table('empleados')
-        ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona') // Unión con persona
-        ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros') // Unión con sub_parametros
-        ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros') // Unión con parametros
-        ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno') // Selección de columnas
-         ->when($busqueda, function ($query, $busqueda) {
-            return $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
-        })
-        ->get();
-        
+            ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
+            ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros') 
+            ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros') 
+            ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno') 
+            ->when($busqueda, function ($query, $busqueda) {
+                return $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
+            })
 
-        
-        return view('empleadosLista' , compact('user','saludo','empleados'));
-        
+            ->when($busqueda, function ($query, $busqueda) {
+                $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
+            })
+
+            ->get();
+
+        return view('empleadosLista', compact('user', 'saludo', 'empleados'));
     }
 
-    public function registrar_empleado($id){
+    public function registrar_empleado($id)
+    {
         $user = DB::table('usuarios')->where('id', $id)->first();
 
-        
+
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $user = Usuario::with('rol')->find($user->id);
-        $saludo = match ($user->rol->nombre_rol) {
-            'empleado' => 'Perfil de Empleado',
-            'admin' => 'Perfil del Administrador'
-        };
+        $saludo = 'Perfil del Administrador';
 
-        return view('empleadosRegistro' , compact('user','saludo'));
-        
-    }    
+        return view('empleadosRegistro', compact('user', 'saludo'));
+    }
 
     public function verificarCorreo(Request $request)
     {
-    $correo = $request->input('correo');
-    $exists = DB::table('persona')->where('correo_electronico', $correo)->exists();
+        $correo = $request->input('correo');
+        $exists = DB::table('persona')->where('correo_electronico', $correo)->exists();
 
-    return response()->json(['exists' => $exists]);
+        return response()->json(['exists' => $exists]);
     }
 
 
     public function registrarEmpleado(Request $request)
     {
-    $correo = $request->input('correo');
+        $request->validate([
+            'nombres' => 'required|string|max:255',
+            'apellido_paterno' => 'required|string|max:255',
+            'apellido_materno' => 'nullable|string|max:255',
+            'carnet_identidad' => 'required|numeric|digits_between:6,10|unique:persona,ci_persona',
+            'telefono' => 'nullable|numeric|digits_between:7,15',
+            'correo' => 'required|email|unique:persona,correo_electronico',
+            'fecha_contratacion' => 'required|date',
+            'salario' => 'required|numeric|min:0',
+            'turno' => 'required|string|in:35,36,37',
+        ], [
+            'nombres.required' => 'El campo nombres es obligatorio.',
+            'apellido_paterno.required' => 'El campo apellido paterno es obligatorio.',
+            'apellido_paterno.string' => 'El apellido paterno debe ser llenado por letras',
+            'carnet_identidad.required' => 'El carnet de identidad es obligatorio.',
+            'carnet_identidad.numeric' => 'El carnet de identidad debe ser un número.',
+            'carnet_identidad.digits_between' => 'El carnet de identidad debe tener entre 6 y 10 dígitos.',
+            'carnet_identidad.unique' => 'Este carnet de identidad ya está registrado.',
+            'telefono.numeric' => 'El teléfono debe ser numérico.',
+            'telefono.digits_between' => 'El teléfono debe tener entre 7 y 15 dígitos.',
+            'correo.required' => 'El campo correo es obligatorio.',
+            'correo.email' => 'El correo debe ser un correo válido.',
+            'correo.unique' => 'Este correo ya está registrado.',
+            'fecha_contratacion.required' => 'La fecha de contratación es obligatoria.',
+            'fecha_contratacion.date' => 'La fecha de contratación debe ser una fecha válida.',
+            'salario.required' => 'El salario es obligatorio.',
+            'salario.numeric' => 'El salario debe ser un valor numérico.',
+            'salario.min' => 'El salario debe ser mayor o igual a 0.',
+            'turno.required' => 'El turno es obligatorio.',
+            'turno.in' => 'El turno seleccionado no es válido.',
+        ]);
 
-    // Verificar si la persona ya existe por su correo
-    $persona = DB::table('persona')->where('correo_electronico', $correo)->first();
 
-        if ($persona) {
-            // Si la persona existe, actualizamos sus datos si están vacíos o nulos
-            DB::table('persona')
-                ->where('correo_electronico', $correo)
-                ->update([
-                    'nombres' => $request->input('nombres', $persona->nombres),
-                    'apellido_paterno' => $request->input('apellido_paterno', $persona->apellido_paterno),
-                    'apellido_materno' => $request->input('apellido_materno', $persona->apellido_materno),
-                    'ci_persona' => $request->input('carnet_identidad', $persona->ci_persona),
-                    'telefono' => $request->input('telefono', $persona->telefono)
-                ]);
+        $ultimoIdPersona = DB::table('persona')->max('id_persona');
+        $nuevoIdPersona = $ultimoIdPersona ? $ultimoIdPersona + 1 : 1; 
+
+
+        
+
+
+        DB::table('persona')->insert([
             
-        } else {
-            return redirect()->back()->with('error', 'El correo electrónico no está registrado. Debe crear un usuario primero.');
-        }
-   
-    DB::table('empleados')->insert([
-        'id_persona' => $persona->id_persona,
-        'fecha_contratacion' => $request->input('fecha_contratacion'),
-        'salario' => $request->input('salario'),
-        'turno' => $request->input('turno')
-    ]);
+            'nombres' => $request->input('nombres'),
+            'apellido_paterno' => $request->input('apellido_paterno'),
+            'apellido_materno' => $request->input('apellido_materno'),
+            'ci_persona' => $request->input('carnet_identidad'),
+            'telefono' => $request->input('telefono'),
+            'correo_electronico' => $request->input('correo'),
+            'fecha_registro' => now()->format('Y-m-d H:i:s'),
+        ]);
 
-    return redirect()->back()->with('success', 'Empleado registrado correctamente.');
+        // Insertar los datos en la tabla empleados
+        DB::table('empleados')->insert([
+            
+            'id_persona' => $nuevoIdPersona,
+            'fecha_contratacion' => $request->input('fecha_contratacion'),
+            'salario' => $request->input('salario'),
+            'turno' => $request->input('turno'),
+        ]);
+
+        return redirect()->back()->with('success', 'Empleado registrado correctamente.');
     }
+
 
     public function editar_empleados($id)
     {
@@ -135,7 +160,7 @@ class moduloEmpleadoController extends Controller
 
         $saludo = 'Edita tu información';
 
-        return view('empleadosEditar', compact('user','saludo'));
+        return view('empleadosEditar', compact('user', 'saludo'));
     }
 
 
@@ -147,125 +172,101 @@ class moduloEmpleadoController extends Controller
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $user = Usuario::with('rol')->find($user->id);
-        $saludo = match ($user->rol->nombre_rol) {
-            'empleado' => 'Perfil de Empleado',
-            'admin' => 'Perfil del Administrador'
-        };
+        $saludo = 'Perfil del Administrador';
 
+        $empleados = DB::table('empleados')
+            ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
+            ->where('empleados.id_empleado', $id_empleado)
+            ->select('empleados.*', 'persona.*')
+            ->first();
 
+        if (!$empleados) {
+            return redirect()->back()->with('error', 'Empleado no encontrado.');
+        }
 
-       // Obtener la información del empleado por su ID
-       $empleados = DB::table('empleados')
-        ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
-        ->where('empleados.id_empleado', $id_empleado)
-        ->select('empleados.*', 'persona.*')
-        ->first();
-
-    // Verificar si el empleado existe
-    if (!$empleados) {
-        return redirect()->back()->with('error', 'Empleado no encontrado.');
-    }
-
-    // Retornar vista de edición con los datos del empleado y el id del usuario
-    return view('empleadosEditar', compact('empleados', 'user','saludo'));
+        return view('empleadosEditar', compact('empleados', 'user', 'saludo'));
     }
 
 
     public function actualizarEmpleado(Request $request)
-{
-    $id_empleado = $request->input('id_empleado');
-    $user = $request->input('user_id');
+    {
+        $id_empleado = $request->input('id_empleado');
+        $user = $request->input('user_id');
 
-    // Validar la entrada
-    $request->validate([
-        'correo' => 'required|email',
-        'nombres' => 'required|string|max:255',
-        'apellido_paterno' => 'required|string|max:255',
-        'apellido_materno' => 'nullable|string|max:255',
-        'carnet_identidad' => 'required|string|max:20',
-        'fecha_contratacion' => 'required|date',
-        'salario' => 'required|numeric',
-        'turno' => 'required|in:34,35,36'
-    ]);
+        $request->validate([
+            'correo' => 'required|email',
+            'nombres' => 'required|string|max:255',
+            'apellido_paterno' => 'required|string|max:255',
+            'apellido_materno' => 'nullable|string|max:255',
+            'carnet_identidad' => 'required|string|max:20',
+            'fecha_contratacion' => 'required|date',
+            'salario' => 'required|numeric',
+            'turno' => 'required|in:34,35,36'
+        ]);
 
-    // Buscar al empleado en la base de datos
-    $empleado = DB::table('empleados')->where('id_empleado', $id_empleado)->first();
-    
-    if (!$empleado) {
-        return redirect()->back()->with('error', 'Empleado no encontrado.');
+        $empleado = DB::table('empleados')->where('id_empleado', $id_empleado)->first();
+
+        if (!$empleado) {
+            return redirect()->back()->with('error', 'Empleado no encontrado.');
+        }
+
+        $id_persona = $empleado->id_persona;
+
+        DB::table('persona')->where('id_persona', $id_persona)->update([
+            'correo_electronico' => $request->input('correo'),
+            'nombres' => $request->input('nombres'),
+            'apellido_paterno' => $request->input('apellido_paterno'),
+            'apellido_materno' => $request->input('apellido_materno'),
+            'ci_persona' => $request->input('carnet_identidad')
+        ]);
+
+        DB::table('empleados')->where('id_empleado', $id_empleado)->update([
+            'fecha_contratacion' => $request->input('fecha_contratacion'),
+            'salario' => $request->input('salario'),
+            'turno' => $request->input('turno')
+        ]);
+
+        return redirect()->route('empleados.informacion', ['id' => $user])
+            ->with('success', 'Empleado actualizado correctamente.');
     }
 
-    // Obtener el id_persona del empleado
-    $id_persona = $empleado->id_persona;
 
-    // Actualizar la información en la tabla persona
-    DB::table('persona')->where('id_persona', $id_persona)->update([
-        'correo_electronico' => $request->input('correo'),
-        'nombres' => $request->input('nombres'),
-        'apellido_paterno' => $request->input('apellido_paterno'),
-        'apellido_materno' => $request->input('apellido_materno'),
-        'ci_persona' => $request->input('carnet_identidad')
-    ]);
+    public function mostrarDetalle($id, $id_empleado)
+    {
+        $user = DB::table('usuarios')->where('id', $id)->first();
+        if (!$user) {
+            return redirect('/users')->with('error', 'Usuario no encontrado');
+        }
+        $saludo = 'Perfil del Administrador';
 
-    // Actualizar la información en la tabla empleados
-    DB::table('empleados')->where('id_empleado', $id_empleado)->update([
-        'fecha_contratacion' => $request->input('fecha_contratacion'),
-        'salario' => $request->input('salario'),
-        'turno' => $request->input('turno')
-    ]);
+        $empleados = DB::table('empleados')
+            ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
+            ->leftJoin('dbo.sub_parametros as genero', 'persona.genero', '=', 'genero.id_sub_parametros') 
+            ->leftJoin('dbo.sub_parametros as estadoCivil', 'persona.estado_civil', '=', 'estadoCivil.id_sub_parametros') 
+            ->where('empleados.id_empleado', $id_empleado)
+            ->select(
+                'empleados.*',
+                'persona.*',
+                'genero.descripcion as genero_descripcion',
+                'estadoCivil.descripcion as estado_civil_descripcion'
+            )
+            ->first();
 
-    // Redirigir con un mensaje de éxito
-    return redirect()->route('empleados.detalles', ['id' => $user])
-                     ->with('success', 'Empleado actualizado correctamente.');
-}
+        $datosAcademicos = DB::table('datos_academicos')
+            ->join('sub_parametros as nivel', 'datos_academicos.nivel_academico', '=', 'nivel.id_sub_parametros')
+            ->join('sub_parametros as especialidad', 'datos_academicos.especialidad_academica', '=', 'especialidad.id_sub_parametros')
+            ->where('datos_academicos.id_empleado', $id_empleado)
+            ->select(
+                'datos_academicos.id_datos_academicos',
+                'nivel.descripcion as nivel_academico_descripcion',
+                'especialidad.descripcion as especialidad_academica_descripcion'
+            )
+            ->first();
 
-public function mostrarDetalle($id, $id_empleado)
-{
-    $user = DB::table('usuarios')->where('id', $id)->first();
-    if (!$user) {
-        return redirect('/users')->with('error', 'Usuario no encontrado');
+        if (!$empleados) {
+            return redirect()->back()->with('error', 'Empleado no encontrado.');
+        }
+
+        return view('empleadosDetalle', compact('empleados', 'user', 'saludo', 'datosAcademicos'));
     }
-    $user = Usuario::with('rol')->find($user->id);
-    $saludo = match ($user->rol->nombre_rol) {
-        'empleado' => 'Perfil de Empleado',
-        'admin' => 'Perfil del Administrador'
-    };
-
-    $empleados = DB::table('empleados')
-        ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
-        ->leftJoin('dbo.sub_parametros as genero', 'persona.genero', '=', 'genero.id_sub_parametros') // Asegúrate de usar el nombre correcto de la columna
-        ->leftJoin('dbo.sub_parametros as estadoCivil', 'persona.estado_civil', '=', 'estadoCivil.id_sub_parametros') // Asegúrate de usar el nombre correcto de la columna
-        ->where('empleados.id_empleado', $id_empleado)
-        ->select(
-            'empleados.*',
-            'persona.*',
-            'genero.descripcion as genero_descripcion',
-            'estadoCivil.descripcion as estado_civil_descripcion'
-        )
-        ->first();
-
-    $datosAcademicos = DB::table('datos_academicos')
-        ->join('sub_parametros as nivel', 'datos_academicos.nivel_academico', '=', 'nivel.id_sub_parametros')
-        ->join('sub_parametros as especialidad', 'datos_academicos.especialidad_academica', '=', 'especialidad.id_sub_parametros')
-        ->where('datos_academicos.id_empleado', $id_empleado)
-        ->select(
-            'datos_academicos.id_datos_academicos',
-            'nivel.descripcion as nivel_academico_descripcion',
-            'especialidad.descripcion as especialidad_academica_descripcion'
-        )
-        ->first();
-
-
-
-
-    if (!$empleados) {
-        return redirect()->back()->with('error', 'Empleado no encontrado.');
-    }
-
-    return view('empleadosDetalle', compact('empleados', 'user', 'saludo', 'datosAcademicos'));
-}
-
-
-
 }
