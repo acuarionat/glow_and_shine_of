@@ -22,7 +22,7 @@ use App\Http\Controllers\comprasController;
 use App\Http\Controllers\salesController;
 use App\Http\Controllers\perfilController;
 use App\Http\Controllers\ManagmentSaleController;
-
+use App\Models\Usuario;
 
 Route::get('/', [HomeController::class, 'masVendidos', 'mostrarRecienLlegados']);
 
@@ -79,7 +79,9 @@ Route::get('dashboard/editarPerfil/{id}',[editarUsuarioController::class, 'edita
 Route::post('/registro-admin', [LoginController::class, 'processRegistrationAdmin'])->name('account.processRegistrationAdmin');
 Route::get('/registerU/{id}', [LoginController::class,'registroU'])->name('account.registerU');
 Route::get('/listarUsuarios/{id}', [UsuarioController::class, 'listarUsuarios'])->name('usuarios.listar');
+Route::get('/listarUsuariosRep/{id}', [UsuarioController::class, 'listarUsuariosRep'])->name('usuarios.listarrep');
 Route::get('/buscarUsuario/{id}', [UsuarioController::class, 'busqueda_usuario'])->name('usuarios.busqueda_usuario');
+Route::get('/buscarUsuarioRep/{id}', [UsuarioController::class, 'busquedaUsuarioRep'])->name('usuarios.busqueda_usuario_rep');
 Route::post('/resena', [ResenaController::class, 'store'])->name('store');
 Route::put('/usuarios/cambiar-estado/{id}', [UsuarioController::class, 'cambiarEstado'])->name('cambiarEstado');
 
@@ -150,3 +152,5 @@ Route::get('/buscar-empresa/{ci}', [comprasController::class, 'buscarPersona'])-
 Route::get('/post-created', function () {
     return view('post-created');
 })->name('post-created');
+
+Route::get('/usuarios/pdf',[UsuarioController::class,'GenerarPDF'])->name('usuariospdf.pdf');
