@@ -33,7 +33,19 @@
                 <li><a href="{{ url('buscarProducto/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
             </ul>
         </li>
-
+        <li class="menu-item">
+            <input type="checkbox" id="subparametros-checkbox">
+            <label for="subparametros-checkbox" class="menu-link">
+                <i class="fas fa-chart-bar"></i>
+                Subparametros
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </label>
+            
+            <ul class="submenu">
+                <li><a href=" {{ url('categorias/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Subparametros</a></li>
+                <li><a href=" {{ url('categorias/subparametros/create/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Agregar Subparametro</a></li>
+            </ul>
+        </li>
         <li class="menu-item">
             <input type="checkbox" id="ventas-checkbox">
             <label for="ventas-checkbox" class="menu-link">
@@ -102,6 +114,7 @@
                 <li><a href="{{ url('listaClientes/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Clientes</a></li>
             </ul>
         </li>
+        @if($role == 'admin')
         <li class="menu-item">
             <input type="checkbox" id="informes-checkbox">
             <label for="informes-checkbox" class="menu-link">
@@ -115,8 +128,9 @@
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de compras</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de empleados</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de clientes</a></li>
-                <li><a href="{{ url('listarUsuariosRep/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
+                <li><a href="{{ url('listarUsuariosRep/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Reportes de usuarios</a></li>
             </ul>
         </li> 
+        @endif
     </ul>
 </div>

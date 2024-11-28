@@ -1,14 +1,71 @@
 <link rel="stylesheet" href="{{ asset('css/registrarProducto.css') }}">
 <div class="contenedor_registrar_editar_producto">
-    <form action="{{ route('producto.update', ['id_user' => $user->id, 'id' => $producto->id_producto]) }}" method="POST">
+<form action="{{ route('producto.update', ['id_user' => $user->id, 'id' => $producto->id_producto]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <h2 class="seccion_forms">Editar Imagen producto</h2>
         <div class="registro_imagen_producto">
             <div class="contenedor_datos">
-                <h3 class="subtitulo_Info">URL de la Imagen:</h3>
-                <input type="text" name="url_imagen" class="edit_informacion" id="direccion_imagen" value="{{ old('url_imagen', $producto->url_imagen ?? '') }}" required>
+                <h3 class="subtitulo_Info">Subir Imagen del Producto:</h3>
+                <input type="file" name="imagen" id="imagen" class="edit_informacion" accept="image/png, image/jpeg" onchange="previewImage(event)">
+
             </div>
+            <div class="contenedor_imagen_previsualizacion">
+                <h3 class="subtitulo_Info">Imagen actual del producto:</h3>
+                <div id="preview-container">
+                    <img id="preview"
+                        src="{{ $imagenProducto }}"
+                        alt="Previsualización de imagen"
+                        style="width: 200px; height: auto; border: 1px solid #ccc;">
+                </div>
+                <input type="hidden" name="url_imagen" id="url_imagen" value="{{ $producto->url_imagen }}">
+            </div>
+
+            <script>
+                // Previsualizar nueva imagen cargada
+                function previewImage(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const preview = document.getElementById('preview');
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            </script>
+
+            <script>
+                document.getElementById('imagen').addEventListener('change', function(event) {
+                    const formData = new FormData();
+                    formData.append('imagen', event.target.files[0]);
+
+                    fetch('{{ route("upload.image") }}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.url) {
+                                document.getElementById('url_imagen').value = data.url;
+                                alert('Imagen subida correctamente.');
+                            } else {
+                                alert('Error al subir la imagen: ' + (data.error || 'desconocido'));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('No se pudo subir la imagen.');
+                        });
+                });
+            </script>
+
+
         </div>
 
         <h2 class="seccion_forms">Editar Información producto</h2>

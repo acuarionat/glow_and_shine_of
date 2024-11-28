@@ -22,6 +22,8 @@ use App\Http\Controllers\comprasController;
 use App\Http\Controllers\salesController;
 use App\Http\Controllers\perfilController;
 use App\Http\Controllers\ManagmentSaleController;
+use App\Http\Controllers\parametroController;
+
 use App\Models\Usuario;
 
 Route::get('/', [HomeController::class, 'masVendidos', 'mostrarRecienLlegados']);
@@ -154,3 +156,9 @@ Route::get('/post-created', function () {
 })->name('post-created');
 
 Route::get('/usuarios/pdf',[UsuarioController::class,'GenerarPDF'])->name('usuariospdf.pdf');
+
+Route::get('/categorias/{id_parametros}/subparametros', [parametroController::class, 'getSubparametros']);
+Route::get('/categorias/{id}', [parametroController::class, 'index'])->name('index');
+Route::get('/categorias/subparametros/create/{id}', [parametroController::class, 'create'])->name('categorias.subparametros.create');
+Route::post('/categorias/subparametros/store/{id}', [parametroController::class, 'storeSubparametro'])->name('categorias.subparametros.store');
+Route::post('/upload-image', [registrarProductoController::class, 'uploadImage'])->name('upload.image');

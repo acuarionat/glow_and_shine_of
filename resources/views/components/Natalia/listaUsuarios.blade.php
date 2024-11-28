@@ -41,16 +41,18 @@
                         @endif
                     </td>
                 <td>
-                        <form action="{{ route('cambiarEstado', $usuario->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" 
-                                class="btn btn-sm estado-btn {{ $usuario->estado === 'Activo' ? 'btn-success' : 'btn-danger' }}">
-                                {{ $usuario->estado }}
-                            </button>
-                        </form>
-                        
-                        
+                    @if ($usuario->rol_name == 'admin')
+                  
+                    @else
+                    <form action="{{ route('cambiarEstado', $usuario->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" 
+                            class="btn btn-sm estado-btn {{ $usuario->estado === 'Activo' ? 'btn-success' : 'btn-danger' }}">
+                            {{ $usuario->estado }}
+                        </button>
+                    </form>
+                    @endif 
                     </td>
                 </tr>
                 @endforeach

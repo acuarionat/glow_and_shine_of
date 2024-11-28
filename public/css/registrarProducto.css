@@ -1,6 +1,6 @@
 label {
-    font-family: inherit; /* Hereda la fuente del body */
-    font-style: inherit; /* Hereda el estilo del body */
+    font-family: inherit;
+    font-style: inherit;
 }
 
 label {
@@ -17,8 +17,8 @@ label {
     flex-wrap: wrap;
     width: 90%;
     margin-left: 5%;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     gap: 80px;
 }
 
@@ -45,10 +45,10 @@ label {
 .contenedor_registrar_editar_producto {
     width: 100%;
     display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    padding: 20px; /* Puedes agregar un poco de espacio interno si lo deseas */
-    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .boton_busqueda {
@@ -107,6 +107,15 @@ label {
 
 .contenedor_datos{
     width: 45%;
+}
+
+.contenedor_imagen_previsualizacion{
+    width: 45% ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
 }
 
 .boton_guardar_actualizar_productos{
