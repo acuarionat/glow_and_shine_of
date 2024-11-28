@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PostCreatedMail;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +33,7 @@ class moduloClienteController extends Controller
 
     public function registrarCliente(Request $request)
     {
-
+        // Validar los datos del formulario
         $request->validate([
             'correo' => 'required|email|unique:persona,correo_electronico',
             'nombres' => 'required|string|max:255',
@@ -42,6 +44,7 @@ class moduloClienteController extends Controller
             'tipo_cliente' => 'required|string|in:42,43,44',
             'porcentaje_descuento' => 'nullable|numeric|min:0|max:100',
         ], [
+            // Mensajes de error personalizados
             'correo.required' => 'El campo correo es obligatorio.',
             'correo.email' => 'El formato del correo no es válido.',
             'correo.unique' => 'El correo ya está registrado.',
@@ -51,17 +54,14 @@ class moduloClienteController extends Controller
             'carnet_identidad.numeric' => 'El carnet de identidad debe ser un número.',
             'carnet_identidad.digits_between' => 'El carnet de identidad debe tener entre 6 y 10 dígitos.',
             'tipo_cliente.required' => 'El tipo de cliente es obligatorio.',
-            'tipo_cliente.in' => 'El tipo de cliente debe ser 52, 53 o 54.',
+            'tipo_cliente.in' => 'El tipo de cliente debe ser 42, 43 o 44.',
             'porcentaje_descuento.numeric' => 'El porcentaje de descuento debe ser un número.',
             'porcentaje_descuento.min' => 'El porcentaje de descuento no puede ser menor a 0.',
             'porcentaje_descuento.max' => 'El porcentaje de descuento no puede ser mayor a 100.',
         ]);
-
-
-        $nuevoIdPersona = DB::table('persona')->max('id_persona') + 1;
-
-        DB::table('persona')->insert([
-            
+    
+        // Crear la persona
+        $nuevoIdPersona = DB::table('persona')->insertGetId([
             'correo_electronico' => $request->input('correo'),
             'nombres' => $request->input('nombres'),
             'apellido_paterno' => $request->input('apellido_paterno'),
@@ -69,19 +69,35 @@ class moduloClienteController extends Controller
             'ci_persona' => $request->input('carnet_identidad'),
             'telefono' => $request->input('telefono'),
         ]);
-
-
-        $nuevoIdCliente = DB::table('cliente')->max('id_cliente') + 1;
-
+    
+        // Crear el cliente asociado
         DB::table('cliente')->insert([
-            
             'id_persona' => $nuevoIdPersona,
             'tipo_cliente' => $request->input('tipo_cliente'),
             'porcentaje_descuento' => $request->input('porcentaje_descuento'),
         ]);
+    
+        // Generar una contraseña automáticamente
+        $nombre = $request->input('nombres');
+        $email = $request->input('correo');
+        $parteEmail = explode('@', $email)[0];
+        $randomNum = rand(100, 999);
+        $contrasenaSugerida = substr($nombre, 0, 3) . substr($parteEmail, 0, 3) . $randomNum;
+    
+            DB::table('usuarios')->insert([
+            'name' => $nombre,
+            'email' => $email,
+            'password' => bcrypt($contrasenaSugerida),
+            'id_roles' => 1, 
+            'estado' => 'Activo', 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
+        Mail::to($email)->send(new PostCreatedMail($nombre, $email, $contrasenaSugerida));
         return redirect()->back()->with('success', 'Cliente registrado correctamente.');
     }
+    
 
 
     public function detalles_cliente($id)
@@ -159,19 +175,16 @@ class moduloClienteController extends Controller
 
 
 
-        // Obtener la información del empleado por su ID
         $clientes = DB::table('cliente')
             ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
             ->where('cliente.id_cliente', $id_cliente)
             ->select('cliente.*', 'persona.*')
             ->first();
 
-        // Verificar si el empleado existe
         if (!$clientes) {
             return redirect()->back()->with('error', 'Cliente no encontrado.');
         }
 
-        // Retornar vista de edición con los datos del empleado y el id del usuario
         return view('clientesEditar', compact('clientes', 'user', 'saludo'));
     }
 

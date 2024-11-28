@@ -63,7 +63,7 @@
 
                 <div class="form-field">
 
-                    <input class="edit_info" type="text" name="fecha_contratacion" placeholder="Fecha Contratación (yy-mm-dd)" value="{{ old('fecha_contratacion') }}" required>
+                    <input class="edit_info" type="date" name="fecha_contratacion" placeholder="Fecha Contratación (yy-mm-dd)" value="{{ old('fecha_contratacion') }}" required>
                     @error('fecha_contratacion')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror

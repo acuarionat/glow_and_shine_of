@@ -25,11 +25,7 @@ class perfilEmpleadoController extends Controller
         $cantidadClientes = DB::table('cliente')->count();
         $cantidadProductos = Producto::count();
         $saludo = 'Perfil de Empleado';
-        $mensajeB = 'Nos alegra que formes parte de nuestro 
-        equipo. Este es tu espacio personal, donde podrás gestionar 
-        tu información, acceder a recursos que te ayudaran a cumplir 
-        con tus tareas. ¡Estamos emocionados de tenerte con nosotros 
-        y esperamos que disfrutes de tu experiencia aquí!';
+        $mensajeB = 'Este es tu panel personal, donde podras realizar tus tareas como emplead@.';
 
         $cantidadDatos = [
             'Ventas' => $cantidadVentas,

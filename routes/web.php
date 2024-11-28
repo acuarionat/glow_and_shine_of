@@ -131,7 +131,7 @@ Route::get('/editarPerfilCliente/{id}/{id_cliente}', [moduloClienteController::c
 Route::put('/clientes/actualizar', [moduloClienteController::class, 'actualizarCliente'])->name('clientes.actualiza');
 
 
-
+Route::get('/perfil/{id}', [perfilController::class, 'datos_perfil']);
 
 
 Route::get('/ventas/{id}', [salesController::class, 'mostrarVentas']);
@@ -146,3 +146,7 @@ Route::get('registrarCompras/{id}', [comprasController::class, 'ManagmentBuy']);
 Route::get('/buscar-empresa/{ci}', [comprasController::class, 'buscarPersona'])->name('buscar.persona');
 
 
+
+Route::get('/post-created', function () {
+    return view('post-created');
+})->name('post-created');

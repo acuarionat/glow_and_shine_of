@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PostCreatedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Empleado;
 use App\Models\Persona;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Mail;
 
 class moduloEmpleadoController extends Controller
 {
@@ -117,17 +119,8 @@ class moduloEmpleadoController extends Controller
             'turno.required' => 'El turno es obligatorio.',
             'turno.in' => 'El turno seleccionado no es válido.',
         ]);
-
-
-        $ultimoIdPersona = DB::table('persona')->max('id_persona');
-        $nuevoIdPersona = $ultimoIdPersona ? $ultimoIdPersona + 1 : 1; 
-
-
-        
-
-
-        DB::table('persona')->insert([
-            
+    
+        $nuevoIdPersona = DB::table('persona')->insertGetId([
             'nombres' => $request->input('nombres'),
             'apellido_paterno' => $request->input('apellido_paterno'),
             'apellido_materno' => $request->input('apellido_materno'),
@@ -136,18 +129,36 @@ class moduloEmpleadoController extends Controller
             'correo_electronico' => $request->input('correo'),
             'fecha_registro' => now()->format('Y-m-d H:i:s'),
         ]);
-
-        // Insertar los datos en la tabla empleados
+    
         DB::table('empleados')->insert([
-            
             'id_persona' => $nuevoIdPersona,
             'fecha_contratacion' => $request->input('fecha_contratacion'),
             'salario' => $request->input('salario'),
             'turno' => $request->input('turno'),
         ]);
+    
+    
+        $nombre = $request->input('nombres');
+        $email = $request->input('correo');
+        $parteEmail = explode('@', $email)[0];
+        $randomNum = rand(100, 999); 
+        $contrasenaSugerida = substr($nombre, 0, 3) . substr($parteEmail, 0, 3) . $randomNum;
+    
+        DB::table('usuarios')->insert([
+            'name' => $nombre,
+            'email' => $email,
+            'password' => bcrypt($contrasenaSugerida),
+            'id_roles' => 2, 
+            'estado' => 'Activo', 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
+        Mail::to($email)->send(new PostCreatedMail($nombre, $email, $contrasenaSugerida));
+        
         return redirect()->back()->with('success', 'Empleado registrado correctamente.');
     }
+    
 
 
     public function editar_empleados($id)

@@ -103,6 +103,10 @@ header {
     display: flex;
     justify-content: center;
 }
+.navbar .logo{
+    width: 90px;
+    height: 90px;
+}
 
 @media(max-width: 992px) {
     .navbar .links,
