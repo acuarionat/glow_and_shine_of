@@ -193,7 +193,7 @@ class moduloClienteController extends Controller
     {
         $id_cliente = $request->input('id_cliente');
         $user = $request->input('user_id');
-
+    
         // Validar la entrada
         $request->validate([
             'correo' => 'required|email',
@@ -201,20 +201,20 @@ class moduloClienteController extends Controller
             'apellido_paterno' => 'required|string|max:255',
             'apellido_materno' => 'nullable|string|max:255',
             'carnet_identidad' => 'required|string|max:20',
-            'porcentaje_descuento' => 'required|numeric|between:10,2',
-            'tipo_cliente' => 'required|in:52,53,54'
+            'porcentaje_descuento' => 'required|numeric|between:0,100', // Valor entre 0 y 100
+            'tipo_cliente' => 'required|in:42,43,44' // Asegúrate de que estos valores sean correctos
         ]);
-
-
-
+    
+        // Buscar al cliente en la base de datos
         $cliente = DB::table('cliente')->where('id_cliente', $id_cliente)->first();
-
+        
         if (!$cliente) {
             return redirect()->route('cliente.detalles', ['id' => $user])->with('error', 'Cliente no encontrado.');
         }
-
+    
+        // Obtener el id_persona del cliente
         $id_persona = $cliente->id_persona;
-
+    
         // Actualizar la información en la tabla persona
         DB::table('persona')->where('id_persona', $id_persona)->update([
             'correo_electronico' => $request->input('correo'),
@@ -222,16 +222,15 @@ class moduloClienteController extends Controller
             'apellido_paterno' => $request->input('apellido_paterno'),
             'apellido_materno' => $request->input('apellido_materno'),
             'ci_persona' => $request->input('carnet_identidad')
-
         ]);
-
+    
+        // Actualizar la información en la tabla cliente
         DB::table('cliente')->where('id_cliente', $id_cliente)->update([
             'porcentaje_descuento' => $request->input('porcentaje_descuento'),
             'tipo_cliente' => $request->input('tipo_cliente')
         ]);
-
-        // Redirigir con un mensaje de éxito
+    
         return redirect()->route('cliente.detalles', ['id' => $user])
-            ->with('success', 'Cliente actualizado correctamente.');
-    }
+                         ->with('success', 'Cliente actualizado correctamente.');
+}
 }

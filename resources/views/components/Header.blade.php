@@ -25,7 +25,7 @@
 
     <header>
         <div class="navbar">
-            <div class="logo"><a href="../"> <img src="{{ asset('images/Loguitozi.png') }}" alt="Logo"></a></div>
+            <div class="logo"><a href="../"> <img src="{{ asset('images/zi.jpg') }}" alt="Logo"></a></div>
             <ul class="links">
                 <li><a href="../">Inicio</a></li>
                 <li><a href="../about">Nosotros</a></li>

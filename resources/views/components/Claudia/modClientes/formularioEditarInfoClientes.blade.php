@@ -10,7 +10,7 @@
         </div>
 
         <div class="container_form_registro">
-            <form action="{{ route('clientes.actualiza') }}" method="POST">
+            <form action="{{ route('clientes.actualizar') }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -46,18 +46,19 @@
                 <h1 class="seccion_forms">Datos del cliente</h1>
                 <div class="form_group">
                     <div class="container_llenado">
-                        <label class="subtitle" for="porcentaje_de_descuento">Porcentaje de descuento (%)</label>
-                        <input class="edit_info" type="text" name="porcentaje_descuento" value="{{ $clientes->porcentaje_descuento }}" required>
-                    </div>
-
-                    <div class="container_llenado">
                         <label class="subtitle" for="tipo_cliente">Tipo de cliente</label>
-                        <select class="edit_info" name="tipo_cliente" required>
+                        <select class="edit_info" id="tipo_cliente" name="tipo_cliente" required onchange="actualizarDescuento()" >
                             <option value="42" {{ $clientes->tipo_cliente == 42 ? 'selected' : '' }}>Minorista</option>
                             <option value="43" {{ $clientes->tipo_cliente == 43 ? 'selected' : '' }}>Mayorista</option>
                             <option value="44" {{ $clientes->tipo_cliente == 44 ? 'selected' : '' }}>Promotores</option>
                         </select>
                     </div>
+                    <div class="container_llenado">
+                        <label class="subtitle" for="porcentaje_de_descuento">Porcentaje de descuento (%)</label>
+                        <input class="edit_info" id="porcentaje_descuento"  type="text" name="porcentaje_descuento" value="{{ $clientes->porcentaje_descuento }}" required>
+                    </div>
+
+                    
                 </div>
 
                 <div class="cont_boton_editE">
@@ -96,4 +97,24 @@
         });
     </script>
     @endif
+    
 </body>
+
+<script>
+    function actualizarDescuento() {
+        const tipoCliente = document.getElementById('tipo_cliente').value;
+        const campoDescuento = document.getElementById('porcentaje_descuento');
+
+        let descuento = '0.0';
+
+        if (tipoCliente === '42') {
+            descuento = '0.0';
+        } else if (tipoCliente === '43') {
+            descuento = '20.0';
+        } else if (tipoCliente === '44') {
+            descuento = '15.0';
+        }
+
+        campoDescuento.value = descuento;
+    }
+</script>

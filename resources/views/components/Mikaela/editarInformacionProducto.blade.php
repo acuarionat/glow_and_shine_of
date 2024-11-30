@@ -53,8 +53,8 @@
                         .then(data => {
                             if (data.url) {
                                 document.getElementById('url_imagen').value = data.url;
-                                alert('Imagen subida correctamente.');
-                            } else {
+/*                                 alert('Imagen subida correctamente.');
+ */                            } else {
                                 alert('Error al subir la imagen: ' + (data.error || 'desconocido'));
                             }
                         })

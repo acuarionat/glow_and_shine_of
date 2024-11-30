@@ -50,7 +50,7 @@
 @if(session('success'))
 <script>
     Swal.fire({
-        title: 'Registro exitoso',
+        title: 'Actualizacion Exitosa',
         text: "{{ session('success') }}",
         icon: 'success',
         confirmButtonText: 'Aceptar',

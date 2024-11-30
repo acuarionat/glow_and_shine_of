@@ -104,8 +104,10 @@ header {
     justify-content: center;
 }
 .navbar .logo{
-    width: 90px;
-    height: 90px;
+    height: 50px;
+}
+.navbar .logo img{
+    height: 50px;
 }
 
 @media(max-width: 992px) {

@@ -4,7 +4,7 @@
         <h1>REGISTRAR VENTA</h1>
     </div>
     <div class="cont_register_title">
-        <h1>Datos Administrador</h1>
+        <h1>Datos Vendedor</h1>
     </div>
     {{--     <form method="POST" action="{{ route('registrar.venta') }}"> --}}
     @csrf
@@ -13,6 +13,7 @@
             <label class="subt_register" for="name">Nombre</label>
             <input class="input_register" type="text" name="Nombre" placeholder="Escribe aquí"
                 value="{{ $user->name }}" readonly>
+            <input type="hidden" id="userId" value="{{ $user->id }}">
         </div>
     </div>
 
@@ -46,10 +47,8 @@
 
     </div>
 
-    <div class="container_button_sale">
-        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+
-            Agregar
-            Producto</button>
+    <div class="container_button_validate">
+        <button type="button" class="my_button_validate">Validar Datos</button>
     </div>
 
     <!-- Modal Inventario Venta -->
@@ -85,6 +84,8 @@
                                     <th>Categoría</th>
                                     <th>Marca</th>
                                     <th>Color</th>
+                                    <th>Lote</th>
+                                    <th>Detalle Medida</th>
                                     <th>Precio Venta</th>
                                     <th>Estado</th>
                                     <th>Imagen</th>
@@ -115,7 +116,7 @@
                     <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
-                    <th>Descuento</th>
+                    <th>Descuento (%)</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
@@ -132,6 +133,8 @@
     </div>
 
     <div class="container_button_sale">
+        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+ Agregar
+            Producto</button>
         <button type="button" class="my_button_sale" id="btnRegistrarVenta">Registrar Venta</button>
     </div>
     {{--     </form> --}}
@@ -157,14 +160,18 @@
     /* buscar producto */
     $(document).ready(function() {
         $('#iconoBuscar').on('click', function() {
-            const nombreProducto = $('#nombre_producto').val();
-            if (nombreProducto) {
-                $.ajax({
-                    url: `/buscar-producto/${nombreProducto}`,
-                    method: 'GET',
-                    success: function(data) {
-                        const tbody = $('.modal-table tbody');
-                        tbody.empty(); // Limpiar la tabla antes de mostrar resultados
+            const nombreProducto = $('#nombre_producto').val().trim();
+
+            const url = nombreProducto ? `/buscar-producto/${nombreProducto}` : '/buscar-producto';
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(data) {
+                    const tbody = $('.modal-table tbody');
+                    tbody.empty();
+
+                    if (data.length > 0) {
                         data.forEach(producto => {
                             const fila = `
                             <tr>
@@ -173,6 +180,8 @@
                                 <td>${producto.categoria}</td>
                                 <td>${producto.marca}</td>
                                 <td>${producto.color}</td>
+                                <td>${producto.lote || ''}</td>
+                                <td>${producto.medida_valor || ''} ${producto.unidad_medida || ''}</td>
                                 <td>${producto.precio_venta}</td>
                                 <td>${producto.estado}</td>
                                 <td>
@@ -180,42 +189,42 @@
                                 </td>
                             </tr>
                         `;
-                            tbody.append(
-                                fila); // Añadir cada fila al cuerpo de la tabla
+                            tbody.append(fila);
                         });
-
-                        // Enlazar el evento a los botones generados
-                        $('.modal-table .btn-success').off('click').on('click', function() {
-                            const row = $(this).closest('tr')[0];
-                            const productName = row.cells[1].textContent;
-                            const price = row.cells[5].textContent;
-
-                            const saleTableBody = document.querySelector(
-                                '.cont_table_sale tbody');
-                            const newRow = document.createElement('tr');
-
-                            newRow.innerHTML = `
-                            <td><button class="btn btn-danger" onclick="removeRow(this)">-</button></td>
-                            <td>${productName}</td>
-                            <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
-                            <td>${price}</td>
-                            <td><input type="number" value="0" min="0" onchange="updateSubtotal(this)"></td>
-                            <td>${price}</td>
-                        `;
-                            saleTableBody.insertBefore(newRow, saleTableBody
-                                .querySelector('.total-row'));
-
-                            updateTotal();
-                        });
-                    },
-                    error: function() {
-                        alert('Producto no encontrado');
+                    } else {
+                        tbody.append('<tr><td colspan="10" class="text-center">No se encontraron productos.</td></tr>');
                     }
-                });
-            }
+
+                    $('.modal-table .btn-success').off('click').on('click', function() {
+                        const row = $(this).closest('tr')[0];
+                        const productName = row.cells[1].textContent;
+                        const price = row.cells[7].textContent;
+
+                        const saleTableBody = document.querySelector('.cont_table_sale tbody');
+                        const newRow = document.createElement('tr');
+
+                        newRow.innerHTML = `
+                        <td><button class="btn btn-danger" onclick="removeRow(this)">-</button></td>
+                        <td>${productName}</td>
+                        <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
+                        <td>${price}</td>
+                        <td><input type="number" value="0" min="0" onchange="updateSubtotal(this)"></td>
+                        <td>${price}</td>
+                    `;
+                        saleTableBody.insertBefore(newRow, saleTableBody.querySelector('.total-row'));
+                        updateTotal();
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al buscar productos.'
+                    });
+                }
+            });
         });
     });
-
 
     $(document).ready(function() {
         $('#ci_persona').on('blur', function() {
@@ -228,104 +237,175 @@
                         $('#nombres').val(data.nombres);
                         $('#apellido_paterno').val(data.apellido_paterno);
                         $('#apellido_materno').val(data.apellido_materno);
-
                     },
                     error: function() {
-                        alert('Persona no encontrada');
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Atención',
+                            text: 'Persona no encontrada.'
+                        });
                         $('#nombres').val('');
                         $('#apellido_paterno').val('');
                         $('#apellido_materno').val('');
-
                     }
                 });
             }
         });
     });
 
-
-
-    // Función para actualizar el subtotal de cada fila de venta
     function updateSubtotal(input) {
         const row = input.closest('tr');
-        const quantity = row.cells[2].querySelector('input').value;
+        const quantity = parseInt(row.cells[2].querySelector('input').value);
         const price = parseFloat(row.cells[3].textContent);
-        const discount = row.cells[4].querySelector('input').value;
-        const subtotal = (quantity * price) - discount;
+        const discount = parseInt(row.cells[4].querySelector('input').value);
+        const subtotal = (quantity * price) - (quantity * price) * (discount / 100);
 
         row.cells[5].textContent = subtotal.toFixed(2);
-
-
         updateTotal();
     }
 
-    // Función para actualizar el total general
     function updateTotal() {
         const rows = document.querySelectorAll('.cont_table_sale tbody tr:not(.total-row)');
         let total = 0;
 
         rows.forEach(row => {
-            const subtotal = parseFloat(row.cells[5].textContent);
-            total += subtotal;
+            const subtotalCell = row.cells[5];
+            const subtotal = parseFloat(subtotalCell ? subtotalCell.textContent : 0);
+
+            if (!isNaN(subtotal)) {
+                total += subtotal;
+            }
         });
 
-        document.querySelector('.total-row td:last-child').textContent = total.toFixed(2);
+        const totalCell = document.querySelector('.total-row td:last-child');
+        if (totalCell) {
+            totalCell.textContent = total.toFixed(2);
+        }
     }
 
-    // Función para eliminar una fila de la tabla de ventas
     function removeRow(button) {
         const row = button.closest('tr');
         row.remove();
         updateTotal();
     }
 
+    $(document).ready(function() {
+        $('.my_button_validate').on('click', function() {
+            const idEmpleado = $('#userId').val();
+            const ciPersona = $('#ci_persona').val();
 
+            if (!idEmpleado || !ciPersona) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Atención',
+                    text: 'Por favor, asegúrate de llenar los datos del cliente y del empleado.'
+                });
+                return;
+            }
+
+            $.ajax({
+                url: `/buscar-cliente/${ciPersona}`,
+                method: 'GET',
+                success: function(data) {
+                    if (data.id_cliente) {
+                        $.ajax({
+                            url: '/registrar-proceso-venta',
+                            method: 'POST',
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                id_empleado: idEmpleado,
+                                id_cliente: data.id_cliente,
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Éxito',
+                                    text: response.success
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: xhr.responseJSON.error || 'Ocurrió un error al registrar el proceso de venta.'
+                                });
+                            },
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Cliente no encontrado. Por favor, verifica el C.I. ingresado.'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al buscar el cliente. Verifica los datos e intenta nuevamente.'
+                    });
+                },
+            });
+        });
+    });
 
     $(document).on('click', '#btnRegistrarVenta', function() {
         const productos = [];
 
-        // Recorre las filas de la tabla de productos
         $('.cont_table_sale tbody tr:not(.total-row)').each(function() {
-    const row = $(this);
+            const row = $(this);
 
-    // Validar que la fila no esté vacía
-    if (!row.find('td').length) {
-        console.warn('Fila vacía detectada, ignorando...');
-        return; // Saltar esta iteración
-    }
+            if (!row.find('td').length) {
+                console.warn('Fila vacía detectada, ignorando...');
+                return;
+            }
 
-    const nombre = row.find('td:nth-child(2)').text().trim();
-    const cantidad = parseInt(row.find('td:nth-child(3) input').val());
- 
-    // Validar datos de la fila
-    if (nombre && !isNaN(cantidad) ) {
-        productos.push({ nombre, cantidad });
-    } else {
-        console.warn('Datos inválidos en fila, ignorando:', { nombre, cantidad });
-    }
-});
+            const nombre = row.find('td:nth-child(2)').text().trim();
+            const cantidad = parseInt(row.find('td:nth-child(3) input').val());
+            const precio = parseFloat(row.find('td:nth-child(4)').text().trim());
 
-        
+            if (nombre && !isNaN(cantidad) && !isNaN(precio)) {
+                productos.push({
+                    nombre,
+                    cantidad,
+                    precio
+                });
+            } else {
+                console.warn('Datos inválidos en fila, ignorando:', {
+                    nombre,
+                    cantidad,
+                    precio
+                });
+            }
+        });
 
-        // Enviar los datos al servidor
-        console.log(productos);
+        const userId = document.getElementById('userId').value;
+
         $.ajax({
-            url: '/registrar-venta',
+            url: `/registrar-venta/${userId}`,
             method: 'POST',
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 productos: productos
             },
             success: function(response) {
-                alert(response.success);
-                location.reload(); // Recargar la página después del éxito
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: response.success
+                }).then(() => {
+                    location.reload();
+                });
             },
             error: function(xhr) {
-    console.log(xhr.responseJSON);
-    alert(xhr.responseJSON.error || 'Ocurrió un error al registrar la venta.');
-}
-
-
-
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: xhr.responseJSON.error || 'Ocurrió un error al registrar la venta.'
+                });
+            }
         });
     });
 </script>
+

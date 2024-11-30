@@ -160,7 +160,7 @@ class moduloCClienteController extends Controller
     }
 
 
-    public function actualizarCliente(Request $request)
+    public function actualizarClientes(Request $request)
     {
     $id_cliente = $request->input('id_cliente');
     $user = $request->input('user_id');

@@ -77,6 +77,18 @@
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 70px;
+}
+
+.container_button_validate {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-right: 70px;
+    display: flex;
+    justify-content: right;
 }
 
 .my_button_sale {
@@ -85,7 +97,17 @@
     font-size: 1rem; 
     border: 2px solid transparent; 
     border-radius: 50px; 
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+    cursor: pointer; 
+    transition: all 0.3s ease; /* Suavizar todos los cambios */
+    color: var(--Blanco);
+}
+
+.my_button_validate {
+    background-color: var(--Morado); 
+    padding: 12px 24px 12px; 
+    font-size: 1rem; 
+    border: 2px solid transparent; 
+    border-radius: 50px; 
     cursor: pointer; 
     transition: all 0.3s ease; /* Suavizar todos los cambios */
     color: var(--Blanco);
@@ -113,6 +135,7 @@
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+    padding-right: 50px;
 }
 
 table {
