@@ -29,8 +29,12 @@
             <ul class="links">
                 <li><a href="../">Inicio</a></li>
                 <li><a href="../about">Nosotros</a></li>
-{{--                 <li><a href="category">Categoria</a></li>
- --}}                <li><a href="../contactanos">Contactanos</a></li>
+                @if (Auth::check())
+                <li><a href="../Favoritos">Favoritos</a></li>
+                @endif
+                <li><a href="../catalogo">Catálogos</a></li>
+               <li><a href="../contactanos">Contactanos</a></li>
+
             </ul>
             <div class="toggle_btn">
                 <i class="fa-solid fa-bars"></i>

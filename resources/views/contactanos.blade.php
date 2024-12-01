@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="\css\contactanos.css">
+<link rel="stylesheet" href="{{ asset('css/contactanos.css') }}">
 <x-app-layout>
 <section class="seccion_direccion">
   <x-Natalia.contactanos.direccion/>

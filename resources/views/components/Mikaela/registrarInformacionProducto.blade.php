@@ -17,7 +17,6 @@
                 <input type="hidden" name="url_imagen" id="url_imagen">
             </div>
             <script>
-                // Previsualización de imagen
                 function previewImage(event) {
                     const file = event.target.files[0];
                     if (file) {
@@ -47,7 +46,6 @@
                         .then(data => {
                             if (data.url) {
                                 document.getElementById('url_imagen').value = data.url;
-                                // alert('Imagen subida correctamente.');
                             } else {
                                 alert('Error al subir la imagen: ' + (data.error || 'desconocido'));
                             }

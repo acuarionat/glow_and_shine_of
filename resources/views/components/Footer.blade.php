@@ -4,10 +4,15 @@
         <div class="contenedor">
             <div class="navegacion">
                 <h2 class="titulos-footer">Menú de navegación</h2>
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/about">Nosotros</a></li>
-                    <li><a href="/contactanos">Contactanos</a></li>
+                <ul class="links">
+                    <li><a href="../">Inicio</a></li>
+                    <li><a href="../about">Nosotros</a></li>
+                    @if (Auth::check())
+                    <li><a href="../Favoritos">Favoritos</a></li>
+                    @endif
+                    <li><a href="../catalogo">Cátalogos</a></li>
+                   <li><a href="../contactanos">Contactanos</a></li>
+    
                 </ul>
             </div>
 

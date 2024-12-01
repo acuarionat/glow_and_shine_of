@@ -20,7 +20,7 @@
     word-wrap: break-word;
     font-size: clamp(15px, 2vw, 22px); 
 }
-img
+.iconos
 {
     height:30px;
     width: 30px;

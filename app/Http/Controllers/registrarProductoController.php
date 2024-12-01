@@ -96,7 +96,6 @@ class registrarProductoController extends Controller
     }
     public function update(Request $request, $id_user, $id)
     {
-        // Verifica el usuario
         $user = DB::table('usuarios')->where('id', $id_user)->first();
     
         if (!$user) {
@@ -111,7 +110,7 @@ class registrarProductoController extends Controller
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'nombre' => 'required|string|max:100',
             'descripcion' => 'nullable|string',
-            // Resto de validaciones...
+            
         ]);
     
         // Procesar la imagen si existe
@@ -128,7 +127,6 @@ class registrarProductoController extends Controller
         }
         
     
-        // Actualiza los demás campos
         $producto->update([
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,

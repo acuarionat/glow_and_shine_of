@@ -32,6 +32,7 @@
                 @if (Auth::check())
                 <li><a href="../Favoritos">Favoritos</a></li>
                 @endif
+                <li><a href="../catalogo">Catálogos</a></li>
                <li><a href="../contactanos">Contactanos</a></li>
 
             </ul>
@@ -60,8 +61,12 @@
         <div class="dropdown_menu">
             <li><a href="../">Inicio</a></li>
             <li><a href="../about">Nosotros</a></li>
-{{--             <li><a href="category">Categoria</a></li>
- --}}            <li><a href="../contactanos">Contactanos</a></li>
+
+     @if (Auth::check())
+                <li><a href="../Favoritos">Favoritos</a></li>
+                @endif
+                <li><a href="../catalogo">Catalogos</a></li>
+               <li><a href="../contactanos">Contactanos</a></li>
  <div>
     @if (Auth::check())
         <a href="{{ url('account/dashboard/' . Auth::user()->id) }}" class="action_btn">

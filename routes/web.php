@@ -45,7 +45,9 @@ Route::get('/about', function () {
     return view('about');
 });
 
-
+Route::get('/catalogo', function () {
+    return view('catalogos');
+});
 
 
 Route::group(['prefix' => 'account'], function(){
