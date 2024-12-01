@@ -160,6 +160,8 @@ Route::get('/post-created', function () {
 })->name('post-created');
 
 Route::get('/usuarios/pdf',[UsuarioController::class,'GenerarPDF'])->name('usuariospdf.pdf');
+Route::get('/usuarios/excel', [UsuarioController::class, 'GenerarExcel'])->name('usuariosex.excel');
+
 
 Route::get('/categorias/{id_parametros}/subparametros', [parametroController::class, 'getSubparametros']);
 Route::get('/categorias/{id}', [parametroController::class, 'index'])->name('index');

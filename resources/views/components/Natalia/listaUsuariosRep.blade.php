@@ -118,11 +118,16 @@ label
             </div>
         </div>
     </form>
-<div class="generar">     
-    <a href="{{ route('usuariospdf.pdf', ['id' => auth()->user()->id] + request()->all()) }}" 
-    class="lim" target="_blank">
-     Generar Reporte
- </a></div>
+    <div class="generar">     
+        <a href="{{ route('usuariospdf.pdf', ['id' => auth()->user()->id] + request()->all()) }}" 
+        class="lim" target="_blank">
+            Generar Reporte en PDF
+        </a>
+        <a href="{{ route('usuariosex.excel', ['id' => auth()->user()->id] + request()->all()) }}" 
+        class="lim">
+            Generar Reporte en Excel
+        </a>
+    </div>
     <div class="contenedor_tabla_usuarios">
         <table class="estilo_tabla">
             <thead>

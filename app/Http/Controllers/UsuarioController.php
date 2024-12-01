@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Usuario;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-
+use App\Exports\UsuariosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class UsuarioController extends Controller
@@ -117,11 +118,52 @@ class UsuarioController extends Controller
         $paginas = $usuarios->chunk($usuariosPorPagina); 
     
         // Generar PDF con datos
-        $pdf = PDF::loadView('usuariospdf.pdf', compact('paginas'))
+        $pdf = PDF::loadView('usuariospdf.excel', compact('paginas'))
                   ->setPaper('letter'); 
     
         return $pdf->download('reporte_usuarios_filtrado.pdf');
     }
+
+  public function GenerarExcel(Request $request)
+{
+    // Base query con relación 'rol'
+    $query = Usuario::with('rol');
+
+    // Filtros por rol
+    if ($request->filled('rol')) {
+        $query->whereHas('rol', function ($query) use ($request) {
+            $query->where('nombre_rol', $request->rol);
+        });
+    }
+
+    // Filtro por estado
+    if ($request->filled('estado')) {
+        $query->where('estado', $request->estado);
+    }
+
+    // Búsqueda por nombre o email
+    if ($request->filled('search')) {
+        $query->where(function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    // Filtro por rango de fechas
+    if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
+        $query->whereBetween('created_at', [
+            Carbon::parse($request->fecha_inicio)->startOfDay(),
+            Carbon::parse($request->fecha_fin)->endOfDay(),
+        ]);
+    }
+    $query = Usuario::with('rol');
+    // Obtener todos los usuarios
+    $usuarios = $query->get();
+
+    // Generar Excel y descargar
+    return Excel::download(new UsuariosExport($usuarios), 'reporte_usuarios_filtrado.xlsx');
+}
+
     public function listarUsuariosRep($id)
     {
         $user = Usuario::with('rol')->find($id);
@@ -145,25 +187,21 @@ class UsuarioController extends Controller
 
     public function busquedaUsuarioRep(Request $request, $id)
     {
-        // Cargar el usuario con su rol
         $user = Usuario::with('rol')->find($id);
     
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
     
-        // Saludo personalizado según el rol del usuario actual
         $saludo = match ($user->rol->nombre_rol ?? 'default') {
             'empleado' => 'Perfil de Empleado',
             'admin' => 'Perfil del Administrador',
             default => 'Perfil de Usuario',
         };
     
-        // Base de consulta
         $query = Usuario::query()->join('roles', 'usuarios.id_roles', '=', 'roles.id_roles')
             ->select('usuarios.id', 'usuarios.name', 'usuarios.email', 'usuarios.created_at', 'roles.nombre_rol as rol_name', 'usuarios.estado');
     
-        // Filtro por búsqueda
         if ($request->filled('busqueda')) {
             $query->where(function ($q) use ($request) {
                 $q->where('usuarios.name', 'like', '%' . $request->busqueda . '%')
@@ -171,25 +209,20 @@ class UsuarioController extends Controller
             });
         }
     
-        // Filtro por rol
         if ($request->filled('rol')) {
             $query->where('roles.nombre_rol', $request->rol);
         }
     
-        // Filtro por estado
         if ($request->filled('estado')) {
             $query->where('usuarios.estado', $request->estado);
         }
     
-        // Filtro por rango de fechas
         if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
             $query->whereBetween('usuarios.created_at', [$request->fecha_inicio, $request->fecha_fin]);
         }
     
-        // Obtener usuarios
         $usuarios = $query->get();
     
-        // Retornar la vista con los datos
         return view('repUsuarios', compact('usuarios', 'saludo', 'user'));
     }
     
