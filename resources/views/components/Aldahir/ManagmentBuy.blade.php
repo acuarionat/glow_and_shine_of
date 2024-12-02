@@ -1,46 +1,49 @@
-<link rel="stylesheet" href="/css/ManagmentSale.css">
+<link rel="stylesheet" href="/css/ManagmentBuy.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <div class="cont_general_register_sale">
     <div class="cont_register_s">
         <h1>REGISTRAR COMPRA</h1>
     </div>
     <div class="cont_register_title">
-        <h1>Datos Administrador</h1>
+        <h1>Datos Comprador</h1>
     </div>
+    {{--     <form method="POST" action="{{ route('registrar.venta') }}"> --}}
+    @csrf
     <div class="cont_regis">
         <div class="cont_filled">
             <label class="subt_register" for="name">Nombre</label>
             <input class="input_register" type="text" name="Nombre" placeholder="Escribe aquí"
                 value="{{ $user->name }}" readonly>
+            <input type="hidden" id="userId" value="{{ $user->id }}">
         </div>
     </div>
 
     <div class="cont_register_title">
-        <h1>Datos del proveedor</h1>
+        <h1>Datos Proveedor</h1>
     </div>
 
     <div class="cont_regis">
 
         <div class="cont_filled">
             <label class="subt_register" for="name">Nombre de la empresa</label>
-            <input class="input_register" type="text" id="ci_persona" name="ci_persona" placeholder="Nombre de la empresa" required>
+            <select class="input_register" name="proveedor" id="select-proveedor" onchange="actualizarTipoProveedor()">
+                <option value="">Seleccione al proveedor</option>
+            </select>
         </div>
-
         <div class="cont_filled">
-            <label class="subt_register" for="name">Codiciones de pago</label>
-            <input class="input_register" type="text" id="condiciones_pago" name="Nombres" placeholder="Condiciones de pago">
-
+            <label class="subt_register" for="name">Tipo Proveedor</label>
+            <input class="input_register" name="Tipo_Proveedor" id="input-tipo-proveedor" type="text"
+                placeholder="Tipo Proveedor" readonly>
         </div>
-
-        
-
     </div>
 
-    <div class="container_button_sale">
-        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+ Agregar
-            Producto</button>
+    <div class="container_button_validate">
+        <button type="button" class="my_button_validate_buy">Validar Datos</button>
     </div>
 
-    <!-- Modal Inventario Venta -->
     <div class="modal fade" id="modalInventarioVenta" tabindex="-1" role="dialog"
         aria-labelledby="modalInventarioVentaLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -54,13 +57,12 @@
                 <div class="modal-body">
                     <!-- Cuadro de búsqueda -->
                     <div class="contenedor_busqueda">
-                        <form class="formulario_busqueda" id="formularioBusqueda" {{-- action="{{ route('empleados.busqueda_empleado', ['id' => $user->id]) }}" method="GET" --}}>
+                        <form id="formularioBusqueda" class="formulario_busqueda" id="formularioBusqueda"
+                            {{-- action="{{ route('empleados.busqueda_empleado', ['id' => $user->id]) }}" method="GET" --}}>
 
-                            <i class="fas fa-search fa-fw" id="iconoBuscar" style="cursor: pointer;"
-                                {{-- onclick="document.getElementById('formularioBusqueda').submit();" --}}></i>
-                            <input class="buscar_empleado" type="text" name="busqueda"
+                            <i class="fas fa-search fa-fw" id="iconoBuscar" style="cursor: pointer;"></i>
+                            <input class="buscar_empleado" type="text" id="nombre_producto"
                                 placeholder="Nombre del producto" required>
-
                         </form>
                     </div>
 
@@ -83,19 +85,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><button class="btn btn-success">+</button></td>
-                                    <td>Rubor</td>
-                                    <td>Maquillaje</td>
-                                    <td>Esika</td>
-                                    <td>Blanco</td>
-                                    <td>12323</td>
-                                    <td>11x4</td>
-                                    <td>45</td>
-                                    <td>Activo</td>
-                                    <td><img src="ruta/a/imagen.jpg" alt="Imagen del producto" class="img-fluid"
-                                            style="width: 50px; height: auto;"></td>
+
                                 </tr>
-                                <!-- Más filas de ejemplo -->
                             </tbody>
                         </table>
                     </div>
@@ -107,11 +98,6 @@
         </div>
     </div>
 
-
-
-
-    {{-- //my_table --}}
-
     <div class="cont_table_sale">
         <table border="1">
             <thead>
@@ -120,13 +106,13 @@
                     <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
-                    <th>Descuento</th>
+                    <th>Descuento (%)</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    
+
                 </tr>
                 <tr class="total-row">
                     <td colspan="5" class="text-right">TOTAL</td>
@@ -137,9 +123,12 @@
     </div>
 
     <div class="container_button_sale">
-        <button type="button" class="my_button_sale">Registrar Compra</button>
+        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+
+            Agregar
+            Producto</button>
+        <button type="button" class="my_button_sale" id="btnRegistrarCompra">Registrar Compra</button>
     </div>
-
+    {{--     </form> --}}
 </div>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -151,123 +140,98 @@
 
 {{-- //script for filled --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#ci_persona').on('blur', function() {
-            const ci = $(this).val();
-            if (ci) {
-                $.ajax({
-                    url: `/buscar-empresa/${ci}`,
-                    method: 'GET',
-                    success: function(data) {
-                        $('#condiciones_pago').val(data.condiciones_pago);
-                        
-                        
-                    },
-                    error: function() {
-                        alert('Empresa no encontrada');
-                        $('#condiciones_pago').val('');
-                        
-                        
-                    }
-                });
-            }
-        });
-    });
-</script>
-
 
 <script>
-    document.querySelector('.my_button_sale').addEventListener('click', function() {
-    // Obtener datos del cliente y el proceso de venta
-    const id_cliente = document.getElementById('ci_persona').value;
-    const id_empleado = "{{ $user->id }}"; // ID del empleado logueado
-    const id_usuarioAccion = "{{ $user->id }}"; // Asumiendo que es el mismo empleado
-
-    // Recopilar productos
-    const productos = [];
-    document.querySelectorAll('.cont_table_sale tbody tr:not(.total-row)').forEach(row => {
-        const id_producto = row.getAttribute('data-id_producto'); // Asegúrate de almacenar el id_producto en cada fila
-        const cantidad = row.querySelector('input[type="number"]').value;
-        const precio = row.cells[3].textContent; // Obtener precio
-
-        productos.push({ id_producto, cantidad, id_precio_mercado: precio });
-    });
-
-    // Enviar datos a través de AJAX
-    $.ajax({
-        url: '/registrar-venta',
-        method: 'POST',
-        data: {
-            _token: "{{ csrf_token() }}", // Token CSRF
-            id_cliente,
-            id_empleado,
-            id_usuarioAccion,
-            productos
-        },
-        success: function(response) {
-            alert(response.message);
-        },
-        error: function(error) {
-            alert('Error al registrar la venta');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-});
 
-</script>
-<script>
-    // Filtrado de productos en tiempo real
-    document.querySelector('input[name="busqueda"]').addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-        const rows = document.querySelectorAll('.modal-table tbody tr');
-        
-        rows.forEach(row => {
-            const productName = row.cells[1].textContent.toLowerCase();
-            if (productName.includes(query)) {
-                row.style.display = ''; // Muestra la fila si coincide con la búsqueda
-            } else {
-                row.style.display = 'none'; 
-            }
-        });
-    });
+    /* buscar producto */
+    $(document).ready(function() {
+        $('#iconoBuscar').on('click', function() {
+            const nombreProducto = $('#nombre_producto').val().trim();
 
-    // Añadir producto a la tabla de ventas
-    document.querySelectorAll('.modal-table .btn-success').forEach(button => {
-        button.addEventListener('click', function() {
-            const row = this.closest('tr');
-            const productName = row.cells[1].textContent;
-            const price = row.cells[7].textContent;
-            
-            
-            const saleTableBody = document.querySelector('.cont_table_sale tbody');
-            const newRow = document.createElement('tr');
-            
-            newRow.innerHTML = `
-                <td><button class="btn btn-danger" onclick="removeRow(this)">-</button></td>
-                <td>${productName}</td>
-                <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
-                <td>${price}</td>
-                <td><input type="number" value="0" min="0" onchange="updateSubtotal(this)"></td>
-                <td>${price}</td>
-            `;
-            saleTableBody.insertBefore(newRow, saleTableBody.querySelector('.total-row'));
-            
-            
-            updateTotal();
+            // Construir la URL dependiendo de si el input tiene valor o no
+            const url = nombreProducto ? `/buscar-producto/${nombreProducto}` : '/buscar-producto';
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(data) {
+                    const tbody = $('.modal-table tbody');
+                    tbody.empty(); // Limpiar la tabla antes de mostrar resultados
+
+                    if (data.length > 0) {
+                        data.forEach(producto => {
+                            const fila = `
+                            <tr>
+                                <td><button class="btn btn-success">+</button></td>
+                                <td>${producto.nombre_producto}</td>
+                                <td>${producto.categoria}</td>
+                                <td>${producto.marca}</td>
+                                <td>${producto.color}</td>
+                                <td>${producto.lote || ''}</td>
+                                <td>${producto.medida_valor || ''} ${producto.unidad_medida || ''}</td>
+                                <td>${producto.precio_venta}</td>
+                                <td>${producto.estado}</td>
+                                <td>
+                                    ${producto.imagen ? `<img src="${producto.imagen}" alt="Imagen del producto" class="img-fluid" style="width: 50px; height: auto;">` : 'Sin Imagen'}
+                                </td>
+                            </tr>
+                        `;
+                            tbody.append(
+                                fila); // Añadir cada fila al cuerpo de la tabla
+                        });
+                    } else {
+                        tbody.append(
+                            '<tr><td colspan="10" class="text-center">No se encontraron productos.</td></tr>'
+                        );
+                    }
+
+                    // Enlazar el evento a los botones generados
+                    $('.modal-table .btn-success').off('click').on('click', function() {
+                        const row = $(this).closest('tr')[0];
+                        const productName = row.cells[1].textContent;
+                        const price = row.cells[7].textContent;
+
+                        const saleTableBody = document.querySelector(
+                            '.cont_table_sale tbody');
+                        const newRow = document.createElement('tr');
+
+                        newRow.innerHTML = `
+                        <td><button class="btn btn-danger" onclick="removeRow(this)">-</button></td>
+                        <td>${productName}</td>
+                        <td><input type="number" value="1" min="1" onchange="updateSubtotal(this)"></td>
+                        <td>${price}</td>
+                        <td><input type="number" value="0" min="0" onchange="updateSubtotal(this)"></td>
+                        <td>${price}</td>
+                    `;
+                        saleTableBody.insertBefore(newRow, saleTableBody
+                            .querySelector('.total-row'));
+
+                        updateTotal();
+                    });
+                },
+                error: function() {
+                    alert('Error al buscar productos.');
+                }
+            });
         });
     });
 
     // Función para actualizar el subtotal de cada fila de venta
     function updateSubtotal(input) {
         const row = input.closest('tr');
-        const quantity = row.cells[2].querySelector('input').value;
+        const quantity = parseInt(row.cells[2].querySelector('input').value);
         const price = parseFloat(row.cells[3].textContent);
-        const discount = row.cells[4].querySelector('input').value;
-        const subtotal = (quantity * price) - discount;
+        const discount = parseInt(row.cells[4].querySelector('input').value);
+        const subtotal = (quantity * price) - (quantity * price) * (discount / 100);
 
         row.cells[5].textContent = subtotal.toFixed(2);
 
-        
+
         updateTotal();
     }
 
@@ -276,22 +240,204 @@
         const rows = document.querySelectorAll('.cont_table_sale tbody tr:not(.total-row)');
         let total = 0;
 
+        // Recorrer las filas para sumar los subtotales
         rows.forEach(row => {
-            const subtotal = parseFloat(row.cells[5].textContent);
-            total += subtotal;
+            const subtotalCell = row.cells[5]; // Celda de subtotal
+            const subtotal = parseFloat(subtotalCell ? subtotalCell.textContent : 0);
+
+            // Verificar que el subtotal sea un número válido
+            if (!isNaN(subtotal)) {
+                total += subtotal;
+            }
         });
 
-        document.querySelector('.total-row td:last-child').textContent = total.toFixed(2);
+        // Actualizar el total en la fila de la tabla
+        const totalCell = document.querySelector('.total-row td:last-child');
+        if (totalCell) {
+            totalCell.textContent = total.toFixed(2); // Actualizar el total con dos decimales
+        }
     }
 
     // Función para eliminar una fila de la tabla de ventas
     function removeRow(button) {
         const row = button.closest('tr');
         row.remove();
-
-       
         updateTotal();
     }
+
+    $(document).ready(function() {
+        $('.my_button_validate_buy').on('click', function() {
+            const idEmpleado = $('#userId').val(); // ID del empleado (obtenido del input oculto)
+            const idProveedor = $('#select-proveedor')
+                .val(); // ID del proveedor seleccionado en el <select>
+
+            if (!idEmpleado || !idProveedor) {
+                const errorMessage =
+                    'El empleado o el proveedor no están definidos. Por favor, completa ambos campos.';
+                Swal.fire({
+                    title: 'Error de actualización',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                        popup: 'custom-popup',
+                        confirmButton: 'custom-confirm-button'
+                    }
+                });
+                return;
+            }
+
+            // Registrar el proceso de compra con los IDs
+            $.ajax({
+                url: '/registrar-proceso-compra', // Ruta para registrar el proceso de compra
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    id_empleado: idEmpleado,
+                    id_proveedor: idProveedor,
+                },
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Información actualizada correctamente',
+                        text: response.success ||
+                            'Los datos se validaron correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar',
+                        customClass: {
+                            popup: 'custom-popup',
+                            confirmButton: 'custom-confirm-button'
+                        }
+                    });
+                },
+                error: function(xhr) {
+                    const errorMessage = xhr.responseJSON?.error ||
+                        'Ocurrió un error inesperado.';
+                    Swal.fire({
+                        title: 'Error de actualización',
+                        text: errorMessage,
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        customClass: {
+                            popup: 'custom-popup',
+                            confirmButton: 'custom-confirm-button'
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+
+    $(document).on('click', '#btnRegistrarCompra', function() {
+        const productos = [];
+
+        // Recorre las filas de la tabla de productos
+        $('.cont_table_sale tbody tr:not(.total-row)').each(function() {
+            const row = $(this);
+
+            // Validar que la fila no esté vacía
+            if (!row.find('td').length) {
+                console.warn('Fila vacía detectada, ignorando...');
+                return;
+            }
+
+            const nombre = row.find('td:nth-child(2)').text().trim();
+            const cantidad = parseInt(row.find('td:nth-child(3) input').val());
+            const precio = parseFloat(row.find('td:nth-child(4)').text().trim());
+
+            // Validar datos de la fila
+            if (nombre && !isNaN(cantidad) && !isNaN(precio)) {
+                productos.push({
+                    nombre,
+                    cantidad,
+                    precio
+                });
+            } else {
+                console.warn('Datos inválidos en fila, ignorando:', {
+                    nombre,
+                    cantidad,
+                    precio
+                });
+            }
+        });
+
+        const userId = document.getElementById('userId').value;
+
+        // Enviar los datos al servidor
+        $.ajax({
+            url: `/registrar-compra/${userId}`,
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                productos: productos
+            },
+            success: function(response) {
+                Swal.fire({
+                    title: 'Información actualizada correctamente',
+                    text: response.success || 'La compra se registró con éxito.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                        popup: 'custom-popup',
+                        confirmButton: 'custom-confirm-button'
+                    }
+                });
+            },
+            error: function(xhr) {
+                const errorMessage = xhr.responseJSON?.error || 'Ocurrió un error inesperado.';
+                Swal.fire({
+                    title: 'Error de actualización',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                        popup: 'custom-popup',
+                        confirmButton: 'custom-confirm-button'
+                    }
+                });
+            }
+        });
+    });
+
+    let proveedoresData = []; // Variable para almacenar los datos obtenidos del servidor
+
+    // Función para obtener los proveedores desde el backend
+    function obtenerProveedores() {
+        fetch('/obtener-proveedores')
+            .then(response => response.json())
+            .then(data => {
+                proveedoresData = data; // Guardar los datos en la variable
+                const selectProveedor = document.getElementById('select-proveedor');
+                selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>'; // Reset del select
+
+                // Llenar el select con las opciones de proveedores
+                data.forEach(proveedor => {
+                    const option = document.createElement('option');
+                    option.value = proveedor.id_proveedor; // Usamos el ID del proveedor como valor
+                    option.textContent = proveedor
+                        .empresa_proveedor; // Nombre de la empresa como texto visible
+                    selectProveedor.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar los proveedores:', error));
+    }
+
+    // Función para actualizar el input con el tipo de proveedor
+    function actualizarTipoProveedor() {
+        const selectProveedor = document.getElementById('select-proveedor');
+        const inputTipoProveedor = document.getElementById('input-tipo-proveedor');
+        const idProveedor = selectProveedor.value;
+
+        if (!idProveedor) {
+            inputTipoProveedor.value = ''; // Limpiar el input si no hay selección
+            return;
+        }
+
+        // Buscar el proveedor seleccionado en los datos
+        const proveedorSeleccionado = proveedoresData.find(proveedor => proveedor.id_proveedor == idProveedor);
+        inputTipoProveedor.value = proveedorSeleccionado ? proveedorSeleccionado.tipo_proveedor : '';
+    }
+
+    // Llamar a la función para cargar los proveedores al cargar la página
+    document.addEventListener('DOMContentLoaded', obtenerProveedores);
 </script>
-
-

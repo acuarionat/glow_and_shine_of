@@ -1,4 +1,8 @@
 <link rel="stylesheet" href="/css/ManagmentSale.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <div class="cont_general_register_sale">
     <div class="cont_register_s">
         <h1>REGISTRAR VENTA</h1>
@@ -133,7 +137,8 @@
     </div>
 
     <div class="container_button_sale">
-        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+ Agregar
+        <button type="button" class="my_button_sale" data-toggle="modal" data-target="#modalInventarioVenta">+
+            Agregar
             Producto</button>
         <button type="button" class="my_button_sale" id="btnRegistrarVenta">Registrar Venta</button>
     </div>
@@ -162,6 +167,7 @@
         $('#iconoBuscar').on('click', function() {
             const nombreProducto = $('#nombre_producto').val().trim();
 
+            // Construir la URL dependiendo de si el input tiene valor o no
             const url = nombreProducto ? `/buscar-producto/${nombreProducto}` : '/buscar-producto';
 
             $.ajax({
@@ -169,7 +175,7 @@
                 method: 'GET',
                 success: function(data) {
                     const tbody = $('.modal-table tbody');
-                    tbody.empty();
+                    tbody.empty(); // Limpiar la tabla antes de mostrar resultados
 
                     if (data.length > 0) {
                         data.forEach(producto => {
@@ -189,18 +195,23 @@
                                 </td>
                             </tr>
                         `;
-                            tbody.append(fila);
+                            tbody.append(
+                                fila); // Añadir cada fila al cuerpo de la tabla
                         });
                     } else {
-                        tbody.append('<tr><td colspan="10" class="text-center">No se encontraron productos.</td></tr>');
+                        tbody.append(
+                            '<tr><td colspan="10" class="text-center">No se encontraron productos.</td></tr>'
+                        );
                     }
 
+                    // Enlazar el evento a los botones generados
                     $('.modal-table .btn-success').off('click').on('click', function() {
                         const row = $(this).closest('tr')[0];
                         const productName = row.cells[1].textContent;
                         const price = row.cells[7].textContent;
 
-                        const saleTableBody = document.querySelector('.cont_table_sale tbody');
+                        const saleTableBody = document.querySelector(
+                            '.cont_table_sale tbody');
                         const newRow = document.createElement('tr');
 
                         newRow.innerHTML = `
@@ -211,16 +222,14 @@
                         <td><input type="number" value="0" min="0" onchange="updateSubtotal(this)"></td>
                         <td>${price}</td>
                     `;
-                        saleTableBody.insertBefore(newRow, saleTableBody.querySelector('.total-row'));
+                        saleTableBody.insertBefore(newRow, saleTableBody
+                            .querySelector('.total-row'));
+
                         updateTotal();
                     });
                 },
                 error: function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Error al buscar productos.'
-                    });
+                    alert('Error al buscar productos.');
                 }
             });
         });
@@ -237,22 +246,21 @@
                         $('#nombres').val(data.nombres);
                         $('#apellido_paterno').val(data.apellido_paterno);
                         $('#apellido_materno').val(data.apellido_materno);
+
                     },
                     error: function() {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Atención',
-                            text: 'Persona no encontrada.'
-                        });
+                        alert('Persona no encontrada');
                         $('#nombres').val('');
                         $('#apellido_paterno').val('');
                         $('#apellido_materno').val('');
+
                     }
                 });
             }
         });
     });
 
+    // Función para actualizar el subtotal de cada fila de venta
     function updateSubtotal(input) {
         const row = input.closest('tr');
         const quantity = parseInt(row.cells[2].querySelector('input').value);
@@ -261,28 +269,35 @@
         const subtotal = (quantity * price) - (quantity * price) * (discount / 100);
 
         row.cells[5].textContent = subtotal.toFixed(2);
+
+
         updateTotal();
     }
 
+    // Función para actualizar el total general
     function updateTotal() {
         const rows = document.querySelectorAll('.cont_table_sale tbody tr:not(.total-row)');
         let total = 0;
 
+        // Recorrer las filas para sumar los subtotales
         rows.forEach(row => {
-            const subtotalCell = row.cells[5];
+            const subtotalCell = row.cells[5]; // Celda de subtotal
             const subtotal = parseFloat(subtotalCell ? subtotalCell.textContent : 0);
 
+            // Verificar que el subtotal sea un número válido
             if (!isNaN(subtotal)) {
                 total += subtotal;
             }
         });
 
+        // Actualizar el total en la fila de la tabla
         const totalCell = document.querySelector('.total-row td:last-child');
         if (totalCell) {
-            totalCell.textContent = total.toFixed(2);
+            totalCell.textContent = total.toFixed(2); // Actualizar el total con dos decimales
         }
     }
 
+    // Función para eliminar una fila de la tabla de ventas
     function removeRow(button) {
         const row = button.closest('tr');
         row.remove();
@@ -291,60 +306,71 @@
 
     $(document).ready(function() {
         $('.my_button_validate').on('click', function() {
-            const idEmpleado = $('#userId').val();
-            const ciPersona = $('#ci_persona').val();
+            const idEmpleado = $('#userId').val(); // ID del empleado (obtenido del input oculto)
+            const ciPersona = $('#ci_persona').val(); // C.I. del cliente ingresado
 
             if (!idEmpleado || !ciPersona) {
+                const errorMessage =
+                    'El empleado o el cliente no están definidos. Por favor, completa ambos campos.';
                 Swal.fire({
-                    icon: 'warning',
-                    title: 'Atención',
-                    text: 'Por favor, asegúrate de llenar los datos del cliente y del empleado.'
+                    title: 'Error de actualización',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                        popup: 'custom-popup',
+                        confirmButton: 'custom-confirm-button'
+                    }
                 });
                 return;
             }
 
+            // Buscar el ID del cliente según su C.I.
             $.ajax({
-                url: `/buscar-cliente/${ciPersona}`,
+                url: `/buscar-cliente/${ciPersona}`, // Ruta para buscar al cliente
                 method: 'GET',
                 success: function(data) {
                     if (data.id_cliente) {
+                        // Enviar datos para registrar en proceso_venta
                         $.ajax({
                             url: '/registrar-proceso-venta',
                             method: 'POST',
                             data: {
-                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                _token: $('meta[name="csrf-token"]').attr(
+                                    'content'),
                                 id_empleado: idEmpleado,
                                 id_cliente: data.id_cliente,
                             },
                             success: function(response) {
                                 Swal.fire({
+                                    title: 'Venta Exitosa',
+                                    text: response.success ||
+                                        'La venta se registró con éxito.',
                                     icon: 'success',
-                                    title: 'Éxito',
-                                    text: response.success
+                                    confirmButtonText: 'Aceptar',
+                                    customClass: {
+                                        popup: 'custom-popup',
+                                        confirmButton: 'custom-confirm-button'
+                                    }
                                 });
                             },
                             error: function(xhr) {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: xhr.responseJSON.error || 'Ocurrió un error al registrar el proceso de venta.'
-                                });
+                                alert(
+                                    xhr.responseJSON.error ||
+                                    'Ocurrió un error al registrar el proceso de venta.'
+                                );
                             },
                         });
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Cliente no encontrado. Por favor, verifica el C.I. ingresado.'
-                        });
+                        alert(
+                            'Cliente no encontrado. Por favor, verifica el C.I. ingresado.'
+                        );
                     }
                 },
                 error: function() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Error al buscar el cliente. Verifica los datos e intenta nuevamente.'
-                    });
+                    alert(
+                        'Error al buscar el cliente. Verifica los datos e intenta nuevamente.'
+                    );
                 },
             });
         });
@@ -353,9 +379,11 @@
     $(document).on('click', '#btnRegistrarVenta', function() {
         const productos = [];
 
+        // Recorre las filas de la tabla de productos
         $('.cont_table_sale tbody tr:not(.total-row)').each(function() {
             const row = $(this);
 
+            // Validar que la fila no esté vacía
             if (!row.find('td').length) {
                 console.warn('Fila vacía detectada, ignorando...');
                 return;
@@ -365,6 +393,7 @@
             const cantidad = parseInt(row.find('td:nth-child(3) input').val());
             const precio = parseFloat(row.find('td:nth-child(4)').text().trim());
 
+            // Validar datos de la fila
             if (nombre && !isNaN(cantidad) && !isNaN(precio)) {
                 productos.push({
                     nombre,
@@ -382,6 +411,7 @@
 
         const userId = document.getElementById('userId').value;
 
+        // Enviar los datos al servidor
         $.ajax({
             url: `/registrar-venta/${userId}`,
             method: 'POST',
@@ -391,21 +421,29 @@
             },
             success: function(response) {
                 Swal.fire({
+                    title: 'Información actualizada correctamente',
+                    text: response.success || 'La venta se registró con éxito.',
                     icon: 'success',
-                    title: 'Éxito',
-                    text: response.success
-                }).then(() => {
-                    location.reload();
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                        popup: 'custom-popup',
+                        confirmButton: 'custom-confirm-button'
+                    }
                 });
             },
             error: function(xhr) {
+                const errorMessage = xhr.responseJSON?.error || 'Ocurrió un error inesperado.';
                 Swal.fire({
+                    title: 'Error de actualización',
+                    text: errorMessage,
                     icon: 'error',
-                    title: 'Error',
-                    text: xhr.responseJSON.error || 'Ocurrió un error al registrar la venta.'
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                        popup: 'custom-popup',
+                        confirmButton: 'custom-confirm-button'
+                    }
                 });
             }
         });
     });
 </script>
-

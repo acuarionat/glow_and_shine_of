@@ -120,14 +120,31 @@ class moduloEmpleadoController extends Controller
             'turno.in' => 'El turno seleccionado no es válido.',
         ]);
     
+        $nombre = $request->input('nombres');
+        $email = $request->input('correo');
+        $parteEmail = explode('@', $email)[0];
+        $randomNum = rand(100, 999);
+        $contrasenaSugerida = substr($nombre, 0, 3) . substr($parteEmail, 0, 3) . $randomNum;
+
+        $nuevoIdUsuario = DB::table('usuarios')->insertGetId([
+            'name' => $nombre,
+            'email' => $email,
+            'password' => bcrypt($contrasenaSugerida),
+            'id_roles' => 1,
+            'estado' => 'Activo',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Crear la persona asociada al usuario
         $nuevoIdPersona = DB::table('persona')->insertGetId([
-            'nombres' => $request->input('nombres'),
+            'id_usuario' => $nuevoIdUsuario, // Relación con el usuario
+            'correo_electronico' => $email,
+            'nombres' => $nombre,
             'apellido_paterno' => $request->input('apellido_paterno'),
             'apellido_materno' => $request->input('apellido_materno'),
             'ci_persona' => $request->input('carnet_identidad'),
             'telefono' => $request->input('telefono'),
-            'correo_electronico' => $request->input('correo'),
-            'fecha_registro' => now()->format('Y-m-d H:i:s'),
         ]);
     
         DB::table('empleados')->insert([
@@ -137,22 +154,7 @@ class moduloEmpleadoController extends Controller
             'turno' => $request->input('turno'),
         ]);
     
-    
-        $nombre = $request->input('nombres');
-        $email = $request->input('correo');
-        $parteEmail = explode('@', $email)[0];
-        $randomNum = rand(100, 999); 
-        $contrasenaSugerida = substr($nombre, 0, 3) . substr($parteEmail, 0, 3) . $randomNum;
-    
-        DB::table('usuarios')->insert([
-            'name' => $nombre,
-            'email' => $email,
-            'password' => bcrypt($contrasenaSugerida),
-            'id_roles' => 2, 
-            'estado' => 'Activo', 
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+
 
         Mail::to($email)->send(new PostCreatedMail($nombre, $email, $contrasenaSugerida));
         

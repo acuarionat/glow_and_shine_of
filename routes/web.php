@@ -17,12 +17,13 @@ use App\Http\Controllers\registrarProductoController;
 use App\Http\Controllers\buscarProductoController;
 use App\Http\Controllers\moduloEmpleadoController;
 use App\Http\Controllers\moduloClienteController;
-use App\Http\Controllers\moduloCClienteController;
 use App\Http\Controllers\comprasController;
 use App\Http\Controllers\salesController;
 use App\Http\Controllers\perfilController;
 use App\Http\Controllers\ManagmentSaleController;
+use App\Http\Controllers\ManagmentBuyController;
 use App\Http\Controllers\parametroController;
+
 
 use App\Models\Usuario;
 
@@ -153,6 +154,10 @@ Route::get('/buscar-empresa/{ci}', [comprasController::class, 'buscarPersona'])-
 Route::get('/buscar-cliente/{ci}', [ManagmentSaleController::class, 'buscarCliente']);
 Route::post('/registrar-proceso-venta', [ManagmentSaleController::class, 'registrarProcesoVenta']);
 Route::post('/registrar-venta/{id}', [ManagmentSaleController::class, 'registrarVenta'])->name('registrar.venta');
+Route::get('/mbuy/{id}', [ManagmentBuyController::class, 'ManagmentBuy']);
+Route::get('/obtener-proveedores', [ManagmentBuyController::class, 'obtenerProveedores']);
+Route::post('/registrar-proceso-compra', [ManagmentBuyController::class, 'registrarProcesoCompra']);
+Route::post('/registrar-compra/{id}', [ManagmentBuyController::class, 'registrarCompra'])->name('registrar.compra');
 
 
 Route::get('/post-created', function () {

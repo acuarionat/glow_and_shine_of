@@ -60,43 +60,44 @@ class moduloClienteController extends Controller
             'porcentaje_descuento.max' => 'El porcentaje de descuento no puede ser mayor a 100.',
         ]);
     
-        // Crear la persona
-        $nuevoIdPersona = DB::table('persona')->insertGetId([
-            'correo_electronico' => $request->input('correo'),
-            'nombres' => $request->input('nombres'),
-            'apellido_paterno' => $request->input('apellido_paterno'),
-            'apellido_materno' => $request->input('apellido_materno'),
-            'ci_persona' => $request->input('carnet_identidad'),
-            'telefono' => $request->input('telefono'),
-        ]);
-    
-        // Crear el cliente asociado
-        DB::table('cliente')->insert([
-            'id_persona' => $nuevoIdPersona,
-            'tipo_cliente' => $request->input('tipo_cliente'),
-            'porcentaje_descuento' => $request->input('porcentaje_descuento'),
-        ]);
-    
         // Generar una contraseña automáticamente
         $nombre = $request->input('nombres');
         $email = $request->input('correo');
         $parteEmail = explode('@', $email)[0];
         $randomNum = rand(100, 999);
         $contrasenaSugerida = substr($nombre, 0, 3) . substr($parteEmail, 0, 3) . $randomNum;
-    
-            DB::table('usuarios')->insert([
+
+        // Crear el usuario y obtener su ID
+        $nuevoIdUsuario = DB::table('usuarios')->insertGetId([
             'name' => $nombre,
             'email' => $email,
             'password' => bcrypt($contrasenaSugerida),
-            'id_roles' => 1, 
-            'estado' => 'Activo', 
+            'id_roles' => 1,
+            'estado' => 'Activo',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+        $nuevoIdPersona = DB::table('persona')->insertGetId([
+            'id_usuario' => $nuevoIdUsuario, 
+            'correo_electronico' => $email,
+            'nombres' => $nombre,
+            'apellido_paterno' => $request->input('apellido_paterno'),
+            'apellido_materno' => $request->input('apellido_materno'),
+            'ci_persona' => $request->input('carnet_identidad'),
+            'telefono' => $request->input('telefono'),
+        ]);
+
+        DB::table('cliente')->insert([
+            'id_persona' => $nuevoIdPersona,
+            'tipo_cliente' => $request->input('tipo_cliente'),
+            'porcentaje_descuento' => $request->input('porcentaje_descuento'),
+        ]);
+
         Mail::to($email)->send(new PostCreatedMail($nombre, $email, $contrasenaSugerida));
+
         return redirect()->back()->with('success', 'Cliente registrado correctamente.');
-    }
+        }
     
 
 
