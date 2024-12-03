@@ -101,54 +101,63 @@ class moduloClienteController extends Controller
     
 
 
-    public function detalles_cliente($id)
-    {
-        $user = DB::table('usuarios')->where('id', $id)->first();
-
-
-        if (!$user) {
-            return redirect('/users')->with('error', 'Usuario no encontrado');
+        public function detalles_cliente($id)
+        {
+            $user = DB::table('usuarios')->where('id', $id)->first();
+        
+            if (!$user) {
+                return redirect('/users')->with('error', 'Usuario no encontrado');
+            }
+            $saludo = 'Perfil del Administrador';
+        
+            $clientes = DB::table('cliente')
+                ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
+                ->join('sub_parametros', 'cliente.tipo_cliente', '=', 'sub_parametros.id_sub_parametros')
+                ->select(
+                    'cliente.id_cliente',
+                    'persona.nombres',
+                    'cliente.porcentaje_descuento',
+                    'sub_parametros.descripcion AS tipo_cliente'
+                )
+                ->paginate(10);  
+        
+            return view('clientesLista', compact('user', 'saludo', 'clientes'));
         }
-        $saludo = 'Perfil del Administrador';
+        
 
-        $clientes = DB::table('cliente')
-            ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
-            ->join('sub_parametros', 'cliente.tipo_cliente', '=', 'sub_parametros.id_sub_parametros')
-            ->select(
-                'cliente.id_cliente',
-                'persona.nombres',
-                'cliente.porcentaje_descuento',
-                'sub_parametros.descripcion AS tipo_cliente'
-            )
-            ->get();
-
-
-        return view('clientesLista', compact('user', 'saludo', 'clientes'));
-    }
-
-    public function busqueda_cliente(Request $request, $id)
-    {
-        $user = DB::table('usuarios')->where('id', $id)->first();
-
-
-        if (!$user) {
-            return redirect('/users')->with('error', 'Usuario no encontrado');
+        public function busqueda_cliente(Request $request, $id)
+        {
+            $user = DB::table('usuarios')->where('id', $id)->first();
+        
+            if (!$user) {
+                return redirect('/users')->with('error', 'Usuario no encontrado');
+            }
+            $saludo = 'Perfil del Administrador';
+        
+            $busqueda = $request->input('busqueda');
+        
+            $clientes = DB::table('cliente')
+                ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
+                ->join('sub_parametros', 'cliente.tipo_cliente', '=', 'sub_parametros.id_sub_parametros')
+                ->select(
+                    'cliente.id_cliente',
+                    'persona.nombres',
+                    'cliente.porcentaje_descuento',
+                    'sub_parametros.descripcion AS tipo_cliente'
+                )
+                ->when($busqueda, function ($query, $busqueda) {
+                    return $query->where(function($q) use ($busqueda) {
+                        $q->where('persona.nombres', 'like', '%' . $busqueda . '%')
+                          ->orWhere('cliente.porcentaje_descuento', 'like', '%' . $busqueda . '%')
+                          ->orWhere('sub_parametros.descripcion', 'like', '%' . $busqueda . '%');
+                    });
+                })
+                ->paginate(10); 
+        
+            return view('clientesLista', compact('user', 'saludo', 'clientes'));
         }
-        $saludo = 'Perfil del Administrador';
-
-        $busqueda = $request->input('busqueda');
-
-        $clientes = DB::table('cliente')
-            ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
-            ->join('sub_parametros', 'cliente.tipo_cliente', '=', 'sub_parametros.id_sub_parametros')
-            ->select('cliente.id_cliente', 'persona.nombres', 'cliente.porcentaje_descuento', 'sub_parametros.descripcion AS tipo_cliente')
-            ->when($busqueda, function ($query, $busqueda) {
-                return $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
-            })
-            ->get();
-
-        return view('clientesLista', compact('user', 'saludo', 'clientes'));
-    }
+        
+        
 
     public function editar_clientes($id)
     {

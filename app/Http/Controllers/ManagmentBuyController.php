@@ -51,6 +51,7 @@ class ManagmentBuyController extends Controller
                 'producto.url_imagen as imagen',
                 'color.descripcion as color',
                 'producto.precio as precio_venta',
+                'producto.cantidad  as cantidad',
                 'estado.descripcion as estado',
                 /* 'imagen_producto.direccion_imagen as imagen' */
             );
@@ -83,10 +84,12 @@ class ManagmentBuyController extends Controller
     {
         $user = DB::table('usuarios')->where('id', $id)->first();
         $id_proceso_compra = DB::table('proceso_compra')->max('id_proceso_compra');
-        $tipo_evento = 55;
+        $tipo_evento = 55; // Tipo de evento para compras
         $id_usuario_accion = $user->id;
-
+    
         try {
+            DB::beginTransaction(); // Inicia una transacción
+    
             foreach ($request->input('productos', []) as $producto) {
                 // Verificar que los datos necesarios están presentes
                 if (!isset($producto['nombre'], $producto['cantidad'], $producto['precio'])) {
@@ -94,28 +97,26 @@ class ManagmentBuyController extends Controller
                         'error' => 'Faltan datos requeridos en uno o más productos.'
                     ], 400);
                 }
-
+    
                 if ($producto['cantidad'] <= 0 || $producto['precio'] < 0) {
                     return response()->json([
                         'error' => "La cantidad o el precio no son válidos para el producto: {$producto['nombre']}."
                     ], 400);
                 }
-
-                // Buscar el id_producto y id_precio_mercado en la base de datos
+    
+                // Buscar el producto en la base de datos
                 $productoDB = DB::table('producto')
                     ->where('nombre', $producto['nombre'])
                     ->first();
-
+    
                 if (!$productoDB) {
                     return response()->json([
                         'error' => "No se encontró el producto en la base de datos: {$producto['nombre']}."
                     ], 404);
                 }
-
-
-                // Insertar los datos en la tabla inventario_venta
+    
+                // Insertar los datos en la tabla inventario_compra
                 DB::table('inventario_compra')->insert([
-
                     'id_proceso_compra' => $id_proceso_compra,
                     'tipo_evento' => $tipo_evento,
                     'id_producto' => $productoDB->id_producto,
@@ -124,11 +125,27 @@ class ManagmentBuyController extends Controller
                     'id_usuario' => $id_usuario_accion,
                     'fecha_compra' => DB::raw('GETDATE()'),
                 ]);
+    
+                // Calcular la nueva cantidad y el estado
+                $nuevaCantidad = $productoDB->cantidad + $producto['cantidad'];
+                $nuevoEstado = $nuevaCantidad < 3 ? 30 : 29; // 30 = agotado, 29 = disponible
+    
+                // Actualizar la tabla producto con la nueva cantidad y estado
+                DB::table('producto')
+                    ->where('id_producto', $productoDB->id_producto)
+                    ->update([
+                        'cantidad' => $nuevaCantidad,
+                        'estado' => $nuevoEstado,
+                    ]);
             }
-
-            return redirect()->back()->with('success', 'La venta fue registrada exitosamente.');
+    
+            DB::commit(); // Confirma la transacción
+    
+            return redirect()->back()->with('success', 'La compra fue registrada exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Hubo un problema al registrar la venta: ' . $e->getMessage());
+            DB::rollBack(); // Revierte los cambios en caso de error
+            return redirect()->back()->with('error', 'Hubo un problema al registrar la compra: ' . $e->getMessage());
         }
     }
+    
 }

@@ -98,7 +98,8 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
-                <li><a href="{{ url('listarUsuarios/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
+{{--                 <li><a href="{{ url('registerU/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i>Registrar Usuarios</a></li>
+ --}}                <li><a href="{{ url('listarUsuarios/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar usuarios</a></li>
             </ul>
         </li>
         @endif
@@ -123,12 +124,13 @@
                 <i class="fas fa-chevron-right arrow-icon"></i>
             </label>
             <ul class="submenu">
+                <li><a href="{{ url('listarUsuariosRep/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Reportes de usuarios</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de productos</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de ventas</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de compras</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de empleados</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de clientes</a></li>
-                <li><a href="{{ url('listarUsuariosRep/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Reportes de usuarios</a></li>
+            
             </ul>
         </li> 
         @endif

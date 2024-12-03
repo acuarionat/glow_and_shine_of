@@ -3,7 +3,7 @@
 <x-app-layout-Usuarios>
     <section class="container_perfil_usuario">
         <x-Claudia.encabezadoPerfil :saludo="$saludo" :user="$user"/>
-        <x-Claudia.formularioEditarInfo :user="$user"/>
+        <x-Claudia.formularioEditarInfo :persona="$persona"/>
         
         
     </section>

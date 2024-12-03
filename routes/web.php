@@ -77,7 +77,7 @@ Route::group(['prefix' => 'account'], function(){
     Route::delete('/favorites/{productId}', [FavoritoController::class, 'removeFromFavorites'])->name('favorites.remove');
     
 
-/* SECCION DE USUARIO - CLIENTE */
+
 
 Route::get('dashboard/editarPerfil/{id}',[editarUsuarioController::class, 'editar_perfil_usuario']); 
 
@@ -94,15 +94,9 @@ Route::put('/usuarios/cambiar-estado/{id}', [UsuarioController::class, 'cambiarE
 
 
 Route::get('/productoDetalle/{id_user}/{id}', [buscarProductoController::class, 'mostrarDetalleProductoAdmin']);
-
-// Route::get('/producto/create', [registrarProductoController::class, 'create']);
 Route::get('/registrarProducto/{id}', [registrarProductoController::class, 'create'])->name('producto.create');
 Route::post('/registrarProducto/{id}', [registrarProductoController::class, 'store'])->name('producto.store');
-
 Route::get('/buscarProducto/{id?}', [buscarProductoController::class, 'buscarProducto'])->name('buscarProducto');
-
-// Route::resource('producto', registrarProductoController::class);
-
 Route::get('/producto/{id_user}/{id}/edit', [registrarProductoController::class, 'edit'])->name('producto.edit');
 Route::put('/producto/{id_user}/{id}/edit', [registrarProductoController::class, 'update'])->name('producto.update');
 
@@ -118,16 +112,6 @@ Route::put('/empleados/actualizar', [moduloEmpleadoController::class, 'actualiza
 Route::get('/mostrarDetalles/{id}/{id_empleado}', [moduloEmpleadoController::class, 'mostrarDetalle'])->name('empleados.detalles');
 
 
-/* 
-Route::get('/registrarCCliente/{id}', [moduloCClienteController::class, 'registrar_cliente']);
-Route::get('/verificarCorreo', [moduloCClienteController::class, 'verificarCorreo'])->name('verificar.correo');
-Route::post('/cclientes/registrar', [moduloCClienteController::class, 'registrarCliente'])->name('cliente.registrar');
-Route::get('/listaCClientes/{id}', [moduloCClienteController::class, 'detalles_cliente'])->name('cliente.detalles');
-Route::get('cclientes/{id}/', [moduloCClienteController::class, 'busqueda_cliente'])->name('cliente.busqueda_cliente');
-Route::get('/editarPerfilCCliente/{id}/{id_cliente}', [moduloCClienteController::class, 'editarCliente'])->name('cliente.editar');
-Route::put('/Cclientes/actualizar', [moduloCClienteController::class, 'actualizarCliente'])->name('clientes.actualizar'); */
-
-
 
 Route::get('/registrarCliente/{id}', [moduloClienteController::class, 'registrar_cliente']);
 Route::get('/verificarCorreo', [moduloClienteController::class, 'verificarCorreo'])->name('verificar.correo');
@@ -136,14 +120,14 @@ Route::get('/listaClientes/{id}', [moduloClienteController::class, 'detalles_cli
 Route::get('clientes/{id}/', [moduloClienteController::class, 'busqueda_cliente'])->name('cliente.busqueda_cliente');
 Route::get('/editarPerfilCliente/{id}/{id_cliente}', [moduloClienteController::class, 'editarCliente'])->name('cliente.editar');
 Route::put('/clientes/actualizar', [moduloClienteController::class, 'actualizarCliente'])->name('clientes.actualizar');
+Route::get('dashboard/editarPerfil/{id}', [editarUsuarioController::class, 'editar_perfil_usuario'])->name('perfil.editar'); 
+Route::get('/perfilUsuario/editarPerfil', [editarUsuarioController::class, 'editar_perfil_usuario'])->name('perfil.edit');
+Route::put('/perfilUsuario/editarPerfil', [editarUsuarioController::class, 'actualizar'])->name('perfil.actualizar');
 
 
 Route::get('/perfil/{id}', [perfilController::class, 'datos_perfil']);
-
-
 Route::get('/ventas/{id}', [salesController::class, 'mostrarVentas']);
 Route::get('/compras/{id}', [comprasController::class, 'mostrarCompras']);
-
 Route::get('/buscar-producto/{nombre?}', [ManagmentSaleController::class, 'buscarProducto'])->name('buscar.producto');
 Route::get('/msale/{id}', [ManagmentSaleController::class, 'ManagmentSale']); 
 Route::get('/buscar-persona/{ci}', [ManagmentSaleController::class, 'buscarPersona'])->name('buscar.persona');

@@ -79,6 +79,7 @@
                                     <th>Lote</th>
                                     <th>Detalle Medida</th>
                                     <th>Precio Venta</th>
+                                    <th>Cantidad</th>
                                     <th>Estado</th>
                                     <th>Imagen</th>
                                 </tr>
@@ -175,6 +176,7 @@
                                 <td>${producto.lote || ''}</td>
                                 <td>${producto.medida_valor || ''} ${producto.unidad_medida || ''}</td>
                                 <td>${producto.precio_venta}</td>
+                                  <td>${producto.cantidad}</td>
                                 <td>${producto.estado}</td>
                                 <td>
                                     ${producto.imagen ? `<img src="${producto.imagen}" alt="Imagen del producto" class="img-fluid" style="width: 50px; height: auto;">` : 'Sin Imagen'}
@@ -251,14 +253,13 @@
             }
         });
 
-        // Actualizar el total en la fila de la tabla
+   
         const totalCell = document.querySelector('.total-row td:last-child');
         if (totalCell) {
-            totalCell.textContent = total.toFixed(2); // Actualizar el total con dos decimales
+            totalCell.textContent = total.toFixed(2); 
         }
     }
 
-    // Función para eliminar una fila de la tabla de ventas
     function removeRow(button) {
         const row = button.closest('tr');
         row.remove();
@@ -267,9 +268,9 @@
 
     $(document).ready(function() {
         $('.my_button_validate_buy').on('click', function() {
-            const idEmpleado = $('#userId').val(); // ID del empleado (obtenido del input oculto)
+            const idEmpleado = $('#userId').val(); 
             const idProveedor = $('#select-proveedor')
-                .val(); // ID del proveedor seleccionado en el <select>
+                .val(); 
 
             if (!idEmpleado || !idProveedor) {
                 const errorMessage =
@@ -345,7 +346,6 @@
             const cantidad = parseInt(row.find('td:nth-child(3) input').val());
             const precio = parseFloat(row.find('td:nth-child(4)').text().trim());
 
-            // Validar datos de la fila
             if (nombre && !isNaN(cantidad) && !isNaN(precio)) {
                 productos.push({
                     nombre,
@@ -363,26 +363,27 @@
 
         const userId = document.getElementById('userId').value;
 
-        // Enviar los datos al servidor
         $.ajax({
-            url: `/registrar-compra/${userId}`,
-            method: 'POST',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                productos: productos
-            },
-            success: function(response) {
-                Swal.fire({
-                    title: 'Información actualizada correctamente',
-                    text: response.success || 'La compra se registró con éxito.',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    customClass: {
-                        popup: 'custom-popup',
-                        confirmButton: 'custom-confirm-button'
-                    }
-                });
-            },
+        url: `/registrar-compra/${userId}`,
+        method: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            productos: productos
+        },
+        success: function(response) {
+            Swal.fire({
+                title: 'Compra exitosa',
+                text: response.success || 'La compra se registró con éxito.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                    popup: 'custom-popup',
+                    confirmButton: 'custom-confirm-button'
+                }
+            }).then(() => {
+                window.location.reload();
+            });
+        },
             error: function(xhr) {
                 const errorMessage = xhr.responseJSON?.error || 'Ocurrió un error inesperado.';
                 Swal.fire({
@@ -394,50 +395,50 @@
                         popup: 'custom-popup',
                         confirmButton: 'custom-confirm-button'
                     }
+                    
                 });
             }
         });
     });
 
-    let proveedoresData = []; // Variable para almacenar los datos obtenidos del servidor
+    let proveedoresData = []; 
 
-    // Función para obtener los proveedores desde el backend
+    
     function obtenerProveedores() {
         fetch('/obtener-proveedores')
             .then(response => response.json())
             .then(data => {
-                proveedoresData = data; // Guardar los datos en la variable
+                proveedoresData = data; 
                 const selectProveedor = document.getElementById('select-proveedor');
-                selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>'; // Reset del select
+                selectProveedor.innerHTML = '<option value="">Seleccione un proveedor</option>';
 
-                // Llenar el select con las opciones de proveedores
+             
                 data.forEach(proveedor => {
                     const option = document.createElement('option');
-                    option.value = proveedor.id_proveedor; // Usamos el ID del proveedor como valor
+                    option.value = proveedor.id_proveedor; 
                     option.textContent = proveedor
-                        .empresa_proveedor; // Nombre de la empresa como texto visible
+                        .empresa_proveedor; 
                     selectProveedor.appendChild(option);
                 });
             })
             .catch(error => console.error('Error al cargar los proveedores:', error));
     }
 
-    // Función para actualizar el input con el tipo de proveedor
+    
     function actualizarTipoProveedor() {
         const selectProveedor = document.getElementById('select-proveedor');
         const inputTipoProveedor = document.getElementById('input-tipo-proveedor');
         const idProveedor = selectProveedor.value;
 
         if (!idProveedor) {
-            inputTipoProveedor.value = ''; // Limpiar el input si no hay selección
+            inputTipoProveedor.value = ''; 
             return;
         }
 
-        // Buscar el proveedor seleccionado en los datos
+        
         const proveedorSeleccionado = proveedoresData.find(proveedor => proveedor.id_proveedor == idProveedor);
         inputTipoProveedor.value = proveedorSeleccionado ? proveedorSeleccionado.tipo_proveedor : '';
     }
 
-    // Llamar a la función para cargar los proveedores al cargar la página
     document.addEventListener('DOMContentLoaded', obtenerProveedores);
 </script>

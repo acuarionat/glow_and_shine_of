@@ -105,27 +105,26 @@
             margin-top: 20px;
         }
 
-      
-
         .page-break {
             page-break-after: always;
         }
     </style>
 </head>
 <body>
+    <!-- Encabezado que solo aparece una vez -->
+    <div class="header">
+        <div class="logo">
+            <img src="{{ public_path('images/log.png') }}" alt="Logo G&S">
+        </div>
+        <div class="title">
+            <h1>Lista de Usuarios</h1>
+            <h2>Glow and Shine System</h2>
+        </div>
+    </div>
+
+    <!-- Aquí se imprimen las páginas -->
     @foreach ($paginas as $pagina)
         <div class="container_lista_usuarios">
-            <!-- Cabecera -->
-            <div class="header">
-                <div class="logo">
-                    <img src="{{ public_path('images/log.png') }}" alt="Logo G&S">
-                </div>
-                <div class="title">
-                    <h1>Lista de Usuarios</h1>
-                    <h2>Glow and Shine System</h2>
-                </div>
-            </div>
-
             <div class="contenedor_tabla_usuario">
                 <table class="estilo_tabla">
                     <thead>
@@ -158,20 +157,25 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="firmas">
-                <p>__________________________</p>
-                <p>Firma del responsable</p>
-            </div>
-
-            <div class="fecha-generacion">
-                <p>Fecha de generación del reporte: {{ \Carbon\Carbon::now()->format('d/m/Y H:i') }}</p>
-            </div>
         </div>
-
+        <!-- Salto de página después de cada página, menos en la última -->
         @if (!$loop->last)
             <div class="page-break"></div>
         @endif
+        
     @endforeach
+ 
+    <div class="firmas">
+        <p>__________________________</p>
+        <p>Firma del responsable</p>
+        <br/>
+        <br/>
+        <p>__________________________</p>
+        <p>Aprobado por</p>
+    </div>
+
+    <div class="fecha-generacion">
+        <p>Fecha de generación del reporte: {{ \Carbon\Carbon::now()->setTimezone('America/La_Paz')->format('d/m/Y H:i') }}</p>
+    </div>
 </body>
 </html>

@@ -25,12 +25,17 @@
 
     <header>
         <div class="navbar">
-            <div class="logo"><a href="/">G&S System</a></div>
+            <div class="logo"><a href="/"> <img src="{{ asset('images/zi.jpg') }}" alt="Logo"></a></div>
             <ul class="links">
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/about">Nosotros</a></li>
-                <li><a href="/Favoritos">Favoritos</a></li>
-                <li><a href="/contactanos">Contactanos</a></li>
+                <ul class="links">
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/about">Nosotros</a></li>
+                    @if (Auth::check())
+                    <li><a href="/Favoritos">Favoritos</a></li>
+                    @endif
+                    <li><a href="/catalogo">Catálogos</a></li>
+                   <li><a href="/contactanos">Contactanos</a></li>
+                </ul>
             </ul>
           
             <div class="botones_sesion">
@@ -53,13 +58,32 @@
         </div>
 
         <div class="dropdown_menu">
-                <li><a href="about">Productos</a></li>
-                <li><a href="category">Favoritos</a></li>
-                <li><a href="category">Promociones</a></li>
-                <li><a href="contact">Contactanos</a></li>
-                <li><a href="contact">Perfil</a></li>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/about">Nosotros</a></li>
+            @if (Auth::check())
+            <li><a href="/Favoritos">Favoritos</a></li>
+            @endif
+            <li><a href="/catalogo">Catálogos</a></li>
+           <li><a href="/contactanos">Contactanos</a></li>
                 
-                <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
+           <div class="botones_sesion">
+            @if (Auth::check())
+            @php
+                $user = Auth::user(); 
+                $userId = $user->id; 
+                $userRole = $user->rol->nombre_rol;
+               
+            @endphp
+            <a href="{{ $userRole == 'cliente' ? url('account/dashboard/' . $userId) : ($userRole == 'empleado' ? url('account/dashboardEmpleado/' . $userId) : url('account/dashboardAdmin/' . $userId)) }}" class="action_btn">
+                <i class="fa-solid fa-user"></i> 
+            </a>
+            @endif
+            <a class="action_btn" href="{{route('account.logout')}}">Cerrar Sesión</a>
+        </div>
+        <div class="toggle_btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
         </div>
     </header>
 

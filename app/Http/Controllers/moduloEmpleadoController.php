@@ -16,53 +16,54 @@ class moduloEmpleadoController extends Controller
     public function detalles_empleados($id)
     {
         $user = DB::table('usuarios')->where('id', $id)->first();
-
-
+    
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
         $saludo = 'Perfil del Administrador';
-
+    
+    
         $empleados = DB::table('empleados')
             ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona') 
             ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros')
             ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros')  
-            ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno') // Selección de columnas
-            ->get();
-
-
+            ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno')
+            ->paginate(10); 
+    
         return view('empleadosLista', compact('user', 'saludo', 'empleados'));
     }
-
+    
     public function busqueda_empleado(Request $request, $id)
     {
         $user = DB::table('usuarios')->where('id', $id)->first();
-
-
+    
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
+    
         $saludo = 'Perfil del Administrador';
-
         $busqueda = $request->input('busqueda');
-
+    
+        // Aquí también aplicamos la paginación
         $empleados = DB::table('empleados')
             ->join('persona', 'empleados.id_persona', '=', 'persona.id_persona')
-            ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros') 
-            ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros') 
-            ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno') 
+            ->join('sub_parametros', 'empleados.turno', '=', 'sub_parametros.id_sub_parametros')
+            ->join('parametros', 'sub_parametros.id_parametros', '=', 'parametros.id_parametros')
+            ->select('empleados.id_empleado', 'persona.nombres', 'empleados.salario', 'empleados.fecha_contratacion', 'sub_parametros.descripcion AS turno')
             ->when($busqueda, function ($query, $busqueda) {
-                return $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
+                return $query->where(function($query) use ($busqueda) {
+                    $query->where('persona.nombres', 'like', '%' . $busqueda . '%')
+                        ->orWhere('empleados.salario', 'like', '%' . $busqueda . '%')
+                        ->orWhere('empleados.fecha_contratacion', 'like', '%' . $busqueda . '%')
+                        ->orWhere('sub_parametros.descripcion', 'like', '%' . $busqueda . '%');  // Para buscar también por turno
+                });
             })
-
-            ->when($busqueda, function ($query, $busqueda) {
-                $query->where('persona.nombres', 'like', '%' . $busqueda . '%');
-            })
-
-            ->get();
-
+            ->paginate(10);
+    
         return view('empleadosLista', compact('user', 'saludo', 'empleados'));
     }
+    
+
 
     public function registrar_empleado($id)
     {

@@ -91,6 +91,7 @@
                                     <th>Lote</th>
                                     <th>Detalle Medida</th>
                                     <th>Precio Venta</th>
+                                    <th>Cantidad</th>
                                     <th>Estado</th>
                                     <th>Imagen</th>
                                 </tr>
@@ -189,6 +190,7 @@
                                 <td>${producto.lote || ''}</td>
                                 <td>${producto.medida_valor || ''} ${producto.unidad_medida || ''}</td>
                                 <td>${producto.precio_venta}</td>
+                                <td>${producto.cantidad}</td>
                                 <td>${producto.estado}</td>
                                 <td>
                                     ${producto.imagen ? `<img src="${producto.imagen}" alt="Imagen del producto" class="img-fluid" style="width: 50px; height: auto;">` : 'Sin Imagen'}
@@ -327,51 +329,43 @@
 
             // Buscar el ID del cliente según su C.I.
             $.ajax({
-                url: `/buscar-cliente/${ciPersona}`, // Ruta para buscar al cliente
-                method: 'GET',
-                success: function(data) {
-                    if (data.id_cliente) {
-                        // Enviar datos para registrar en proceso_venta
-                        $.ajax({
-                            url: '/registrar-proceso-venta',
-                            method: 'POST',
-                            data: {
-                                _token: $('meta[name="csrf-token"]').attr(
-                                    'content'),
-                                id_empleado: idEmpleado,
-                                id_cliente: data.id_cliente,
-                            },
-                            success: function(response) {
-                                Swal.fire({
-                                    title: 'Venta Exitosa',
-                                    text: response.success ||
-                                        'La venta se registró con éxito.',
-                                    icon: 'success',
-                                    confirmButtonText: 'Aceptar',
-                                    customClass: {
-                                        popup: 'custom-popup',
-                                        confirmButton: 'custom-confirm-button'
-                                    }
-                                });
-                            },
-                            error: function(xhr) {
-                                alert(
-                                    xhr.responseJSON.error ||
-                                    'Ocurrió un error al registrar el proceso de venta.'
-                                );
-                            },
-                        });
-                    } else {
-                        alert(
-                            'Cliente no encontrado. Por favor, verifica el C.I. ingresado.'
-                        );
-                    }
-                },
-                error: function() {
-                    alert(
-                        'Error al buscar el cliente. Verifica los datos e intenta nuevamente.'
-                    );
-                },
+            url: `/buscar-cliente/${ciPersona}`, 
+            method: 'GET',
+            success: function(data) {
+                if (data.id_cliente) {
+                    $.ajax({
+                        url: '/registrar-proceso-venta',
+                        method: 'POST',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            id_empleado: idEmpleado,
+                            id_cliente: data.id_cliente, // Aquí estamos pasando el id_cliente
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: 'Cliente encontrado',
+                                text: response.success || 'El proceso de venta se registró con éxito.',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                                customClass: {
+                                    popup: 'custom-popup',
+                                    confirmButton: 'custom-confirm-button'
+                                }
+                            });
+                        },
+                        error: function(xhr) {
+                            alert(xhr.responseJSON.error || 'Ocurrió un error al registrar el proceso de venta.');
+                        },
+                    });
+                } else {
+                    // Si el cliente no se encuentra
+                    alert('Cliente no encontrado. Por favor, verifica el C.I. ingresado.');
+                }
+            },
+            error: function() {
+                // En caso de error en la búsqueda
+                alert('Error al buscar el cliente. Verifica los datos e intenta nuevamente.');
+            },
             });
         });
     });
@@ -411,26 +405,27 @@
 
         const userId = document.getElementById('userId').value;
 
-        // Enviar los datos al servidor
         $.ajax({
-            url: `/registrar-venta/${userId}`,
-            method: 'POST',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                productos: productos
-            },
-            success: function(response) {
-                Swal.fire({
-                    title: 'Información actualizada correctamente',
-                    text: response.success || 'La venta se registró con éxito.',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    customClass: {
-                        popup: 'custom-popup',
-                        confirmButton: 'custom-confirm-button'
-                    }
-                });
-            },
+        url: `/registrar-venta/${userId}`,
+        method: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            productos: productos
+        },
+        success: function(response) {
+            Swal.fire({
+                title: 'Venta Exitosa',
+                text: response.success || 'La venta se registró con éxito.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                    popup: 'custom-popup',
+                    confirmButton: 'custom-confirm-button'
+                }
+            }).then(() => {
+                window.location.reload();
+            });
+        },
             error: function(xhr) {
                 const errorMessage = xhr.responseJSON?.error || 'Ocurrió un error inesperado.';
                 Swal.fire({

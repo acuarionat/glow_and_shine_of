@@ -33,36 +33,38 @@ class ManagmentSaleController extends Controller
 
     public function buscarPersona($ci)
     {
-        $persona = DB::table('persona')
+        $ciPersona = DB::table('persona')
             ->where('ci_persona', $ci)
             ->first();
+    
 
-        if ($persona) {
-            return response()->json($persona);
+        if ($ciPersona) {
+         
+            return response()->json($ciPersona);
         } else {
+        
             return response()->json(['error' => 'Persona no encontrada'], 404);
         }
     }
 
     public function buscarCliente($ci)
     {
-        $cliente = DB::table('cliente')
+        $idCliente = DB::table('cliente')
             ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')
             ->where('persona.ci_persona', $ci)
-            ->select('cliente.id_cliente')
-            ->first();
-
-        if ($cliente) {
-            return response()->json($cliente);
+            ->value('cliente.id_cliente');
+    
+        if ($idCliente) {
+            return response()->json(['id_cliente' => $idCliente]);
         } else {
             return response()->json(['error' => 'Cliente no encontrado.'], 404);
         }
     }
-
+    
+    
     public function buscarProducto($nombre = null)
     {
         $productos = DB::table('producto')
-            /*             ->leftJoin('imagen_producto', 'producto.id_imagen_producto', '=', 'imagen_producto.id_imagen_producto') */
             ->leftJoin('sub_parametros as marca', 'producto.marca', '=', 'marca.id_sub_parametros')
             ->leftJoin('sub_parametros as categoria', 'producto.categoria', '=', 'categoria.id_sub_parametros')
             ->leftJoin('sub_parametros as color', 'producto.color', '=', 'color.id_sub_parametros')
@@ -77,6 +79,7 @@ class ManagmentSaleController extends Controller
                 'producto.url_imagen as imagen',
                 'color.descripcion as color',
                 'producto.precio as precio_venta',
+                'producto.cantidad  as cantidad',
                 'estado.descripcion as estado',
                 /* 'imagen_producto.direccion_imagen as imagen' */
             );
@@ -111,36 +114,42 @@ class ManagmentSaleController extends Controller
         $id_proceso_venta = DB::table('proceso_venta')->max('id_proceso_venta');
         $tipo_evento = 54;
         $id_usuario_accion = $user->id;
-
+    
         try {
+            DB::beginTransaction(); // Inicia una transacción para garantizar la atomicidad.
+    
             foreach ($request->input('productos', []) as $producto) {
-                // Verificar que los datos necesarios están presentes
                 if (!isset($producto['nombre'], $producto['cantidad'], $producto['precio'])) {
                     return response()->json([
                         'error' => 'Faltan datos requeridos en uno o más productos.'
                     ], 400);
                 }
-
+    
                 if ($producto['cantidad'] <= 0 || $producto['precio'] < 0) {
                     return response()->json([
                         'error' => "La cantidad o el precio no son válidos para el producto: {$producto['nombre']}."
                     ], 400);
                 }
-
-                // Buscar el id_producto y id_precio_mercado en la base de datos
+    
                 $productoDB = DB::table('producto')
                     ->where('nombre', $producto['nombre'])
                     ->first();
-
+    
                 if (!$productoDB) {
                     return response()->json([
                         'error' => "No se encontró el producto en la base de datos: {$producto['nombre']}."
                     ], 404);
                 }
-
-
+    
+                // Verifica que haya suficiente cantidad en inventario
+                if ($productoDB->cantidad < $producto['cantidad']) {
+                    return response()->json([
+                        'error' => "Cantidad insuficiente para el producto: {$producto['nombre']}."
+                    ], 400);
+                }
+    
+                // Inserta el registro en inventario_venta
                 DB::table('inventario_venta')->insert([
-
                     'id_proceso_venta' => $id_proceso_venta,
                     'tipo_evento' => $tipo_evento,
                     'id_producto' => $productoDB->id_producto,
@@ -148,11 +157,27 @@ class ManagmentSaleController extends Controller
                     'id_usuario_accion' => $id_usuario_accion,
                     'fecha_venta' => DB::raw('GETDATE()'),
                 ]);
+    
+                $nuevaCantidad = $productoDB->cantidad - $producto['cantidad'];
+                $nuevoEstado = $nuevaCantidad < 3 ? 30 : 29; 
+    
+          
+                DB::table('producto')
+                    ->where('id_producto', $productoDB->id_producto)
+                    ->update([
+                        'cantidad' => $nuevaCantidad,
+                        'estado' => $nuevoEstado,
+                    ]);
             }
-
+    
+            DB::commit(); 
+    
             return redirect()->back()->with('success', 'La venta fue registrada exitosamente.');
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->back()->with('error', 'Hubo un problema al registrar la venta: ' . $e->getMessage());
         }
     }
+    
+    
 }

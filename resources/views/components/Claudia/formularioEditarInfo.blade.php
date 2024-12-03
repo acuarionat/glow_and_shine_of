@@ -1,22 +1,117 @@
 <link rel="stylesheet" href="{{ asset('css/formularioE.css') }}">
+
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<div class="container_form_registro"  >
-    <form action="{{ url('/perfilUsuario/editarPerfil/' . $user->id) }}" method="POST" class="form_editar_info">
-            @csrf
-            @method('PUT') 
-            <input class="edit_info" type="text" name="name" value="{{ $user->name }}" placeholder="Nombres" required>
-            <input class="edit_info" type="text" placeholder="Apellido paterno" required>
-            <input class="edit_info" type="text" placeholder="Apellido materno">
-            <input class="edit_info" type="email" name="email" value="{{ $user->email }}" placeholder="Correo Electrónico" required>
-            <input class="edit_info" type="text" placeholder="CI" required>
-            <input class="edit_info" type="date" placeholder="Fecha de nacimiento" required>
-            <input class="edit_info" type="password" placeholder="Contraseña" required>
-            
+<div class="container_form_registro">
+    <form action="{{ route('perfil.actualizar') }}" method="POST" class="form_editar_info">
+        @csrf
+        @method('PUT')
+
+        <div class="container_llenado">
+            <label class="subtitle" for="nombre">Nombre</label>
+            <input class="edit_info" type="text" name="nombre" value="{{ $persona->nombres }}" placeholder="Nombres" required>
+            @error('nombre')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="apellido_paterno">Apellido paterno</label>
+            <input class="edit_info" type="text" name="apellido_paterno" placeholder="Apellido paterno" value="{{ $persona->apellido_paterno }}" required>
+            @error('apellido_paterno')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="apellido_materno">Apellido materno</label>
+            <input class="edit_info" type="text" name="apellido_materno" placeholder="Apellido materno" value="{{ $persona->apellido_materno }}">
+
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="ci">Carnet de identidad</label>
+            <input class="edit_info" type="text" name="ci" placeholder="CI" value="{{ $persona->ci_persona }}" required>
+
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="fecha_nacimiento">Fecha de nacimiento</label>
+            <input class="edit_info" type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento" value="{{ $persona->fecha_nacimiento }}">
+
+        </div>
+
+        <div class="container_llenado">
+            <label class="subtitle" for="email">Correo electronico</label>
+            <input class="edit_info" type="email" name="correo_electronico" value="{{ $persona->correo_electronico }}" placeholder="Correo Electrónico" required>
+
+        </div>
+
+        <div class="container_llenado">
+            <label class="subtitle" for="direccion">Dirección</label>
+            <input class="edit_info" type="text" name="direccion" placeholder="direccion" value="{{ $persona->direccion }}">
+
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="telefono">Telefono</label>
+            <input class="edit_info" type="text" name="telefono" placeholder="Telefono" value="{{ $persona->telefono }}">
+
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="genero">Genero</label>
+            <select class="edit_info" name="genero">
+                <option value="" disabled selected>Selecciona tu genero</option>
+                <option value="55" {{ $persona->genero == 55 ? 'selected' : '' }}>Femenino</option>
+                <option value="56" {{ $persona->genero == 56 ? 'selected' : '' }}>Masculino</option>
+                <option value="57" {{ $persona->genero == 57 ? 'selected' : '' }}>Otro</option>
+            </select>
+        </div>
+        <div class="container_llenado">
+            <label class="subtitle" for="estado_civil">Estado Civil </label>
+            <select class="edit_info" name="estado_civil">
+                <option value="" disabled selected>Selecciona tu estado civil</option>
+                <option value="58" {{ $persona->estado_civil == 58 ? 'selected' : '' }}>Soltero/a</option>
+                <option value="59" {{ $persona->estado_civil == 59 ? 'selected' : '' }}>Casado/a</option>
+                <option value="60" {{ $persona->estado_civil == 60 ? 'selected' : '' }}>Divorciado/a</option>
+                <option value="61" {{ $persona->estado_civil == 61 ? 'selected' : '' }}>Viudo/a</option>
+            </select>
+        </div>
+        <div class="cont_boton_editE">
+
+            <button type="submit" class="boton_guardar_cambios">Guardar cambios</button>
+        </div>
     </form>
 
-    <button type="submit" class="boton_guardar_cambios">Guardar cambios</button>
-    
+
+
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        title: 'Informacion actualizada correctamente',
+        text: "{{ session('success') }}",
+        icon: 'success',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+            popup: 'custom-popup',
+            confirmButton: 'custom-confirm-button'
+        }
+    });
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    Swal.fire({
+        title: 'Error de actualización',
+        text: "{{ session('error') }}",
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+            popup: 'custom-popup',
+            confirmButton: 'custom-confirm-button'
+        }
+    });
+</script>
+@endif

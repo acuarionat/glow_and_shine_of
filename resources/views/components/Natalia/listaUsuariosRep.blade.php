@@ -72,6 +72,19 @@ label
     justify-content: start;
     border-top: #764C73 solid 2px;
 }
+    .pagination .page-item .page-link {
+        background-color: whitesmoke; 
+        color: #c26abc; 
+        border-radius: 5px;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #764C73; 
+        border-color: #764C73;
+        color: white;
+    }
+
+
 </style>
 <section class="container_lista_usuarios">
     <div class="contenedor_Tmostrar">
@@ -132,16 +145,17 @@ label
         <table class="estilo_tabla">
             <thead>
                 <tr class="encabezado_table">
+                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Rol</th>
                     <th>Estado</th>
-                    <th>Fecha de creacion</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($usuarios as $usuario)
                 <tr class="text-center">
+                    <td>{{ $usuario->id }}</td>
                     <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->email }}</td>
                     <td>
@@ -151,11 +165,15 @@ label
                             {{ $usuario->rol_name }}
                         @endif
                     </td>
-                    <td>{{ $usuario->estado }}</td>
-                    <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
+                    <td>
+                                {{ $usuario->estado }}
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-3 d-flex justify-content-center">
+            {{ $usuarios->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 </section>

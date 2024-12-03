@@ -3,11 +3,10 @@
     /* width: 320px;
     height: 41px; */
     width: 100%;
-   
     display: flex;
-    justify-content: start;
-    
     margin: 17px; 
+    justify-content:center;
+    align-items: center;
     
 }
 .saludo{
@@ -15,8 +14,11 @@
     font-size: 24px;
     margin-left: 10px;
     font-family: 'Poppins', Regular;
-    justify-content: start;
+    display: flex;
+    justify-content:center;
+    align-items: center;
     padding-left: 10px;
+    
    
 }
 /* .cerrar_s{
