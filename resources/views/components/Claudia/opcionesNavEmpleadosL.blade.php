@@ -38,7 +38,7 @@
             </label>
             <ul class="submenu">
                 <li><a href="{{ url('msale/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar venta</a></li>
-                <li><a href="{{ url('ventas/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de ventas</a></li>
+                <li><a href="{{ url('ventas/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historial de ventas</a></li>
             </ul>
         </li>
 

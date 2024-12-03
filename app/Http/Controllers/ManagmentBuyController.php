@@ -58,7 +58,7 @@ class ManagmentBuyController extends Controller
                 'producto.url_imagen as imagen',
                 'color.descripcion as color',
                 'producto.precio as precio_venta',
-                'producto.cantidad  as cantidad',
+                'producto.cantidad as cantidad',
                 'estado.descripcion as estado',
                 /* 'imagen_producto.direccion_imagen as imagen' */
             );
@@ -133,11 +133,9 @@ class ManagmentBuyController extends Controller
                     'fecha_compra' => DB::raw('GETDATE()'),
                 ]);
     
-                // Calcular la nueva cantidad y el estado
                 $nuevaCantidad = $productoDB->cantidad + $producto['cantidad'];
-                $nuevoEstado = $nuevaCantidad < 3 ? 30 : 29; // 30 = agotado, 29 = disponible
+                $nuevoEstado = $nuevaCantidad < 3 ? 30 : 29;
     
-                // Actualizar la tabla producto con la nueva cantidad y estado
                 DB::table('producto')
                     ->where('id_producto', $productoDB->id_producto)
                     ->update([

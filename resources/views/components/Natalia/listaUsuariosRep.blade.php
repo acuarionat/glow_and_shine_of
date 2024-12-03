@@ -150,6 +150,8 @@ label
                     <th>Email</th>
                     <th>Rol</th>
                     <th>Estado</th>
+                    <th>Fecha de creacion</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -168,6 +170,7 @@ label
                     <td>
                                 {{ $usuario->estado }}
                     </td>
+                    <td>{{ $usuario->created_at->format('d/m/Y') }}</td>
                 </tr>
                 @endforeach
             </tbody>

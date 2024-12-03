@@ -176,7 +176,7 @@
                                 <td>${producto.lote || ''}</td>
                                 <td>${producto.medida_valor || ''} ${producto.unidad_medida || ''}</td>
                                 <td>${producto.precio_venta}</td>
-                                  <td>${producto.cantidad}</td>
+                                <td>${producto.cantidad}</td>
                                 <td>${producto.estado}</td>
                                 <td>
                                     ${producto.imagen ? `<img src="${producto.imagen}" alt="Imagen del producto" class="img-fluid" style="width: 50px; height: auto;">` : 'Sin Imagen'}

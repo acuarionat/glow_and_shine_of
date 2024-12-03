@@ -57,7 +57,7 @@
             </label>
             <ul class="submenu">
                 <li><a href="{{ url('msale/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Registrar venta</a></li>
-                <li><a href="{{ url('ventas/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de ventas</a></li>
+                <li><a href="{{ url('ventas/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historial de ventas</a></li>
             </ul>
         </li>
 
@@ -71,7 +71,7 @@
             </label>
             <ul class="submenu">
                 <li><a href="{{ url('registrarCompras/' . auth()->user()->id) }}"  class="active"><i class="fas fa-plus"></i> Registrar Compra</a></li>
-                <li><a href="{{ url('compras/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historia de Compra</a></li>
+                <li><a href="{{ url('compras/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Historial de Compra</a></li>
             </ul>
         </li>
         @endif
@@ -127,11 +127,11 @@
             </label>
             <ul class="submenu">
                 <li><a href="{{ url('listarUsuariosRep/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Reportes de usuarios</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de productos</a></li>
+            {{--     <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de productos</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de ventas</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de compras</a></li>
                 <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de empleados</a></li>
-                <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de clientes</a></li>
+                <li><a href="#" class="active"><i class="fas fa-plus"></i> Reportes de clientes</a></li> --}}
             
             </ul>
         </li> 

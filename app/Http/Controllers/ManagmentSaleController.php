@@ -83,6 +83,7 @@ class ManagmentSaleController extends Controller
                 'producto.url_imagen as imagen',
                 'color.descripcion as color',
                 'producto.precio as precio_venta',
+                'producto.cantidad as cantidad',
                 'producto.nombre  as estado',
                 'estado.descripcion as estado',
                 /* 'imagen_producto.direccion_imagen as imagen' */

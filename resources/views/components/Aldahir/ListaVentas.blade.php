@@ -5,7 +5,7 @@
 <section class="container_lista_empleados">
    
         <div class="cotenedor_lista_e">
-            <h1>LISTA DE  VENTAS</h1>
+            <h1>HISTORIAL DE VENTAS</h1>
         </div>
         
     

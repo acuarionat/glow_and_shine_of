@@ -82,22 +82,18 @@ class UsuarioController extends Controller
     
     public function GenerarPDF(Request $request)
     {
-        // Base query con relación 'rol'
         $query = Usuario::with('rol');
     
-        // Filtros por rol
         if ($request->filled('rol')) {
             $query->whereHas('rol', function ($query) use ($request) {
                 $query->where('nombre_rol', $request->rol);
             });
         }
     
-        // Filtro por estado
         if ($request->filled('estado')) {
             $query->where('estado', $request->estado);
         }
     
-        // Búsqueda por nombre o email
         if ($request->filled('search')) {
             $query->where(function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->search . '%')
@@ -105,7 +101,6 @@ class UsuarioController extends Controller
             });
         }
     
-        // Filtro por rango de fechas
         if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
             $query->whereBetween('created_at', [
                 Carbon::parse($request->fecha_inicio)->startOfDay(),
@@ -119,7 +114,6 @@ class UsuarioController extends Controller
 
   
     
-        // Generar PDF con datos
         $pdf = PDF::loadView('usuariospdf.pdf', compact('paginas'))
                   ->setPaper('letter'); 
     
@@ -128,22 +122,18 @@ class UsuarioController extends Controller
 
   public function GenerarExcel(Request $request)
 {
-    // Base query con relación 'rol'
     $query = Usuario::with('rol');
 
-    // Filtros por rol
     if ($request->filled('rol')) {
         $query->whereHas('rol', function ($query) use ($request) {
             $query->where('nombre_rol', $request->rol);
         });
     }
 
-    // Filtro por estado
     if ($request->filled('estado')) {
         $query->where('estado', $request->estado);
     }
 
-    // Búsqueda por nombre o email
     if ($request->filled('search')) {
         $query->where(function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->search . '%')
@@ -151,7 +141,6 @@ class UsuarioController extends Controller
         });
     }
 
-    // Filtro por rango de fechas
     if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
         $query->whereBetween('created_at', [
             Carbon::parse($request->fecha_inicio)->startOfDay(),
@@ -159,10 +148,8 @@ class UsuarioController extends Controller
         ]);
     }
     $query = Usuario::with('rol');
-    // Obtener todos los usuarios
     $usuarios = $query->get();
 
-    // Generar Excel y descargar
     return Excel::download(new UsuariosExport($usuarios), 'reporte_usuarios_filtrado.xlsx');
 }
 
@@ -201,11 +188,9 @@ public function busquedaUsuarioRep(Request $request, $id)
         default => 'Perfil de Usuario',
     };
 
-    // Construcción de la consulta con paginación
     $query = Usuario::query()->join('roles', 'usuarios.id_roles', '=', 'roles.id_roles')
         ->select('usuarios.id', 'usuarios.name', 'usuarios.email', 'usuarios.created_at', 'roles.nombre_rol as rol_name', 'usuarios.estado');
 
-    // Filtrado por nombre o correo
     if ($request->filled('busqueda')) {
         $query->where(function ($q) use ($request) {
             $q->where('usuarios.name', 'like', '%' . $request->busqueda . '%')
@@ -213,25 +198,20 @@ public function busquedaUsuarioRep(Request $request, $id)
         });
     }
 
-    // Filtrado por rol
     if ($request->filled('rol')) {
         $query->where('roles.nombre_rol', $request->rol);
     }
 
-    // Filtrado por estado
     if ($request->filled('estado')) {
         $query->where('usuarios.estado', $request->estado);
     }
 
-    // Filtrado por rango de fechas
     if ($request->filled('fecha_inicio') && $request->filled('fecha_fin')) {
         $query->whereBetween('usuarios.created_at', [$request->fecha_inicio, $request->fecha_fin]);
     }
 
-    // Paginación de los resultados
-    $usuarios = $query->paginate(10); // Paginación con 10 usuarios por página
+    $usuarios = $query->paginate(10);
 
-    // Conservar los parámetros de búsqueda para la paginación
     $usuarios->appends($request->all());
 
     return view('repUsuarios', compact('usuarios', 'saludo', 'user'));
