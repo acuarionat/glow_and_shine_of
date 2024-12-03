@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PostCreatedMail;
+use App\Models\Usuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,13 +12,18 @@ class moduloClienteController extends Controller
 {
     public function registrar_cliente($id)
     {
-        $user = DB::table('usuarios')->where('id', $id)->first();
-
+        $user = Usuario::with('rol')->find($id);
 
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+    
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario'
+        };
+
 
         return view('clientesRegistro', compact('user', 'saludo'));
     }
@@ -103,12 +109,18 @@ class moduloClienteController extends Controller
 
         public function detalles_cliente($id)
         {
-            $user = DB::table('usuarios')->where('id', $id)->first();
-        
-            if (!$user) {
-                return redirect('/users')->with('error', 'Usuario no encontrado');
-            }
-            $saludo = 'Perfil del Administrador';
+            $user = Usuario::with('rol')->find($id);
+
+        if (!$user) {
+            return redirect('/users')->with('error', 'Usuario no encontrado');
+        }
+    
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario'
+        };
+
         
             $clientes = DB::table('cliente')
                 ->join('persona', 'cliente.id_persona', '=', 'persona.id_persona')

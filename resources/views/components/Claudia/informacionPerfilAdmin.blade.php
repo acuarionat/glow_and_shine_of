@@ -13,6 +13,6 @@
 
     </div>
     <div class="contenedor_opcion">
-       <a href="{{ url('editarPerfil/' . $user->id ) }}" class="editar_cuenta">Editar información</a>
+       <a href="{{ url('editarPerfilPersona/' . $user->id ) }}" class="editar_cuenta">Editar información</a>
     </div>
 </div>

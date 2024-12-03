@@ -80,7 +80,6 @@ Route::group(['prefix' => 'account'], function(){
 
 
 Route::get('dashboard/editarPerfil/{id}',[editarUsuarioController::class, 'editar_perfil_usuario']); 
-
 Route::post('/registro-admin', [LoginController::class, 'processRegistrationAdmin'])->name('account.processRegistrationAdmin');
 Route::get('/registerU/{id}', [LoginController::class,'registroU'])->name('account.registerU');
 Route::get('/listarUsuarios/{id}', [UsuarioController::class, 'listarUsuarios'])->name('usuarios.listar');
@@ -102,6 +101,8 @@ Route::put('/producto/{id_user}/{id}/edit', [registrarProductoController::class,
 
 
 
+Route::get('/editarPerfilPersona/{id}', [perfilController::class, 'editar_perfilPersona']);
+Route::put('/editarPerfilPersona/actualizar', [perfilController::class, 'actualizar_datos'])->name('perfil.actualizarDatos');
 Route::get('/listaEmpleados/{id}', [moduloEmpleadoController::class, 'detalles_empleados'])->name('empleados.informacion');
 Route::get('empleados/{id}/', [moduloEmpleadoController::class, 'busqueda_empleado'])->name('empleados.busqueda_empleado');
 Route::get('/registrarEmpleados/{id}', [moduloEmpleadoController::class, 'registrar_empleado']);
@@ -144,12 +145,15 @@ Route::post('/registrar-proceso-compra', [ManagmentBuyController::class, 'regist
 Route::post('/registrar-compra/{id}', [ManagmentBuyController::class, 'registrarCompra'])->name('registrar.compra');
 
 
+
 Route::get('/post-created', function () {
     return view('post-created');
 })->name('post-created');
 
 Route::get('/usuarios/pdf',[UsuarioController::class,'GenerarPDF'])->name('usuariospdf.pdf');
 Route::get('/usuarios/excel', [UsuarioController::class, 'GenerarExcel'])->name('usuariosex.excel');
+
+
 
 
 Route::get('/categorias/{id_parametros}/subparametros', [parametroController::class, 'getSubparametros']);

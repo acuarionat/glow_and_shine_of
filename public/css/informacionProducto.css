@@ -8,16 +8,23 @@
     font-weight: 600;
     color: var(--Rosado_principal);
     margin: 0;
-    padding: 3%;
+    padding: 1.5%;
+    text-align: justify;
+}
+
+.texto_subtitulos_productos_largo{
+    font-weight: 600;
+    color: var(--Rosado_principal);
+    margin: 0;
+    padding: 1.5%;
     text-align: justify;
 }
 .texto_contenido_subtitulos{
     color: var(--Negro);
     margin: 0;
-    padding: 3%;
+    padding: 1.5%;
     text-align: justify;
 }
-
 
 @media (min-width: 769px) {
     .contenedor_descripcion_productos {
@@ -26,11 +33,26 @@
     }
     .texto_subtitulos_productos{
         font-size: 20px;
+        width: 200px;
+    }
+
+    .texto_subtitulos_productos_largo{
+        font-size: 20px;
+        width: 300px;
     }
     .texto_contenido_subtitulos{
         font-size: 20px;
     }
-    
+    .informacion_datos_producto {
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0px;
+    }
 
 }
 

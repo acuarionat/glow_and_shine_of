@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Producto;
 use App\Models\InventarioVenta; // Modelo relacionado con la tabla inventario_venta
+use App\Models\Usuario;
 
 use Carbon\Carbon;
 
@@ -18,14 +19,17 @@ class ManagmentSaleController extends Controller
 
     public function ManagmentSale($id)
     {
-        $user = DB::table('usuarios')->where('id', $id)->first();
-
+        $user = Usuario::with('rol')->find($id);
 
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
-
+    
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario'
+        };
 
 
         return view('DashboardAdminSale', compact('user', 'saludo'));
@@ -79,7 +83,7 @@ class ManagmentSaleController extends Controller
                 'producto.url_imagen as imagen',
                 'color.descripcion as color',
                 'producto.precio as precio_venta',
-                'producto.cantidad  as cantidad',
+                'producto.nombre  as estado',
                 'estado.descripcion as estado',
                 /* 'imagen_producto.direccion_imagen as imagen' */
             );

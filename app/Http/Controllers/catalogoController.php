@@ -101,18 +101,42 @@ class catalogoController extends Controller
     public function mostrarDetalleProducto($id)
     {
         $producto = DB::table('producto AS p')
-            ->leftJoin('sub_parametros AS sp', function ($join) {
-                $join->on('p.color', '=', 'sp.id_sub_parametros')
-                     ->where('sp.id_parametros', '=', 3);
+            ->leftJoin('sub_parametros AS sp_color', function ($join) {
+                $join->on('p.color', '=', 'sp_color.id_sub_parametros')
+                    ->where('sp_color.id_parametros', '=', 3);
+            })
+            ->leftJoin('sub_parametros AS sp_estado', function ($join) {
+                $join->on('p.estado', '=', 'sp_estado.id_sub_parametros')
+                    ->where('sp_estado.id_parametros', '=', 5);
+            })
+            ->leftJoin('sub_parametros AS sp_marca', function ($join) {
+                $join->on('p.marca', '=', 'sp_marca.id_sub_parametros')
+                    ->where('sp_marca.id_parametros', '=', 2);
+            })
+            ->leftJoin('sub_parametros AS sp_presentacion', function ($join) {
+                $join->on('p.presentacion', '=', 'sp_presentacion.id_sub_parametros')
+                    ->where('sp_presentacion.id_parametros', '=', 4);
+            })
+            ->leftJoin('sub_parametros AS sp_categoria', function ($join) {
+                $join->on('p.categoria', '=', 'sp_categoria.id_sub_parametros')
+                    ->where('sp_categoria.id_parametros', '=', 1);
             })
             ->where('p.id_producto', $id)
             ->select(
                 'p.id_producto',
                 'p.nombre AS nombre_producto',
+                'p.cantidad AS cantidad',
                 'p.descripcion',
+                'p.recomendaciones_uso AS recomendacion',
+                DB::raw("COALESCE(sp_color.descripcion, 'Sin color') AS color"),
+                'p.url_imagen AS imagen_producto', 
+                'sp_estado.descripcion AS estado',
+                'sp_marca.descripcion AS marca',
+                'sp_presentacion.descripcion AS presentacion',
+                'sp_categoria.descripcion AS categoria',
+                'p.cantidad',
                 'p.precio',
-                'sp.descripcion AS color',
-                'p.url_imagen AS imagen_producto'
+                'p.detalle_medida'
             )
             ->first();
 

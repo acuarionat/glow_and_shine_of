@@ -33,6 +33,7 @@
                 <li><a href="{{ url('buscarProducto/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Mostrar Productos</a></li>
             </ul>
         </li>
+        @if($role == 'admin')
         <li class="menu-item">
             <input type="checkbox" id="subparametros-checkbox">
             <label for="subparametros-checkbox" class="menu-link">
@@ -46,6 +47,7 @@
                 <li><a href=" {{ url('categorias/subparametros/create/' . auth()->user()->id) }}" class="active"><i class="fas fa-plus"></i> Agregar Subparametro</a></li>
             </ul>
         </li>
+        @endif
         <li class="menu-item">
             <input type="checkbox" id="ventas-checkbox">
             <label for="ventas-checkbox" class="menu-link">

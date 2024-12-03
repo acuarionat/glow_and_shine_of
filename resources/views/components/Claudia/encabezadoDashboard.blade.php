@@ -32,22 +32,18 @@
 </div>
 
 <script>
-    // Al cargar la página, establece el estado inicial del menú
     document.addEventListener('DOMContentLoaded', () => {
         const navLateral = document.querySelector('.contenedor_nav_lateral');
         const encabezado = document.querySelector('.encabezado_p');
         const content = document.querySelector('.contenedorDashAdmin');
 
-        // Recuperar estado desde localStorage
         const isMenuOpen = localStorage.getItem('menuOpen');
 
-        // Si no hay estado guardado, asumir que está abierto
         if (isMenuOpen === null || isMenuOpen === 'true') {
             navLateral.classList.add('visible');
             encabezado.classList.add('push');
             content?.classList.add('push');
 
-            // Guardar estado inicial como abierto
             localStorage.setItem('menuOpen', 'true');
         } else {
             navLateral.classList.remove('visible');
@@ -65,7 +61,6 @@
         encabezado.classList.toggle('push');
         content?.classList.toggle('push');
 
-        // Guardar el estado del menú en localStorage
         localStorage.setItem('menuOpen', isMenuCurrentlyOpen);
     }
 </script>

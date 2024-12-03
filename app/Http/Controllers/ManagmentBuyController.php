@@ -5,19 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Usuario;
+
 
 class ManagmentBuyController extends Controller
 {
 
     public function ManagmentBuy($id)
     {
-        $user = DB::table('usuarios')->where('id', $id)->first();
-
+        $user = Usuario::with('rol')->find($id);
 
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
-        $saludo = 'Perfil del Administrador';
+    
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario'
+        };
+
 
 
         return view('DashboardAdminBuy', compact('user', 'saludo'));

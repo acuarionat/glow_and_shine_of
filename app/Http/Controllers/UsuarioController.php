@@ -174,7 +174,6 @@ public function listarUsuariosRep($id)
         return redirect('/users')->with('error', 'Usuario no encontrado');
     }
 
-    // Cambiar 'get()' por 'paginate(10)'
     $usuarios = Usuario::join('roles', 'usuarios.id_roles', '=', 'roles.id_roles')
         ->select('usuarios.id', 'usuarios.name', 'usuarios.email', 'usuarios.created_at', 'roles.nombre_rol as rol_name', 'usuarios.estado')
         ->paginate(10); 

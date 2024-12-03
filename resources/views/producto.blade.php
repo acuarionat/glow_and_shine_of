@@ -70,6 +70,9 @@
                 </div>
             </div>
         </div>
+        <x-Aldahir.TSubtitle>
+            <span>★</span> DÉJANOS TU COMENTARIO <span>★</span>
+        </x-Aldahir.TSubtitle>
         <div class="contenedor_total_producto">
             <x-Mikaela.calificaProducto :producto="$producto"/>
         </div>

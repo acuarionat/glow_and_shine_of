@@ -9,18 +9,25 @@ use App\Models\Subparametro;
 use App\Models\Proveedores;
 use App\Models\Lote;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Usuario;
+
 
 class registrarProductoController extends Controller
 {
     public function create($id)
     {
-        $user = DB::table('usuarios')->where('id', $id)->first();
+        $user = Usuario::with('rol')->find($id);
 
         if (!$user) {
             return redirect('/users')->with('error', 'Usuario no encontrado');
         }
+    
+        $saludo = match ($user->rol->nombre_rol) {
+            'empleado' => 'Perfil de Empleado',
+            'admin' => 'Perfil del Administrador',
+            default => 'Perfil de Usuario'
+        };
 
-        $saludo = 'Perfil del Administrador';
         $subparametrosCategorias = Subparametro::where('id_parametros', 1)->get();
         $subparametrosMarca = Subparametro::where('id_parametros', 2)->get();
         $subparametrosColor = Subparametro::where('id_parametros', 3)->get();
